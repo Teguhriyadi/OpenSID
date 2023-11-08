@@ -2,7 +2,7 @@
 
 defined('BASEPATH') || exit('No direct script access allowed');
 
-class Vi_Iuran_model extends MY_Model
+class Vi_Iuran_Produk_model extends MY_Model
 {
     protected $table = 'vi_iuranproduk';
 
