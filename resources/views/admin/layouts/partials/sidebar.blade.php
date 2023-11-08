@@ -41,6 +41,12 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU UTAMA</li>
 
+            <li>
+                <a href="<?php echo base_url() ?>apps">
+                    <i class="fa fa-home"></i> Apps Menu
+                </a>
+            </li>
+
             <?php foreach ($modul as $mod): ?>
             <?php if (count($mod['submodul']) == 0): ?>
             <li class="<?= jecho($modul_ini, $mod['slug'], 'active') ?>">

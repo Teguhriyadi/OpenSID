@@ -206,7 +206,13 @@ class Web_Controller extends MY_Controller
         $this->load->model('pamong_model');
 
         $main         = $this->header;
-        $pamong_kades = Pamong::ttd('a.n')->first()->toArray();
+        $pamong_kades = Pamong::ttd('a.n')->first();
+
+        if ($pamong_kades) {
+            $pamong_kades = $pamong_kades->toArray();
+        }
+
+        return $pamong_kades;
 
         // TODO : Gunakan view blade
         if (file_exists(DESAPATH . 'offline_mode.php')) {
@@ -279,7 +285,7 @@ class Admin_Controller extends MY_Controller
         $this->CI = CI_Controller::get_instance();
         $this->load->model(['header_model', 'user_model', 'notif_model', 'pelanggan_model', 'referensi_model']);
         $this->header = $this->header_model->get_data();
-
+        
         // Kalau sehabis periksa data, paksa harus login lagi
         if ($this->session->periksa_data == 1) {
             $this->user_model->logout();

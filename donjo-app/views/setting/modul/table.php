@@ -216,6 +216,7 @@
 								</tr>
 							</thead>
 							<tbody>
+							<tbody>
 								<?php foreach ($main as $data): ?>
 									<tr>
 										<td class="padat"><?=$data['no']?></td>
@@ -241,6 +242,7 @@
 										<td class="padat"><i class="fa <?=$data['ikon']?> fa-lg"></i></td>
 									</tr>
 								<?php endforeach; ?>
+							</tbody>
 							</tbody>
 						</table>
 					</div>

@@ -298,9 +298,7 @@ class Migrasi_fitur_premium_2210 extends MY_model
         return $hasil && $this->tambah_setting([
             'key'   => 'notifikasi_pengajuan_surat',
             'value' => <<<'EOD'
-                Segera cek Halaman Admin, penduduk atas nama [nama_penduduk] telah mengajukan [judul_surat] melalui [melalui] pada tanggal [tanggal]
-
-                TERIMA KASIH.
+                Segera cek Halaman Admin, penduduk atas nama [nama_penduduk] telah mengajukan [judul_surat] melalui [melalui] pada tanggal [tanggal] TERIMA KASIH.
                 EOD,
             'keterangan' => 'Pesan notifikasi pengajuan surat',
             'jenis'      => 'textarea',
