@@ -31,14 +31,18 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="desaid"> Desa </label>
-                            <select name="desaid" class="form-control" id="desaid">
+                            <select name="desaid" class="form-control select2 input-sm" id="desaid">
                                 <option value="">- Pilih -</option>
-                                <option value="1">Semanggi</option>
+                                @foreach ($desa as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->dusun }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="nama_produk"> Nama Produk </label>
-                            <input type="text" class="form-control" name="nama_produk" id="nama_produk" placeholder="Masukkan Nama Produk">
+                            <input type="text" class="form-control input-sm" name="nama_produk" id="nama_produk" placeholder="Masukkan Nama Produk">
                         </div>
                     </div>
                     <div class="box-footer">

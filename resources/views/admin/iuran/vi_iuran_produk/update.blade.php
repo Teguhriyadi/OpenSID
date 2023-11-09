@@ -31,14 +31,24 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="desa_id"> Desa </label>
-                            <select name="desa_id" class="form-control" id="desa_id">
+                            <select name="desa_id" class="form-control input-sm select2" id="desa_id">
                                 <option value="">- Pilih -</option>
-                                <option value="1" selected>Semanggi</option>
+                                @foreach ($desa as $item)
+                                    @if ($item->id == $query->desaid)
+                                    <option value="<?= $item->id ?>" selected>
+                                        <?= $item->dusun ?>
+                                    </option>    
+                                    @else
+                                    <option value="<?= $item->id ?>">
+                                        <?= $item->dusun ?>
+                                    </option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="nama_produk"> Nama Produk </label>
-                            <input type="text" class="form-control" name="nama_produk" id="nama_produk" placeholder="Masukkan Nama Produk" value="<?= $query->nama_produk ?>">
+                            <input type="text" class="form-control input-sm" name="nama_produk" id="nama_produk" placeholder="Masukkan Nama Produk" value="<?= $query->nama_produk ?>">
                         </div>
                     </div>
                     <div class="box-footer">

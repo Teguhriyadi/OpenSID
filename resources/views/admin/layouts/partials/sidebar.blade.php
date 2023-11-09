@@ -57,13 +57,13 @@
             </a>
             <ul class="treeview-menu">
                 <li>
-                    <a href="<?= site_url('vi_iuran') ?>">
-                        <i class="fa fa-circle-o"></i> Data Iuran
+                    <a href="<?= site_url('vi_iuran_produk') ?>">
+                        <i class="fa fa-circle-o"></i> Data Iuran Produk
                     </a>
                 </li>
                 <li>
-                    <a href="pages/charts/morris.html">
-                        <i class="fa fa-circle-o"></i> Data Iuran Produk
+                    <a href="<?= site_url('vi_iuran') ?>">
+                        <i class="fa fa-circle-o"></i> Data Iuran
                     </a>
                 </li>
               </ul>

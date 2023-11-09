@@ -158,6 +158,11 @@ class Wilayah_model extends MY_Model
             ->result_array();
     }
 
+    public function list_desa()
+    {
+        return $this->db->get('tweb_wil_clusterdesa');
+    }
+
     private function select_jumlah_rw_rt()
     {
         $this->db
