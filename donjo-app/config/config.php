@@ -578,7 +578,7 @@ $config['proxy_ips'] = '';
 | - Nama Lembaga
 |
 */
-$config['nama_aplikasi'] = 'OpenSID';
+$config['nama_aplikasi'] = 'Sipantas';
 $config['nama_lembaga']  = 'OpenDesa';
 
 /*

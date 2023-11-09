@@ -81,12 +81,11 @@ class Vi_Iuran_Produk extends Admin_Controller {
 
             $header = false;
 
-            foreach ($data as $makanan) {
+            foreach ($data as $row) {
                 if ($header) {
                     $data_to_insert = array(
-                        'desaid' => $makanan[1],
-                        'nama_produk' => $makanan[2]
-                        // dan seterusnya sesuai dengan kolom dalam tabel Anda
+                        'desaid' => $row[1],
+                        'nama_produk' => $row[2]
                     );
 
                     $this->vi_iuran_produk_model->create($data_to_insert);

@@ -21,23 +21,29 @@
             <div class="box-header with-border">
                 <div class="btn-group btn-group-vertical">
                     <a href="<?= site_url('vi_iuran/form') ?>" class="btn btn-social btn-flat btn-success btn-sm">
-                        <i class='fa fa-plus'></i> Tambah Menu
+                        <i class='fa fa-plus'></i> Tambah Iuran
                     </a>
                 </div>
+                <div class="btn-group btn-group-vertical">
+                    <button type="button" class="btn btn-success btn-social btn-flat btn-sm" data-toggle="modal" data-target="#modal-default">
+                        <i class="fa fa-download"></i> Import Excel
+                    </button>
+                </div>
+                <br><br>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                         <thead class="bg-gray disabled color-palette">
                             <tr>
                                 <th>No.</th>
                                 <th class="text-center">Aksi</th>
-                                <th style="text-align: left">Desa</th>
-                                <th>RW</th>
-                                <th class="text-center">RT</th>
-                                <th class="text-center">Submenu</th>
-                                <th class="text-center">Posisi</th>
-                                <th class="text-center">Icons</th>
-                                <th class="text-center">Icon</th>
-                                <th class="text-center">Keterangan</th>
+                                <th class="text-center">NIK</th>
+                                <th>Nama</th>
+                                <th class="text-center">Desa</th>
+                                <th class="text-center">Tagihan</th>
+                                <th class="text-center">Bulan</th>
+                                <th class="text-center">Tahun</th>
+                                <th class="text-center">Produk</th>
+                                <th class="text-center">Tanggal Bayar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,14 +61,14 @@
                                         <i class='fa fa-trash'></i> Hapus
                                     </a>
                                 </td>
-                                <td><?= $item->nama ?></td>
-                                <td class="text-center"><?= $item->links ?></td>
-                                <td class="text-center"><?= $item->desa ?></td>
-                                <td class="text-center"><?= $item->rw ?></td>
-                                <td class="text-center"><?= $item->rt ?></td>
-                                <td class="text-center"><?= $item->icons ?></td>
-                                <td class="text-center"><?= $item->icon ?></td>
-                                <td class="text-center"><?= $item->keterangan ?></td>
+                                <td class="text-center"><?= $item->nik ?></td>
+                                <td style="text-align: left"><?= $item->nama ?></td>
+                                <td class="text-center"><?= $item->dusun ?></td>
+                                <td class="text-center">Rp. <?= number_format($item->tagihan) ?></td>
+                                <td class="text-center"><?= $item->p_bulan ?></td>
+                                <td class="text-center"><?= $item->p_tahun ?></td>
+                                <td class="text-center"><?= $item->namaproduk ?></td>
+                                <td class="text-center"><?= $item->tgl_bayar ?></td>
                             </tr>   
                             @endforeach
                         </tbody>
@@ -73,6 +79,37 @@
     </div>
 </div>
 
-
+<!-- Modal -->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    <i class="fa fa-download"></i> Upload Data Iuran
+                </h4>
+            </div>
+            <form action="<?= site_url('vi_iuran/upload_excel') ?>" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="upload"> Upload Excel </label>
+                        <input type="file" class="form-control" name="upload" id="upload">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger pull-left btn-social btn-flat btn-sm" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-social btn-flat btn-sm">
+                        <i class="fa fa-save"></i> Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End -->
 
 @endsection

@@ -23,7 +23,14 @@ class Vi_Iuran_model extends MY_Model
 
     public function getData()
     {
-        return $this->db->get($this->table);
+        $this->db->select("vi_iuran.*, tweb_penduduk.*, tweb_wil_clusterdesa.*, vi_iuranproduk.nama_produk AS namaproduk");
+        $this->db->from($this->table);
+        $this->db->join("tweb_penduduk", "tweb_penduduk.nik = vi_iuran.nik");
+        $this->db->join("tweb_wil_clusterdesa", "tweb_wil_clusterdesa.id = tweb_penduduk.id_cluster");
+        $this->db->join("vi_iuranproduk", "vi_iuranproduk.id = vi_iuran.produk");
+        $this->db->order_by('vi_iuran.id', "DESC");
+
+        return $this->db->get();
     }
 
     public function create($data)
@@ -47,4 +54,25 @@ class Vi_Iuran_model extends MY_Model
 		$this->db->where('id', $id);
 		return $this->db->delete($this->table);
 	}
+
+    public function cekPenduduk($nik)
+    {
+        return $this->db->get_where("tweb_penduduk", array('nik' => $nik));
+    }
+
+    public function cekDuplikasi($nik, $produk, $p_bulan, $p_tahun)
+    {
+        $this->db->where("nik", $nik);
+        $this->db->where("produk", $produk);
+        $this->db->where("p_bulan", $p_bulan);
+        $this->db->where("p_tahun", $p_tahun);
+        $query = $this->db->get($this->table);
+
+        return $query->num_rows() > 0;
+    }
+
+    public function getCluster($id_cluster)
+    {
+        return $this->db->get_where("tweb_wil_clusterdesa", array('id' => $id_cluster));
+    }
 }
