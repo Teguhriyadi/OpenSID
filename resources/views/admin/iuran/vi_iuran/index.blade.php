@@ -7,9 +7,6 @@
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">
-    <a href="{{ route('pengurus') }}"> Iuran </a>
-</li>
 <li class="active">Data Iuran</li>
 @endsection
 

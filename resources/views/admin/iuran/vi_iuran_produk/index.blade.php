@@ -7,9 +7,6 @@
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">
-    <a href="{{ route('pengurus') }}"> Iuran Produk </a>
-</li>
 <li class="active">Data Iuran</li>
 @endsection
 
@@ -38,6 +35,7 @@
                                 <th class="text-center" style="width: 200px;">Aksi</th>
                                 <th style="text-align: left">Desa</th>
                                 <th>Nama Produk</th>
+                                <th>Adm Produk</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,6 +55,7 @@
                                 </td>
                                 <td><?= $item->dusun ?></td>
                                 <td><?= $item->nama_produk ?></td>
+                                <td><?= $item->adm_produk ?></td>
                             </tr>   
                             @endforeach
                         </tbody>

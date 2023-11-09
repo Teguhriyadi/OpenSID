@@ -34,7 +34,8 @@ class Vi_Iuran_Produk extends Admin_Controller {
     {
         $data = array(
             'desaid' => $this->input->post('desaid'),
-            'nama_produk' => $this->input->post('nama_produk')
+            'nama_produk' => $this->input->post('nama_produk'),
+            'adm_produk' => $this->input->post('adm_produk')
         );
         
         $this->vi_iuran_produk_model->create($data);
@@ -54,7 +55,8 @@ class Vi_Iuran_Produk extends Admin_Controller {
     {
         $data = array(
             'desaid' => $this->input->post('desa_id'),
-            'nama_produk' => $this->input->post('nama_produk')
+            'nama_produk' => $this->input->post('nama_produk'),
+            'adm_produk' => $this->input->post('adm_produk')
         );
         
         $this->vi_iuran_produk_model->update($id, $data);

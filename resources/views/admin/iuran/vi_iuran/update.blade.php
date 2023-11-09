@@ -4,16 +4,16 @@
 
 @section('title')
 <h1>
-    Daftar Apps Menu
+    Edit Data Iuran
 </h1>
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item">
-    <a href="{{ route('pengurus') }}"> Pengurus</a>
+    <a href="<?= site_url('vi_iuran') ?>"> Data Iuran </a>
 </li>
 <li class="active">
-    Daftar Menu Apps
+    Edit Data Iuran
 </li>
 @endsection
 

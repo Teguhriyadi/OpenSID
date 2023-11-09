@@ -22,7 +22,9 @@ class Vi_Iuran extends Admin_Controller {
 
     public function form()
     {
-        return view("admin.iuran.vi_iuran.form");
+        $data["bulan"] = $this->vi_iuran_model->getBulanData();
+
+        return view("admin.iuran.vi_iuran.form", $data);
     }
 
     public function insert()

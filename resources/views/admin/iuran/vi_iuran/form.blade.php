@@ -4,16 +4,16 @@
 
 @section('title')
 <h1>
-    Daftar Apps Menu
+    Tambah Data Iuran
 </h1>
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item">
-    <a href="{{ route('pengurus') }}"> Pengurus</a>
+    <a href="<?= site_url('vi_iuran') ?>"> Data Iuran </a>
 </li>
 <li class="active">
-    Daftar Menu Apps
+    Tambah Data Iuran
 </li>
 @endsection
 
@@ -94,9 +94,11 @@
                                     <label for="p_bulan"> Periode Bulan </label>
                                     <select name="p_bulan" class="form-control" id="p_bulan">
                                         <option value="">- Pilih -</option>
-                                        <option value="1">Januari</option>
-                                        <option value="2">Februari</option>
-                                        <option value="3">Maret</option>
+                                        <?php foreach ($bulan as $b => $urutan_bulan) : ?>
+                                            <option value="<?= $urutan_bulan ?>">
+                                                <?= $b ?>
+                                            </option>
+                                        <?php endforeach ?>
                                     </select>
                                 </div>
                             </div>

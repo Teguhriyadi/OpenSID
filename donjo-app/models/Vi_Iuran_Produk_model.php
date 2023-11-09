@@ -8,7 +8,8 @@ class Vi_Iuran_Produk_model extends MY_Model
 
     protected $fillable = [
         'desaid',
-        'nama_produk'
+        'nama_produk',
+        'adm_produk'
     ];
 
     public function getData()

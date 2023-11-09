@@ -4,16 +4,16 @@
 
 @section('title')
 <h1>
-    Daftar Apps Menu
+    Edit Iuran Produk
 </h1>
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item">
-    <a href="{{ route('pengurus') }}"> Pengurus</a>
+    <a href="<?= site_url('vi_iuran_produk') ?>"> Data Iuran Produk </a>
 </li>
 <li class="active">
-    Daftar Menu Apps
+    Update Iuran Produk
 </li>
 @endsection
 
@@ -49,6 +49,10 @@
                         <div class="form-group">
                             <label for="nama_produk"> Nama Produk </label>
                             <input type="text" class="form-control input-sm" name="nama_produk" id="nama_produk" placeholder="Masukkan Nama Produk" value="<?= $query->nama_produk ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="adm_produk"> Adm Produk </label>
+                            <input type="number" class="form-control input-sm" name="adm_produk" id="adm_produk" placeholder="Masukkan Adm Produk" value="<?= $query->adm_produk ?>">
                         </div>
                     </div>
                     <div class="box-footer">
