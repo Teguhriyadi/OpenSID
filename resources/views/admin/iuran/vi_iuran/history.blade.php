@@ -13,54 +13,37 @@
 <li class="active">History Iuran</li>
 @endsection
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom/css/style.min.css') }}">
+@endpush
+
 @section('content')
 
 <div class="row">
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
+                <div class="btn-group btn-group-vertical">
+                    <a href="<?= site_url('vi_iuran') ?>" class="btn btn-social btn-flat btn-danger btn-sm">
+                        <i class='fa fa-sign-out'></i> Kembali Ke Halaman Sebelumnya
+                    </a>
+                </div>
+                <br><br>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table id="data-example" class="table table-bordered table-striped table-hover" style="width: 100%">
                         <thead class="bg-gray disabled color-palette">
                             <tr>
-                                <th class="text-center">No.</th>
-
-                                <th class="text-center">User</th>
+                                <th style="text-align: center;">No.</th>
+                                <th style="text-align: center;">User</th>
                                 <th>Deskripsi</th>
-                                <th class="text-center">Tagihan</th>
-                                <th class="text-center">Bulan</th>
-                                <th class="text-center">Tahun</th>
-                                <th class="text-center">Aksi</th>
+                                <th style="text-align: center;">Tagihan</th>
+                                <th style="text-align: center;">Bulan</th>
+                                <th style="text-align: center;">Tahun</th>
+                                <th style="text-align: center;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $nomer = 0 ?>
-                            <?php foreach ($query as $data) : ?>
-                            <tr>
-                                <td class="text-center"><?= ++$nomer ?>.</td>
-                                <td class="text-center"><?= $data->execs ?></td>
-                                <td><?= $data->deskripsi ?></td>
-                                <td class="text-center">Rp. <?= number_format($data->tagihan) ?></td>
-                                <td class="text-center"><?= $data->bulan ?></td>
-                                <td class="text-center"><?= $data->tahun ?></td>
-                                <td class="text-center" style="padding-top: 20px; padding-bottom: 10px;">
-                                    <?php if ($data->aksi == "TAMBAH") : ?>
-                                        <span style="background-color: green; padding: 10px; color: white; text-transform: uppercase" class="badge badge-success">
-                                            Tambah
-                                        </span>
-                                    <?php elseif ($data->aksi == "UPDATE") : ?>
-                                        <span style="background-color: yellow; padding: 10px; color: white; text-transform: uppercase" class="badge badge-success">
-                                            Tambah
-                                        </span>
-                                    <?php elseif ($data->aksi == "DELETE") : ?>
-                                        <span style="background-color: red; padding: 10px; color: white; text-transform: uppercase" class="badge badge-success">
-                                            Delete
-                                        </span>
-                                    <?php else : ?>
-                                    <?php endif ?>
-                                </td>
-                            </tr>
-                            <?php endforeach ?>
+                            
                         </tbody>
                     </table>
                 </div>
@@ -103,3 +86,78 @@
 <!-- End -->
 
 @endsection
+
+@push('scripts')
+<script src="{{ asset('custom/javascript/dataTables.min.js') }}"></script>
+<script src="{{ asset('custom/javascript/bootstrap.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#data-example").DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "<?= site_url('vi_iuran/dataTableHistory') ?>",
+                "type": "GET",
+                "dataSrc": function(json) {
+                    return json.query
+                }
+            },
+            "columnDefs": [{
+                "orderable": false
+            }],
+            "columns": [{
+                "data": null,
+                render: function(data, type, row, meta) {
+                    return '<div style="text-align: center;">' + (meta.row + meta.settings._iDisplayStart + 1) + '.</div>';
+                }
+            },
+            {
+                "data": "execs",
+                render: function(data, type, row, meta) {
+                    return "<div style='text-align: center;'>" + data + "</div>";
+                }
+            },
+            {
+                "data": "deskripsi"
+            },
+            {
+                "data": "tagihan",
+                render: function(data) {
+                    return "<div style='text-align: center;'>Rp. " + number_format(data) + "</div>";
+                }
+            },
+            {
+                "data": "bulan",
+                render: function(data) {
+                    return "<div style='text-align: center;'>" + data + "</div>";
+                }
+            },
+            {
+                "data": "tahun",
+                render: function(data) {
+                    return "<div style='text-align: center;'>" + data + "</div>";
+                }
+            },
+            {
+                "data": null,
+                render: function(data, type, row, meta) {
+                    if (data.aksi == "TAMBAH") {
+                        return "<div style='text-align: center; padding-top: 20px; padding-bottom: 10px;'><span style='background-color: green; padding: 10px; color: white; text-transform: uppercase' class='badge badge-success'> Tambah </span></div>";
+                    } else if (data.aksi == "DELETE") {
+                        return "<div style='text-align: center; padding-top: 20px; padding-bottom: 10px;'><span style='background-color: red; padding: 10px; color: white; text-transform: uppercase' class='badge badge-success'> Delete </span></div>";
+                    }
+                }
+            }],
+            "language": {
+                "zeroRecords": "No matching records found",
+                "infoEmpty": "No records available"
+            }
+        });
+    })
+
+    function number_format(number) {
+        return new Intl.NumberFormat('id-ID').format(number);
+    }
+</script>
+@endpush

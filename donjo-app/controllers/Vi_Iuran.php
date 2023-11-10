@@ -14,10 +14,8 @@ class Vi_Iuran extends Admin_Controller {
     }
 
     public function index()
-    {
-        $data['query'] = $this->vi_iuran_model->getData()->result();
-        
-        return view("admin.iuran.vi_iuran.index", $data);
+    {   
+        return view("admin.iuran.vi_iuran.index");
     }
 
     public function form()
@@ -126,9 +124,17 @@ class Vi_Iuran extends Admin_Controller {
 
     public function history()
     {
-        $data['query'] = $this->history_iuran_model->getData()->result();
+        return view("admin.iuran.vi_iuran.history");
+    }
 
-        return view("admin.iuran.vi_iuran.history", $data);
+    public function dataTableHistory()
+    {
+        $postData = $this->input->get();
+        $data['query'] = $this->history_iuran_model->getData($postData);
+        $data['recordsTotal'] = $this->history_iuran_model->count_all();
+        $data['recordsFiltered'] = $this->history_iuran_model->count_filtered($postData);
+
+        echo json_encode($data);
     }
 
     public function upload_excel()
@@ -194,6 +200,16 @@ class Vi_Iuran extends Admin_Controller {
         } catch (Exception $e) {
             die("Error Loading File : " . $e->getMessage());
         }
+    }
+
+    public function dataTable()
+    {
+        $postData = $this->input->get();
+        $data['query'] = $this->vi_iuran_model->getData($postData);
+        $data['recordsTotal'] = $this->vi_iuran_model->count_all();
+        $data['recordsFiltered'] = $this->vi_iuran_model->count_filtered($postData);
+
+        echo json_encode($data);
     }
 }
 

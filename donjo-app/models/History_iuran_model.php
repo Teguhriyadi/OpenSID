@@ -17,13 +17,41 @@ class History_iuran_model extends MY_Model
         'execs'
     ];
 
-    public function getData()
+    public function getData($postData)
+    {
+        $this->get_datatable($postData);
+        
+        if ($postData["length"] != -1) {
+            $this->db->limit($postData["length"], $postData["start"]);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function count_filtered($postData)
+    {
+        $this->get_datatable($postData);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all()
+    {
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    private function get_datatable($postData)
     {
         $this->db->select("*");
         $this->db->from($this->table);
+        
+        if (!empty($postData["search"]["value"])) {
+            $this->db->like("id", $postData["search"]["value"]);
+        }
+        
         $this->db->order_by('id', "DESC");
-
-        return $this->db->get();
     }
 
     public function create($data)

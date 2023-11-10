@@ -21,17 +21,49 @@ class Vi_Iuran_model extends MY_Model
         'execs'
     ];
 
-    public function getData()
+    public function getData($postData)
+    {
+        $this->get_datatable($postData);
+
+        if ($postData["length"] != -1) {
+            $this->db->limit($postData["length"], $postData["start"]);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function count_filtered($postData)
+    {
+        $this->get_datatable($postData);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all()
+    {
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    private function get_datatable($postData)
     {
         $this->db->select("vi_iuran.id AS id_iuran, vi_iuran.*, tweb_penduduk.*, tweb_wil_clusterdesa.*, vi_iuranproduk.nama_produk AS namaproduk");
         $this->db->from($this->table);
         $this->db->join("tweb_penduduk", "tweb_penduduk.nik = vi_iuran.nik");
         $this->db->join("tweb_wil_clusterdesa", "tweb_wil_clusterdesa.id = tweb_penduduk.id_cluster");
         $this->db->join("vi_iuranproduk", "vi_iuranproduk.id = vi_iuran.produk");
+        
+        if (!empty($postData["search"]["value"])) {
+            $this->db->like("vi_iuran.id", $postData["search"]["value"]);
+            $this->db->or_like("tweb_penduduk.nama", $postData["search"]["value"]);
+            $this->db->or_like("tweb_penduduk.nik", $postData["search"]["value"]);
+            $this->db->or_like("tweb_wil_clusterdesa.dusun", $postData["search"]["value"]);
+            $this->db->or_like("vi_iuran.tagihan", $postData["search"]["value"]);
+        }
+        
         $this->db->order_by('vi_iuran.id', "DESC");
-
-        return $this->db->get();
-    }
+    } 
 
     public function create($data)
 	{

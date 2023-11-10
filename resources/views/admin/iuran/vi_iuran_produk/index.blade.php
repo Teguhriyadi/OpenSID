@@ -10,6 +10,10 @@
 <li class="active">Data Iuran</li>
 @endsection
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('custom/css/style.min.css') }}">
+@endpush
+
 @section('content')
 
 <div class="row">
@@ -28,7 +32,7 @@
                 </div>
                 <br><br>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table id="example" class="table table-bordered table-striped table-hover">
                         <thead class="bg-gray disabled color-palette">
                             <tr>
                                 <th class="text-center" style="width: 50px;">No.</th>
@@ -100,3 +104,15 @@
 <!-- End -->
 
 @endsection
+
+@push('scripts')
+
+<script src="{{ asset('custom/javascript/dataTables.min.js') }}"></script>
+<script src="{{ asset('custom/javascript/bootstrap.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#example").DataTable();
+    })
+</script>
+
+@endpush

@@ -9,20 +9,19 @@ class Apps extends Admin_Controller {
         parent::__construct();
 
         $this->load->model('apps_menu_model');
-        $this->modul_ini     = 'apps-menu';
-        $this->sub_modul_ini = 'pengaturan-peta';
+        $this->load->model("vi_iuran_produk_model");
     }
 
     public function index()
-    {
-        $data['query'] = $this->apps_menu_model->getData()->result();
-        
-        return view("admin.apps.menu.index", $data);
+    {   
+        return view("admin.apps.menu.index");
     }
 
     public function form()
     {
-        return view("admin.apps.menu.form");
+        $data['query'] = $this->vi_iuran_produk_model->getData()->result();
+
+        return view("admin.apps.menu.form", $data);
     }
 
     public function insert()
@@ -52,7 +51,8 @@ class Apps extends Admin_Controller {
     public function edit($id)
     {
         $data['query'] = $this->apps_menu_model->getEditData($id)->row();
-
+        $data['vi_iuran_produk'] = $this->vi_iuran_produk_model->getData()->result();
+        
         return view("admin.apps.menu.update", $data);
     }
 
@@ -85,6 +85,16 @@ class Apps extends Admin_Controller {
         $this->apps_menu_model->delete($id);
 
         redirect("/apps");
+    }
+
+    public function datatable()
+    {
+        $postData = $this->input->get();
+        $data['query'] = $this->apps_menu_model->getData($postData);
+        $data['recordsTotal'] = $this->apps_menu_model->count_all();
+        $data['recordsFiltered'] = $this->apps_menu_model->count_filtered($postData);
+
+        echo json_encode($data);
     }
 }
 
