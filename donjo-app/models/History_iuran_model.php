@@ -19,7 +19,11 @@ class History_iuran_model extends MY_Model
 
     public function getData()
     {
-        return $this->db->get($this->table);
+        $this->db->select("*");
+        $this->db->from($this->table);
+        $this->db->order_by('id', "DESC");
+
+        return $this->db->get();
     }
 
     public function create($data)

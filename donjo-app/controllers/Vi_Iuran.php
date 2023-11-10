@@ -10,8 +10,7 @@ class Vi_Iuran extends Admin_Controller {
 
         $this->load->model('vi_iuran_model');
         $this->load->model('history_iuran_model');
-        $this->modul_ini     = 'apps-menu';
-        $this->sub_modul_ini = 'pengaturan-peta';
+        $this->load->library('session');
     }
 
     public function index()
@@ -103,6 +102,8 @@ class Vi_Iuran extends Admin_Controller {
 
     public function destroy($id)
     {
+        $nama_sesi = $this->session->userdata("nama");
+
         $cek_iuran = $this->vi_iuran_model->getEditData($id)->row(); 
 
         $this->vi_iuran_model->delete($id);
@@ -115,7 +116,7 @@ class Vi_Iuran extends Admin_Controller {
             'tahun' => $cek_iuran->p_tahun,
             'tagihan' => $cek_iuran->tagihan,
             'tanggal_aksi' => date("Y-m-d H:i:s"),
-            'execs' => 1,
+            'execs' => $nama_sesi,
         );
 
         $this->history_iuran_model->create($history_iuran);
@@ -123,9 +124,17 @@ class Vi_Iuran extends Admin_Controller {
         redirect("/vi_iuran");
     }
 
+    public function history()
+    {
+        $data['query'] = $this->history_iuran_model->getData()->result();
+
+        return view("admin.iuran.vi_iuran.history", $data);
+    }
+
     public function upload_excel()
     {
         try {
+            $nama_sesi = $this->session->userdata("nama");
             $input = $_FILES["upload"]["tmp_name"];
             $spreadsheet = PHPExcel_IOFactory::load($input);
             $worksheet = $spreadsheet->getSheet(0);
@@ -169,7 +178,7 @@ class Vi_Iuran extends Admin_Controller {
                             'tahun' => $tahun,
                             'tagihan' => $row[3],
                             'tanggal_aksi' => $now,
-                            'execs' => 1,
+                            'execs' => $nama_sesi,
                         );
     
                         $this->vi_iuran_model->create($data_to_insert);

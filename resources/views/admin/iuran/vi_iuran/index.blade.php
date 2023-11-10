@@ -26,6 +26,11 @@
                         <i class="fa fa-download"></i> Import Excel
                     </button>
                 </div>
+                <div class="btn-group btn-group-vertical">
+                    <a href="<?= site_url('vi_iuran/history') ?>" class="btn btn-social btn-flat btn-primary btn-sm">
+                        <i class='fa fa-book'></i> History Iuran
+                    </a>
+                </div>
                 <br><br>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
