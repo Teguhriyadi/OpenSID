@@ -9,6 +9,7 @@ class Vi_Iuran extends Admin_Controller {
         parent::__construct();
 
         $this->load->model('vi_iuran_model');
+        $this->load->model('history_iuran_model');
         $this->modul_ini     = 'apps-menu';
         $this->sub_modul_ini = 'pengaturan-peta';
     }
@@ -31,6 +32,7 @@ class Vi_Iuran extends Admin_Controller {
     {
         $data = array(
             'tanggal' => $this->input->post('tanggal'),
+            'tgl_bayar' => $this->input->post('tanggal'),
             'agenid' => $this->input->post('agenid'),
             'desaid' => $this->input->post('desaid'),
             'nik' => $this->input->post('nik'),
@@ -44,7 +46,19 @@ class Vi_Iuran extends Admin_Controller {
             'execs' => $this->input->post('execs')
         );
 
+        $history = array(
+            'kategori_menu' => 'vi-iuran',
+            'deskripsi' => 'Melakukan Aksi Tambah',
+            'aksi' => "TAMBAH",
+            'bulan' => $data["p_bulan"],
+            'tahun' => $data['p_tahun'],
+            'tagihan' => $data["tagihan"],
+            'tanggal_aksi' => date("Y-m-d H:i:s"),
+            'execs' => 1,
+        );
+
         $this->vi_iuran_model->create($data);
+        $this->history_iuran_model->create($history);
 
         redirect("/vi_iuran");
     }
@@ -73,14 +87,38 @@ class Vi_Iuran extends Admin_Controller {
             'execs' => $this->input->post('execs')
         );
 
+        $history = array(
+            'kategori_menu' => 'vi-iuran',
+            'deskripsi' => 'Melakukan Aksi Update',
+            'aksi' => "UPDATE",
+            'exec' => 1,
+            'tanggal_aksi' => date("Y-m-d H:i:s")
+        );
+
         $this->vi_iuran_model->update($id, $data);
+        $this->history->create($history);
 
         redirect("/vi_iuran");
     }
 
     public function destroy($id)
     {
+        $cek_iuran = $this->vi_iuran_model->getEditData($id)->row(); 
+
         $this->vi_iuran_model->delete($id);
+
+        $history_iuran = array(
+            'kategori_menu' => 'vi-iuran',
+            'deskripsi' => 'Melakukan Aksi Delete',
+            'aksi' => "DELETE",
+            'bulan' => $cek_iuran->p_bulan,
+            'tahun' => $cek_iuran->p_tahun,
+            'tagihan' => $cek_iuran->tagihan,
+            'tanggal_aksi' => date("Y-m-d H:i:s"),
+            'execs' => 1,
+        );
+
+        $this->history_iuran_model->create($history_iuran);
 
         redirect("/vi_iuran");
     }
@@ -96,6 +134,8 @@ class Vi_Iuran extends Admin_Controller {
             $this->load->model("vi_iuran_model");
 
             $header = false;
+
+            $now = date("Y-m-d H:i:s");
 
             foreach ($data as $row) {
                 if ($header) {
@@ -120,8 +160,20 @@ class Vi_Iuran extends Admin_Controller {
                             'produk' => $produk,
                             "tgl_bayar" => date("Y-m-d H:i:s")
                         );
+
+                        $history_iuran = array(
+                            'kategori_menu' => 'vi-iuran',
+                            'deskripsi' => 'Melakukan Aksi Tambah',
+                            'aksi' => "TAMBAH",
+                            'bulan' => $bulan,
+                            'tahun' => $tahun,
+                            'tagihan' => $row[3],
+                            'tanggal_aksi' => $now,
+                            'execs' => 1,
+                        );
     
                         $this->vi_iuran_model->create($data_to_insert);
+                        $this->history_iuran_model->create($history_iuran);
                     }
 
                 } else {

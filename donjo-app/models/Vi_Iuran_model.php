@@ -23,7 +23,7 @@ class Vi_Iuran_model extends MY_Model
 
     public function getData()
     {
-        $this->db->select("vi_iuran.*, tweb_penduduk.*, tweb_wil_clusterdesa.*, vi_iuranproduk.nama_produk AS namaproduk");
+        $this->db->select("vi_iuran.id AS id_iuran, vi_iuran.*, tweb_penduduk.*, tweb_wil_clusterdesa.*, vi_iuranproduk.nama_produk AS namaproduk");
         $this->db->from($this->table);
         $this->db->join("tweb_penduduk", "tweb_penduduk.nik = vi_iuran.nik");
         $this->db->join("tweb_wil_clusterdesa", "tweb_wil_clusterdesa.id = tweb_penduduk.id_cluster");

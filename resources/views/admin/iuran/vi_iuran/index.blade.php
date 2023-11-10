@@ -51,10 +51,10 @@
                             <tr>
                                 <td class="text-center"><?= $nomer++ ?>.</td>
                                 <td class="text-center">
-                                    <a href="<?= site_url('vi_iuran/edit/'.$item->id) ?>" class="btn btn-social btn-flat btn-warning btn-sm">
+                                    <a href="<?= site_url('vi_iuran/edit/'.$item->id_iuran) ?>" class="btn btn-social btn-flat btn-warning btn-sm">
                                         <i class='fa fa-edit'></i> Edit
                                     </a>
-                                    <a href="<?= site_url('vi_iuran/destroy/'.$item->id) ?>" class="btn btn-social btn-flat btn-danger btn-sm">
+                                    <a href="<?= site_url('vi_iuran/destroy/'.$item->id_iuran) ?>" class="btn btn-social btn-flat btn-danger btn-sm">
                                         <i class='fa fa-trash'></i> Hapus
                                     </a>
                                 </td>

@@ -31,7 +31,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="tanggal"> Tanggal </label>
-                            <input type="date" class="form-control" name="tanggal" id="tanggal">
+                            <input type="datetime-local" class="form-control" name="tanggal" id="tanggal">
                         </div>
                         <div class="row">
                             <div class="col-md-6">
