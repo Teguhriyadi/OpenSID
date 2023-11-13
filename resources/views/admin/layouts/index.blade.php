@@ -1,164 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>
-        {{ $setting->admin_title . ' ' . ucwords($setting->sebutan_desa . ' ' . ($desa['nama_desa'] ?? '')) . get_dynamic_title_page_from_path() }}
-    </title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" href="{{ favico_desa() }}" />
-    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{ base_url('rss.xml') }}" />
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/font-awesome.min.css') }}" />
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/ionicons.min.css') }}" />
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/select2.min.css') }}" />
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}" />
-    <!-- AdminLTE Skins. -->
-    <link rel="stylesheet" href="{{ asset('css/skins/_all-skins.min.css') }}" />
-    <!-- Sweetalert CSS-->
-    <link rel="stylesheet" href="{{ asset('js/sweetalert2/sweetalert2.min.css') }}">
-    <!-- Modifikasi -->
-    <link rel="stylesheet" href="{{ asset('css/admin-style.css') }}" />
-    @stack('css')
+    <title>Admin Panel</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo, earum?" />
+    <meta name="keywords" content="admin panel, admin, lorem" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href="/" />
+    <link rel="shortcut icon" href="<?= base_url() ?>themes/media/logos/favicon.ico" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+
+    @include("admin.layouts.partials.css.style_css")
 </head>
 
-<body id="sidebar_collapse" class="{{ $setting->warna_tema_admin }} fixed sidebar-mini">
-    <div class="wrapper">
+<body id="kt_app_body" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on"
+    data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on" data-kt-app-header-fixed="true"
+    data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
+    data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true"
+    data-kt-app-sidebar-push-footer="true" class="app-default">
+    <!--begin::Theme mode setup on page load-->
+    <script>
+        let defaultThemeMode = "light";
+        let themeMode;
+        if (document.documentElement) {
+            if (
+                document.documentElement.hasAttribute("data-bs-theme-mode")
+            ) {
+                themeMode =
+                    document.documentElement.getAttribute(
+                        "data-bs-theme-mode"
+                    );
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) {
+                    themeMode = localStorage.getItem("data-bs-theme");
+                } else {
+                    themeMode = defaultThemeMode;
+                }
+            }
+            if (themeMode === "system") {
+                themeMode = window.matchMedia(
+                        "(prefers-color-scheme: dark)"
+                    ).matches ?
+                    "dark" :
+                    "light";
+            }
+            document.documentElement.setAttribute(
+                "data-bs-theme",
+                themeMode
+            );
+        }
+    </script>
+    <!--end::Theme mode setup on page load-->
 
-        @include('admin.layouts.partials.header')
-
-        @include('admin.layouts.partials.sidebar')
-
-        <div class="content-wrapper">
-            <section class="content-header">
-                @yield('title')
-
-                @include('admin.layouts.components.breadcrumb')
-
-            </section>
-
-            <section id="maincontent" class="content">
-
-                @include('admin.layouts.partials.info')
-
-                @yield('content')
-
-            </section>
+    <div class="page-loader flex-column">
+        <img alt="Logo" class="h-100px" src="<?= base_url() ?>themes/media/logos/logo-single-dark.png">
+        <div class="d-flex align-items-center mt-n5">
+            <span class="spinner-border text-primary" role="status"></span>
+            <span class="text-muted fs-6 fw-semibold ms-5">Memuat...</span>
         </div>
+    </div>
 
-        @include('admin.pengaturan.pengaturan_modal')
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <!--begin::Header-->
+            @include("admin.layouts.partials.header.header")
+            <!--end::Header-->
 
-        @if ($notif['pengumuman'])
-            @include('admin.layouts.components.pengumuman', $notif['pengumuman'])
-        @endif
-
-        @include('admin.layouts.partials.footer')
-
-        @include('admin.layouts.partials.control_sidebar')
-
-        <!-- Untuk menampilkan modal bootstrap umum -->
-        <div class="modal fade" id="modalBox" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel"></h4>
-                    </div>
-                    <div class="fetched-data"></div>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <!--begin::Sidebar-->
+                <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true"
+                    data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}"
+                    data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start"
+                    data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+                    <!-- logo -->
+                    @include("admin.layouts.partials.sidebar.sidebar-header")
+                    <!-- menu -->
+                    @include("admin.layouts.partials.sidebar.sidebar")
                 </div>
+                <!--end::Sidebar-->
+
+                <!--begin::Main-->
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                    <!--begin::Content-->
+                    <div class="d-flex flex-column flex-column-fluid">
+                        
+                        @include("admin.layouts.breadcrumb")
+
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            <div id="kt_app_content_container" class="app-container container-fluid">
+                                @yield('content')
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Content-->
+
+                    <!--begin::Footer-->
+                    <div id="kt_app_footer" class="app-footer">
+                        <div
+                            class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
+                            <div class="text-dark order-2 order-md-1">
+                                <span class="text-muted fw-semibold me-1">2023&copy;</span>
+                                <a href="#" target="_blank" class="text-gray-800 text-hover-primary">PT
+                                    Alphatech</a>
+                            </div>
+                            <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+                                <li class="menu-item">
+                                    <a href="#" target="_blank" class="menu-link px-2">License</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" target="_blank" class="menu-link px-2">More Theme</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" target="_blank" class="menu-link px-2">Documentation</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="#" target="_blank" class="menu-link px-2">Support</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--end::Footer-->
+                </div>
+                <!--end:::Main-->
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        var SITE_URL = "{{ site_url() }}";
-    </script>
-    <!-- jQuery 3 -->
-    <script src="{{ asset('bootstrap/js/jquery.min.js') }}"></script>
-    @if (config_item('csrf_protection'))
-        <!-- CSRF Token -->
-        <script type="text/javascript">
-            var csrfParam = "{{ $token }}";
-            var getCsrfToken = () => document.cookie.match(new RegExp(csrfParam + '=(\\w+)'))[1];
-        </script>
-        <script src="{{ asset('js/anti-csrf.js') }}"></script>
-    @endif
 
-    <!-- Bootstrap 3.3.7 -->
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-    <!-- Select2 -->
-    <script src="{{ asset('bootstrap/js/select2.full.min.js') }}"></script>
-    <!-- Slimscroll -->
-    <script src="{{ asset('bootstrap/js/jquery.slimscroll.min.js') }}"></script>
-    <!-- jquery validasi -->
-    <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
-    <!-- FastClick -->
-    <script src="{{ asset('bootstrap/js/fastclick.js') }}"></script>
-    <!-- AdminLTE -->
-    <script src="{{ asset('js/adminlte.min.js') }}"></script>
-    <!-- Sweetalert JS -->
-    <script src="{{ asset('js/sweetalert2/sweetalert2.all.min.js') }}"></script>
-    <!-- jquery validasi -->
-    <script src="{{ asset('js/script.js') }}"></script>
-    <script src="{{ asset('js/admin.js') }}"></script>
-    <!-- Modifikasi -->
-    @if (config_item('demo_mode'))
-        <!-- Website Demo -->
-        <script src="{{ asset('js/demo.js') }}"></script>
-    @endif
-    @if (!setting('inspect_element'))
-        <script src="{{ asset('js/disabled.min.js') }}"></script>
-    @endif
-    @stack('scripts')
-    <script>
-        $(document).ready(function() {
-            $('ul.sidebar-menu').on('expanded.tree', function(e) {
-                e.stopImmediatePropagation();
-                setTimeout(scrollTampil($('li.treeview.menu-open')[0]), 500);
-            });
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <i class="fa-light fa-arrow-up text-white"></i>
+    </div>
+    <!--end::Scrolltop-->
 
-            function scrollTampil(elem) {
-                elem.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    </script>
-
-    @if ($perbaharui_langganan != null && !config_item('demo_mode'))
-        <!-- cek status langganan -->
-        <script type="text/javascript">
-            var controller = '{{ $controller }}';
-            $.ajax({
-                    url: `<?= config_item('server_layanan') ?>/api/v1/pelanggan/pemesanan`,
-                    headers: {
-                        "Authorization": `Bearer {{ $setting->layanan_opendesa_token }}`,
-                        "X-Requested-With": `XMLHttpRequest`,
-                    },
-                    type: 'Post',
-                })
-                .done(function(response) {
-                    let data = {
-                        body: response
-                    }
-                    $.ajax({
-                        url: `${SITE_URL}pelanggan/pemesanan`,
-                        type: 'Post',
-                        dataType: 'json',
-                        data: data,
-                    }).done(function() {
-                        if (controller == 'pelanggan') {
-                            location.reload();
-                        }
-                    });
-                })
-        </script>
-    @endif
+    @include("admin.layouts.partials.javascript.style_javascript")
 </body>
 
 </html>

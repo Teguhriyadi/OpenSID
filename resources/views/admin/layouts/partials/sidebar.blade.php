@@ -6,103 +6,103 @@
             </div>
             <div class="pull-left info">
                 <strong><?= ucwords(setting('sebutan_desa') . ' ' . $desa['nama_desa']) ?></strong>
-            </br>
-            
-            <?php
-            $seb_kec = setting('sebutan_kecamatan');
-            $nam_kec = $desa['nama_kecamatan'];
-            $seb_kab = setting('sebutan_kabupaten');
-            $nam_kab = $desa['nama_kabupaten'];
-            ?>
-            
-            <?php if (strlen($nam_kec) <= 12 && strlen($nam_kab) <= 12): ?>
-            <?= ucwords($seb_kec . ' ' . $nam_kec) ?>
-        </br>
-        <?= ucwords($seb_kab . ' ' . $nam_kab) ?>
-        <?php else: ?>
-        <?= ucwords(substr($seb_kec, 0, 3) . '. ' . $nam_kec) ?>
-    </br>
-    <?= ucwords(substr($seb_kab, 0, 3) . '. ' . $nam_kab) ?>
-    <?php endif ?>
-    
-</div>
-</div>
+                </br>
 
-<div class="sidebar-form">
-    <div class="input-group mb-0">
-        <input type="text" id="cari-menu" class="form-control" placeholder="Pencarian...">
-        <span class="input-group-btn">
-            <button type="button" name="search" id="search-btn" class="btn btn-sm"><i
-                class="fa fa-search"></i></button>
-            </span>
+                <?php
+                $seb_kec = setting('sebutan_kecamatan');
+                $nam_kec = $desa['nama_kecamatan'];
+                $seb_kab = setting('sebutan_kabupaten');
+                $nam_kab = $desa['nama_kabupaten'];
+                ?>
+
+                <?php if (strlen($nam_kec) <= 12 && strlen($nam_kab) <= 12): ?>
+                <?= ucwords($seb_kec . ' ' . $nam_kec) ?>
+                </br>
+                <?= ucwords($seb_kab . ' ' . $nam_kab) ?>
+                <?php else: ?>
+                <?= ucwords(substr($seb_kec, 0, 3) . '. ' . $nam_kec) ?>
+                </br>
+                <?= ucwords(substr($seb_kab, 0, 3) . '. ' . $nam_kab) ?>
+                <?php endif ?>
+
+            </div>
         </div>
-    </div>
-    
-    <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MENU UTAMA</li>
-        
-        <li>
-            <a href="<?php echo base_url() ?>apps">
-                <i class="fa fa-home"></i> Apps Menu
-            </a>
-        </li>
-        
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-money"></i>
-                <span>Master Iuran</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
+
+        <div class="sidebar-form">
+            <div class="input-group mb-0">
+                <input type="text" id="cari-menu" class="form-control" placeholder="Pencarian...">
+                <span class="input-group-btn">
+                    <button type="button" name="search" id="search-btn" class="btn btn-sm"><i
+                            class="fa fa-search"></i></button>
                 </span>
-            </a>
-            <ul class="treeview-menu">
-                <li>
-                    <a href="<?= site_url('vi_iuran_produk') ?>">
-                        <i class="fa fa-circle-o"></i> Data Iuran Produk
-                    </a>
-                </li>
-                <li>
-                    <a href="<?= site_url('vi_iuran') ?>">
-                        <i class="fa fa-circle-o"></i> Data Iuran
-                    </a>
-                </li>
-              </ul>
-        </li>                        
-        
-        <?php foreach ($modul as $mod): ?>
-        <?php if (count($mod['submodul']) == 0): ?>
-        <li class="<?= jecho($modul_ini, $mod['slug'], 'active') ?>">
-            <a href="<?= route($mod['url']) ?>">
-                <i
-                class="fa <?= $mod['ikon'] ?> <?= jecho($modul_ini, $mod['slug'], 'text-aqua') ?>"></i><span><?= $mod['modul'] ?></span>
-                <span class="pull-right-container"></span>
-            </a>
-        </li>
-        <?php else: ?>
-        <li class="treeview <?= jecho($modul_ini, $mod['slug'], 'active') ?>">
-            <a href="<?= route($mod['url']) ?>">
-                <i
-                class="fa <?= $mod['ikon'] ?> <?= jecho($modul_ini, $mod['slug'], 'text-aqua') ?>"></i><span><?= $mod['modul'] ?></span>
-                <span class="pull-right-container"><i class='fa fa-angle-left pull-right'></i></span>
-            </a>
-            <ul class="treeview-menu <?= jecho($modul_ini, $mod['slug'], 'active') ?>">
-                
-                <?php foreach ($mod['submodul'] as $submod): ?>
-                <li class="<?= jecho($sub_modul_ini, $submod['slug'], 'active') ?>">
-                    <a href="<?= route($submod['url']) ?>">
-                        <i
-                        class="fa <?= $submod['ikon'] != null ? $submod['ikon'] : 'fa-circle-o' ?> <?= jecho($sub_modul_ini, $submod['slug'], 'text-red') ?>"></i>
-                        <?= $submod['modul'] ?>
-                    </a>
-                </li>
-                <?php endforeach ?>
-                
-            </ul>
-        </li>
-        <?php endif ?>
-        <?php endforeach ?>
-        
-    </ul>
-    
-</section>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MENU UTAMA</li>
+
+            <li>
+                <a href="<?php echo base_url(); ?>apps">
+                    <i class="fa fa-home"></i> Apps Menu
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-money"></i>
+                    <span>Master Iuran</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="<?= site_url('vi_iuran_produk') ?>">
+                            <i class="fa fa-circle-o"></i> Data Iuran Produk
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= site_url('vi_iuran') ?>">
+                            <i class="fa fa-circle-o"></i> Data Iuran
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <?php foreach ($modul as $mod): ?>
+            <?php if (count($mod['submodul']) == 0): ?>
+            <li class="<?= jecho($modul_ini, $mod['slug'], 'active') ?>">
+                <a href="<?= route($mod['url']) ?>">
+                    <i
+                        class="fa <?= $mod['ikon'] ?> <?= jecho($modul_ini, $mod['slug'], 'text-aqua') ?>"></i><span><?= $mod['modul'] ?></span>
+                    <span class="pull-right-container"></span>
+                </a>
+            </li>
+            <?php else: ?>
+            <li class="treeview <?= jecho($modul_ini, $mod['slug'], 'active') ?>">
+                <a href="<?= route($mod['url']) ?>">
+                    <i
+                        class="fa <?= $mod['ikon'] ?> <?= jecho($modul_ini, $mod['slug'], 'text-aqua') ?>"></i><span><?= $mod['modul'] ?></span>
+                    <span class="pull-right-container"><i class='fa fa-angle-left pull-right'></i></span>
+                </a>
+                <ul class="treeview-menu <?= jecho($modul_ini, $mod['slug'], 'active') ?>">
+
+                    <?php foreach ($mod['submodul'] as $submod): ?>
+                    <li class="<?= jecho($sub_modul_ini, $submod['slug'], 'active') ?>">
+                        <a href="<?= route($submod['url']) ?>">
+                            <i
+                                class="fa <?= $submod['ikon'] != null ? $submod['ikon'] : 'fa-circle-o' ?> <?= jecho($sub_modul_ini, $submod['slug'], 'text-red') ?>"></i>
+                            <?= $submod['modul'] ?>
+                        </a>
+                    </li>
+                    <?php endforeach ?>
+
+                </ul>
+            </li>
+            <?php endif ?>
+            <?php endforeach ?>
+
+        </ul>
+
+    </section>
 </aside>
