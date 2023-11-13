@@ -185,4 +185,15 @@ class Config extends BaseModel
         hapus_cache('status_langganan');
         hapus_cache('_cache_modul');
     }
+
+    public function getDataDesa()
+    {
+        $this->db->from($this->table);
+        $this->db->order_by("id", "ASC");
+        $this->db->order_by("nama_desa", "ASC");
+        
+        $query = $this->db->get();
+
+        return $query->result();
+    }
 }

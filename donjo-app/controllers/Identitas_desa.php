@@ -52,6 +52,8 @@ class Identitas_desa extends Admin_Controller
         $this->modul_ini     = 'info-desa';
         $this->sub_modul_ini = 'identitas-desa';
 
+        $this->load->model("Config_model");
+
         if (Schema::hasTable('ref_jabatan')) {
             $this->cek_kades = Pamong::kepalaDesa()->exists();
         }
@@ -85,23 +87,20 @@ class Identitas_desa extends Admin_Controller
     {
         $this->redirect_hak_akses('u');
 
-        $main = null;
-
-        if (Schema::hasTable('ref_jabatan')) {
-            $main = Config::first();
-        }
-
         $nomor_operator = Schema::hasColumn('config', 'nomor_operator');
 
-        if ($main) {
-            $form_action = route('identitas_desa.update', $main->id);
-        } else {
-            $form_action = route('identitas_desa.insert');
-        }
+        $data["query"] = $this->Config_model->getDataDesa();
 
-        $cek_kades = $this->cek_kades;
+        return view('admin.identitas_desa.form', $data, compact('nomor_operator'));
+    }
 
-        return view('admin.identitas_desa.form', compact('main', 'form_action', 'cek_kades', 'nomor_operator'));
+    public function pilih($id_desa)
+    {
+        $selected = $this->Config_model->selectedDesa($id_desa);
+
+        $this->output->set_content_type('application/json');
+        
+        echo json_encode($selected);
     }
 
     /**

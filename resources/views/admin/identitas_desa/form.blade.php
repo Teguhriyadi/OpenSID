@@ -39,12 +39,12 @@
 @endsection
 
 @section('content')
-    <form action="#" id="validasi" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row gap-5 gap-xl-8">
+    <form action="" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row gap-5 gap-xl-8">
         <div class="d-flex flex-column flex-lg-row-auto w-lg-250px w-xl-350px gap-5 gap-xl-8">
             <div class="card shadow-sm border-0 card-flush">
                 <div class="card-header border-0 py-7">
                     <div class="card-title">
-                        <h2>Logo Desa</h2>
+                        <h2>Logo {{ ucwords($setting->sebutan_desa) }}</h2>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -88,7 +88,7 @@
             <div class="card shadow-sm border-0 card-flush">
                 <div class="card-header border-0 py-7">
                     <div class="card-title">
-                        <h2>Kantor Desa</h2>
+                        <h2>Kantor {{ ucwords($setting->sebutan_desa) }}</h2>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -133,23 +133,26 @@
                             <div class="position-absolute top-0 start-0 rounded h-100 bg-primary w-4px">
                             </div>
                             <div class="fw-semibold ms-5">
-                                <span class="fs-5 fw-bold text-gray-900 text-hover-primary">Desa</span>
+                                <span class="fs-5 fw-bold text-gray-900 text-hover-primary">{{ ucwords($setting->sebutan_desa) }}</span>
                                 <div class="fs-7 text-gray-700 fw-semibold">
-                                    Informasi tentang desa
+                                    Informasi tentang {{ ucwords($setting->sebutan_desa) }}
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex flex-wrap gap-5 mb-5">
                             <div class="fv-row w-100 fv-plugins-icon-container flex-md-root">
                                 <label class="required form-label fs-5 fw-bold">
-                                    Desa
+                                    {{ ucwords($setting->sebutan_desa) }}
                                 </label>
-                                <select class="form-select mb-2" name="desa" data-control="select2"
-                                    data-placeholder="Pilih desa">
-                                    <option></option>
-                                    <option value="1" selected>Desa 1</option>
-                                    <option value="2">Desa 2</option>
-                                </select>
+                                @if (cek_koneksi_internet())
+                                    <select class="form-select mb-2" name="desa" data-control="select2" data-placeholder="Pilih desa" id="pilih_desa">
+                                        <?php foreach ($query as $q) : ?>
+                                        <option value="<?= $q->id ?>">
+                                            <?= $q->nama_desa ?> - <?= $q->nama_kecamatan ?> - <?= $q->nama_kabupaten ?> - <?= $q->nama_propinsi ?>
+                                        </option>
+                                        <?php endforeach ?>
+                                    </select>
+                                @endif
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -159,8 +162,7 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Kode Desa
                                 </label>
-                                <input type="text" name="kode_desa" class="form-control mb-2" placeholder="Kode desa"
-                                    value="1109">
+                                <input type="text" name="kode_desa" class="form-control mb-2" id="kode_desa" placeholder="Kode desa" disabled>
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -423,4 +425,27 @@
             </div>
         </div>
     </form>
+@endsection
+
+@section("javascript")
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#pilih_desa").on("change", function() {
+            let pilih_desa = $("#pilih_desa").val();
+
+            $.ajax({
+                type: "GET",
+                url: "<?= site_url('identitas_desa/pilih/') ?>" + pilih_desa,
+                success: function(data) {
+                    $("#kode_desa").val(data.kode_pos);
+                },
+                error: function(error) {
+                    console.log("Error : " + error);
+                }
+            })
+        });
+    });
+</script>
+
 @endsection

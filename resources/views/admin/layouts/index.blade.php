@@ -140,6 +140,8 @@
     <!--end::Scrolltop-->
 
     @include("admin.layouts.partials.javascript.style_javascript")
+
+    @yield("javascript")
 </body>
 
 </html>
