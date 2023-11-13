@@ -63,40 +63,41 @@ class Dokumen_sekretariat extends Admin_Controller
     // Produk Hukum Desa
     public function peraturan_desa($kat = 2, $p = 1, $o = 0)
     {
-        $data['p']   = $p;
-        $data['o']   = $o;
-        $data['kat'] = $kat;
+        // $data['p']   = $p;
+        // $data['o']   = $o;
+        // $data['kat'] = $kat;
 
-        foreach ($this->list_session as $list) {
-            $data[$list] = $this->session->{$list} ?: '';
-        }
+        // foreach ($this->list_session as $list) {
+        //     $data[$list] = $this->session->{$list} ?: '';
+        // }
 
-        $data['func']              = "index/{$kat}";
-        $data['set_page']          = $this->_set_page;
-        $data['per_page']          = $this->session->per_page;
-        $data['kat_nama']          = $this->web_dokumen_model->kat_nama($kat);
-        $data['paging']            = $this->web_dokumen_model->paging($kat, $p, $o);
-        $data['main']              = $this->web_dokumen_model->list_data($kat, $o, $data['paging']->offset, $data['paging']->per_page);
-        $data['list_tahun']        = $this->web_dokumen_model->list_tahun($kat);
-        $data['keyword']           = $this->web_dokumen_model->autocomplete();
-        $data['submenu']           = $this->referensi_model->list_data('ref_dokumen');
-        $data['jenis_peraturan']   = $this->referensi_model->jenis_peraturan_desa();
-        $data['sub_kategori']      = $_SESSION['sub_kategori'];
-        $_SESSION['menu_kategori'] = true;
+        // $data['func']              = "index/{$kat}";
+        // $data['set_page']          = $this->_set_page;
+        // $data['per_page']          = $this->session->per_page;
+        // $data['kat_nama']          = $this->web_dokumen_model->kat_nama($kat);
+        // $data['paging']            = $this->web_dokumen_model->paging($kat, $p, $o);
+        // $data['main']              = $this->web_dokumen_model->list_data($kat, $o, $data['paging']->offset, $data['paging']->per_page);
+        // $data['list_tahun']        = $this->web_dokumen_model->list_tahun($kat);
+        // $data['keyword']           = $this->web_dokumen_model->autocomplete();
+        // $data['submenu']           = $this->referensi_model->list_data('ref_dokumen');
+        // $data['jenis_peraturan']   = $this->referensi_model->jenis_peraturan_desa();
+        // $data['sub_kategori']      = $_SESSION['sub_kategori'];
+        // $_SESSION['menu_kategori'] = true;
 
-        foreach ($data['submenu'] as $s) {
-            if ($kat == $s['id']) {
-                $_SESSION['submenu']       = $s['id'];
-                $_SESSION['sub_kategori']  = $s['kategori'];
-                $_SESSION['kode_kategori'] = $s['id'];
-            }
-        }
+        // foreach ($data['submenu'] as $s) {
+        //     if ($kat == $s['id']) {
+        //         $_SESSION['submenu']       = $s['id'];
+        //         $_SESSION['sub_kategori']  = $s['kategori'];
+        //         $_SESSION['kode_kategori'] = $s['id'];
+        //     }
+        // }
 
-        $data['main_content'] = 'dokumen/table_buku_umum';
-        $data['subtitle']     = ($kat == '3') ? 'Buku Peraturan Di ' . ucwords($this->setting->sebutan_desa) : 'Buku Keputusan ' . ucwords($this->setting->sebutan_kepala_desa);
-        $data['selected_nav'] = ($kat == '3') ? 'peraturan' : 'keputusan';
+        // $data['main_content'] = 'dokumen/table_buku_umum';
+        // $data['subtitle']     = ($kat == '3') ? 'Buku Peraturan Di ' . ucwords($this->setting->sebutan_desa) : 'Buku Keputusan ' . ucwords($this->setting->sebutan_kepala_desa);
+        // $data['selected_nav'] = ($kat == '3') ? 'peraturan' : 'keputusan';
 
-        $this->render('bumindes/umum/main', $data);
+        // $this->render('bumindes/umum/main', $data);
+        return view("admin.bumindes.umum.main.index");
     }
 
     public function clear($kat = 2)

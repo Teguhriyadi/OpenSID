@@ -56,30 +56,31 @@ class Bumindes_rencana_pembangunan extends Admin_Controller
 
     public function index()
     {
-        if ($this->input->is_ajax_request()) {
-            $start  = $this->input->post('start');
-            $length = $this->input->post('length');
-            $search = $this->input->post('search[value]');
-            $order  = $this->model::ORDER_ABLE[$this->input->post('order[0][column]')];
-            $dir    = $this->input->post('order[0][dir]');
-            $tahun  = $this->input->post('tahun');
+        return view("admin.bumindes.pembangunan.main.index");
+        // if ($this->input->is_ajax_request()) {
+        //     $start  = $this->input->post('start');
+        //     $length = $this->input->post('length');
+        //     $search = $this->input->post('search[value]');
+        //     $order  = $this->model::ORDER_ABLE[$this->input->post('order[0][column]')];
+        //     $dir    = $this->input->post('order[0][dir]');
+        //     $tahun  = $this->input->post('tahun');
 
-            return json([
-                'draw'            => $this->input->post('draw'),
-                'recordsTotal'    => $this->model->get_data()->count_all_results(),
-                'recordsFiltered' => $this->model->get_data($search, $tahun)->count_all_results(),
-                'data'            => $this->model->get_data($search, $tahun)->order_by($order, $dir)->limit($length, $start)->get()->result(),
-            ]);
-        }
+        //     return json([
+        //         'draw'            => $this->input->post('draw'),
+        //         'recordsTotal'    => $this->model->get_data()->count_all_results(),
+        //         'recordsFiltered' => $this->model->get_data($search, $tahun)->count_all_results(),
+        //         'data'            => $this->model->get_data($search, $tahun)->order_by($order, $dir)->limit($length, $start)->get()->result(),
+        //     ]);
+        // }
 
-        $this->render('bumindes/pembangunan/main', [
-            'tipe'         => ucwords($this->tipe),
-            'list_tahun'   => $this->model->list_filter_tahun(),
-            'satuan_waktu' => SatuanWaktuEnum::all(),
-            'selected_nav' => $this->tipe,
-            'subtitle'     => 'Buku ' . ucwords($this->tipe) . ' Pembangunan',
-            'main_content' => 'bumindes/pembangunan/' . $this->tipe . '/index',
-        ]);
+        // $this->render('bumindes/pembangunan/main', [
+        //     'tipe'         => ucwords($this->tipe),
+        //     'list_tahun'   => $this->model->list_filter_tahun(),
+        //     'satuan_waktu' => SatuanWaktuEnum::all(),
+        //     'selected_nav' => $this->tipe,
+        //     'subtitle'     => 'Buku ' . ucwords($this->tipe) . ' Pembangunan',
+        //     'main_content' => 'bumindes/pembangunan/' . $this->tipe . '/index',
+        // ]);
     }
 
     public function dialog($aksi = '')

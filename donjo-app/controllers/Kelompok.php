@@ -87,32 +87,33 @@ class Kelompok extends Admin_Controller
         $this->render('kelompok/anggota/table', $data);
     }
 
-    public function form($p = 1, $o = 0, $id = 0)
+    public function form()
     {
-        $this->redirect_hak_akses('u');
-        $data['p']   = $p;
-        $data['o']   = $o;
-        $list_master = $this->kelompok_model->list_master();
+        return view("admin.lembaga_desa.form");
+        // $this->redirect_hak_akses('u');
+        // $data['p']   = $p;
+        // $data['o']   = $o;
+        // $list_master = $this->kelompok_model->list_master();
 
-        if (count($list_master) <= 0) {
-            $this->session->success   = -1;
-            $this->session->error_msg = "Kategori {$this->tipe} tidak tersedia, silakan tambah ketegori terlebih dahulu";
+        // if (count($list_master) <= 0) {
+        //     $this->session->success   = -1;
+        //     $this->session->error_msg = "Kategori {$this->tipe} tidak tersedia, silakan tambah ketegori terlebih dahulu";
 
-            redirect($this->controller);
-        }
+        //     redirect($this->controller);
+        // }
 
-        if ($id) {
-            $data['kelompok']    = $this->kelompok_model->get_kelompok($id);
-            $data['form_action'] = site_url("{$this->controller}/update/{$p}/{$o}/{$id}");
-        } else {
-            $data['kelompok']    = null;
-            $data['form_action'] = site_url("{$this->controller}/insert");
-        }
+        // if ($id) {
+        //     $data['kelompok']    = $this->kelompok_model->get_kelompok($id);
+        //     $data['form_action'] = site_url("{$this->controller}/update/{$p}/{$o}/{$id}");
+        // } else {
+        //     $data['kelompok']    = null;
+        //     $data['form_action'] = site_url("{$this->controller}/insert");
+        // }
 
-        $data['list_master']   = $list_master;
-        $data['list_penduduk'] = $this->kelompok_model->list_penduduk();
+        // $data['list_master']   = $list_master;
+        // $data['list_penduduk'] = $this->kelompok_model->list_penduduk();
 
-        $this->render('kelompok/form', $data);
+        // $this->render('kelompok/form', $data);
     }
 
     public function aksi($aksi = '', $id = 0)

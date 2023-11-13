@@ -56,7 +56,7 @@
                                 <span class="menu-section text-muted text-uppercase fs-7 fw-bold">Menu</span>
                             </div>
                         </div>
-                        @include("admin/bumindes/umum/main/side")
+                        @include('admin/bumindes/pembangunan/main/side')
                     </div>
                 </div>
             </div>
@@ -80,8 +80,7 @@
                         </div>
                         <div class="d-flex align-items-center position-relative">
                             <i class="fa-duotone fa-search fs-3 position-absolute ms-4"></i>
-                            <input type="text" class="form-control form-control-sm w-250px ps-12"
-                                placeholder="Cari...">
+                            <input type="text" class="form-control form-control-sm w-250px ps-12" placeholder="Cari...">
                         </div>
                     </h2>
                     <div class="card-toolbar align-self-center d-flex column-gap-2">
