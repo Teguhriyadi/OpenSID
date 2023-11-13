@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>Admin Panel</title>
+    <title>
+        {{ $setting->admin_title . ' ' . ucwords($setting->sebutan_desa . ' ' . ($desa['nama_desa'] ?? '')) . get_dynamic_title_page_from_path() }}
+    </title>
     <meta charset="utf-8" />
     <meta name="description" content="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo, earum?" />
     <meta name="keywords" content="admin panel, admin, lorem" />
