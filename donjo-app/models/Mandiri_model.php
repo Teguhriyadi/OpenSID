@@ -61,6 +61,29 @@ class Mandiri_model extends CI_Model
         return autocomplete_data_ke_str($data);
     }
 
+    public function getData()
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->join("tweb_penduduk", "tweb_penduduk.id = tweb_penduduk_mandiri.id_pend");
+        $this->db->where("tweb_penduduk_mandiri.aktif", 1);
+        $this->db->order_by("tweb_penduduk_mandiri.tanggal_buat", "ASC");
+        $this->db->limit(5);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function getDataCount()
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->join("tweb_penduduk", "tweb_penduduk.id = tweb_penduduk_mandiri.id_pend");
+        $this->db->where("tweb_penduduk_mandiri.aktif", 1);
+        
+        return $this->db->count_all_results();
+    }
+
     private function search_sql()
     {
         $cari = $this->session->cari;
@@ -329,7 +352,7 @@ class Mandiri_model extends CI_Model
     {
         //cek penduduk apakah sudah terdaftar di data kependudukan
         if (null !== ($penduduk = $this->cek_pendaftaran($data['nama'], $data['nik'], $data['tgl_lahir'], $data['kk']))) {
-            if (! $this->cek_layanan_mandiri($penduduk->id)) {
+            if (!$this->cek_layanan_mandiri($penduduk->id)) {
                 $data_penduduk['id'] = $penduduk->id;
                 $this->insert_daftar($data_penduduk, $data);
 
@@ -346,7 +369,7 @@ class Mandiri_model extends CI_Model
                     'pesan'  => 'untuk melengkapi pendaftaran Silahkan Verifikasi Email dan Telegram',
                     'aksi'   => site_url('/layanan-mandiri/daftar/verifikasi/telegram'), // TODO issue
                 ];
-            } elseif ($this->cek_layanan_mandiri($penduduk->id) && ! $this->otp_library->driver('telegram')->cek_verifikasi_otp($penduduk->id)) {
+            } elseif ($this->cek_layanan_mandiri($penduduk->id) && !$this->otp_library->driver('telegram')->cek_verifikasi_otp($penduduk->id)) {
                 $data_penduduk['id'] = $penduduk->id;
 
                 $session = [
@@ -468,7 +491,7 @@ class Mandiri_model extends CI_Model
             session_error($this->upload->display_errors());
         }
 
-        return (! empty($uploadData)) ? $uploadData['file_name'] : null;
+        return (!empty($uploadData)) ? $uploadData['file_name'] : null;
     }
 
     //Login Layanan Mandiri
@@ -563,7 +586,7 @@ class Mandiri_model extends CI_Model
                     $this->session->set_userdata($session);
                     break;
 
-                case $data && ! $this->cek_anjungan && $tag == $data->tag_id_card && $pin == $data->pin:
+                case $data && !$this->cek_anjungan && $tag == $data->tag_id_card && $pin == $data->pin:
                     $session = [
                         'mandiri'    => 1,
                         'is_login'   => $data,

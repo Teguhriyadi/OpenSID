@@ -346,7 +346,7 @@
                     </div>
                     <!-- sign out -->
                     <div class="menu-item px-5">
-                        <a href="#" class="menu-link px-5">
+                        <a href="<?= base_url('siteman/logout') ?>" class="menu-link px-5">
                             <span class="menu-icon">
                                 <i class="fa-duotone fa-sign-out fs-4"></i>
                             </span>

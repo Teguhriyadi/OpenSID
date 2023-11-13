@@ -58,6 +58,7 @@ class Hom_sid extends Admin_Controller
         parent::__construct();
 
         $this->isAdmin = $this->session->isAdmin->pamong;
+        $this->load->model("Mandiri_model");
     }
 
     public function index()
@@ -69,17 +70,11 @@ class Hom_sid extends Admin_Controller
         $this->load->library('saas');
 
         $data = [
-            'rilis'           => $this->getUpdate(),
-            'bantuan'         => $this->bantuan(),
             'penduduk'        => Penduduk::status()->count(),
             'keluarga'        => Keluarga::status()->count(),
-            'rtm'             => Rtm::status()->count(),
-            'kelompok'        => Schema::hasColumn('kelompok', 'tipe') ? Kelompok::status()->tipe()->count() : 0,
-            'dusun'           => Wilayah::dusun()->count(),
-            'pendaftaran'     => Schema::hasColumn('tweb_penduduk_mandiri', 'aktif') ? PendudukMandiri::status()->count() : 0,
-            'surat'           => (! $this->db->field_exists('deleted_at', 'log_surat')) ? 0 : $this->logSurat(), // jika kolom deleted_at tidak ada, kosongkan jumlah surat.
             'saas'            => $this->saas->peringatan(),
-            'notif_langganan' => $this->pelanggan_model->status_langganan(),
+            'mandiri'   => $this->Mandiri_model->getData(),
+            "mandiri_count" => $this->Mandiri_model->getDataCount()
         ];
 
         return view('admin.home.index', $data);

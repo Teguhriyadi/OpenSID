@@ -16,7 +16,7 @@
                     </h1>
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
                         <li class="breadcrumb-item text-muted">
-                            <a href="./index.html" class="text-muted text-hover-primary">
+                            <a href="<?= site_url('hom_sid') ?>" class="text-muted text-hover-primary">
                                 Home
                             </a>
                         </li>
@@ -24,15 +24,7 @@
                             <span class="bullet bg-gray-500 w-5px h-2px"></span>
                         </li>
                         <li class="breadcrumb-item text-muted">
-                            <a href="#" class="text-muted text-hover-primary">
-                                Info Desa
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <span class="bullet bg-gray-500 w-5px h-2px"></span>
-                        </li>
-                        <li class="breadcrumb-item text-muted">
-                            Wilayah Administratif
+                            Identitas Desa
                         </li>
                     </ul>
                 </div>
@@ -43,7 +35,6 @@
         </div>
     </div>
 @endsection
-
 
 @section('content')
     <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6 mb-10">
@@ -77,7 +68,7 @@
                     </div>
                     <div class="d-flex flex-stack justify-content-end fs-4">
                         <span data-bs-toggle="tooltip" data-bs-trigger="hover">
-                            <a href="./identitas_desa_edit.html" class="btn btn-sm btn-primary">
+                            <a href="<?= site_url('identitas_desa/form') ?>" class="btn btn-sm btn-primary">
                                 Ubah
                             </a>
                         </span>
