@@ -81,6 +81,16 @@ class Sid_core extends Admin_Controller
         return view("admin.wilayah.index");
     }
 
+    public function dataTable()
+    {
+        $postData = $this->input->get();
+        $data["query"] = $this->wilayah_model->getDataTable($postData);
+        $data["recordsTotal"] = $this->wilayah_model->count_all();
+        $data['recordsFiltered'] = $this->wilayah_model->count_filtered($postData);
+
+        echo json_encode($data);
+    }
+
     // $aksi = cetak/unduh
     public function dialog($aksi = 'cetak')
     {

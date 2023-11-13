@@ -86,6 +86,43 @@ class Wilayah_model extends MY_Model
         return $sql;
     }
 
+    public function getDataTable($postData)
+    {
+        $this->get_datatable($postData);
+
+        if ($postData["length"] != -1) {
+            $this->db->limit($postData["length"], $postData["start"]);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function count_filtered($postData)
+    {
+        $this->get_datatable($postData);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all()
+    {
+        $this->db->from("tweb_wil_clusterdesa");
+        return $this->db->count_all_results();
+    }
+
+    private function get_datatable($postData)
+    {
+        $this->db->from("tweb_wil_clusterdesa");
+        $this->db->join("penduduk_hidup", "penduduk_hidup.id = tweb_wil_clusterdesa.id_kepala", "LEFT");
+
+        if (!empty( $postData["search"]["value"])) {
+            $this->db->like("id", $postData["search"]["value"]);
+        }
+
+        $this->db->order_by("tweb_wil_clusterdesa.id", "DESC");
+    }
     /*
         Struktur tweb_wil_clusterdesa:
         - baris dengan kolom rt = '0' dan rw = '0' menunjukkan dusun

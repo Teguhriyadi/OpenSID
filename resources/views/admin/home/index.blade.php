@@ -288,7 +288,7 @@
                             <div class="card-body">
                                 <div class="d-flex flex-column">
                                     <span class="fs-2hx fw-bold">
-                                        {{ $surat }}
+                                        100
                                     </span>
                                     <span class="pt-1 fw-semibold fs-6">
                                         Surat Tercetak
