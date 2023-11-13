@@ -63,30 +63,9 @@ class Kelompok extends Admin_Controller
         redirect($this->controller);
     }
 
-    public function index($p = 1, $o = 0)
+    public function index()
     {
-        $data['p'] = $p;
-        $data['o'] = $o;
-
-        foreach ($this->_list_session as $list) {
-            $data[$list] = $this->session->{$list} ?: '';
-        }
-
-        $per_page = $this->input->post('per_page');
-        if (isset($per_page)) {
-            $this->session->per_page = $per_page;
-        }
-
-        $data['func']        = 'index';
-        $data['set_page']    = $this->_set_page;
-        $data['filter']      = $this->session->filter;
-        $list_data           = $this->kelompok_model->list_data($o, $p);
-        $data['paging']      = $list_data['paging'];
-        $data['main']        = $list_data['main'];
-        $data['keyword']     = $this->kelompok_model->autocomplete();
-        $data['list_master'] = $this->kelompok_model->list_master();
-
-        $this->render('kelompok/table', $data);
+        return view("admin.lembaga_desa.index");
     }
 
     public function anggota($id = 0, $p = 1, $o = 0)

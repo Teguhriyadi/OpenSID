@@ -6,6 +6,22 @@
     </h1>
 @endsection
 
+@section('css')
+    <style>
+        .custom-button {
+            background-color: white;
+            border: 1px solid gray;
+            border-radius: 5px;
+            width: 100%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+
+        .shadow-sm {}
+    </style>
+@endsection
+
 @section('breadcrumb')
     <li class="active">Tentang <?= config_item('nama_aplikasi') ?></li>
 @endsection
@@ -13,108 +29,214 @@
 @section('content')
     <div class="row">
         @if (can('u', 'sid_core'))
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0 card-flush mb-xl-10">
-                    <div class="card-header pt-5">
-                        <div class="card-title d-flex flex-column">
-                            <div class="d-flex align-items-center">
-                                <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">1,836</span>
-                                <span class="badge badge-light-danger fs-base">
-                                    <i class="ki-outline ki-arrow-down fs-5 text-danger ms-n1"></i>2.2%
-                                </span>
-                            </div>
-                            <span class="text-gray-400 pt-1 fw-semibold fs-6">
-                                Total Sales
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10"style="background-color: purple">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
+                                {{ $dusun }}
                             </span>
                         </div>
+                        <span class="text-white pt-1 fw-semibold fs-6">
+                            {{ SebutanDesa('Wilayah [Desa]') }}
+                        </span>
                     </div>
-                    <div class="card-body d-flex align-items-end pt-0">
-                        <!--begin::Progress-->
-                        <div class="d-flex align-items-center flex-column mt-3 w-100">
-                            <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                <span class="fw-bolder fs-6 text-dark">1,048
-                                    to
-                                    Goal</span>
-                                <span class="fw-bold fs-6 text-gray-400">62%</span>
-                            </div>
-                            <div class="h-8px mx-3 w-100 bg-light-success rounded">
-                                <div class="bg-success rounded h-8px" role="progressbar"
-                                    style="
-                                        width: 62%;
-                                    "
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                    <i class="fa fa-location text-white" style="font-size: 30px;"></i>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('sid_core') }}">
+                        <div class="custom-button">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0 card-flush mb-xl-10">
-                    <div class="card-header pt-5">
-                        <div class="card-title d-flex flex-column">
-                            <div class="d-flex align-items-center">
-                                <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">1,836</span>
-                                <span class="badge badge-light-danger fs-base">
-                                    <i class="ki-outline ki-arrow-down fs-5 text-danger ms-n1"></i>2.2%
-                                </span>
-                            </div>
-                            <span class="text-gray-400 pt-1 fw-semibold fs-6">
-                                Total Sales
+        </div>
+        @endif
+
+        @if (can('u', 'penduduk'))
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10" style="background-color: #00c0ef">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
+                                {{ $penduduk }}
                             </span>
                         </div>
+                        <span class="text-white pt-1 fw-semibold fs-6">
+                            Penduduk
+                        </span>
                     </div>
-                    <div class="card-body d-flex align-items-end pt-0">
-                        <!--begin::Progress-->
-                        <div class="d-flex align-items-center flex-column mt-3 w-100">
-                            <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                <span class="fw-bolder fs-6 text-dark">1,048
-                                    to
-                                    Goal</span>
-                                <span class="fw-bold fs-6 text-gray-400">62%</span>
-                            </div>
-                            <div class="h-8px mx-3 w-100 bg-light-success rounded">
-                                <div class="bg-success rounded h-8px" role="progressbar"
-                                    style="
-                                        width: 62%;
-                                    "
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                    <i class="fa fa-user text-white" style="font-size: 30px;"></i>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('penduduk.clear') }}">
+                        <div class="custom-button">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0 card-flush mb-xl-10">
+        </div>
+        @endif
+
+        @if (can('u', 'keluarga'))
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10" style="background-color: #00a65a">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
+                                {{ $keluarga }}
+                            </span>
+                        </div>
+                        <span class="text-white pt-1 fw-semibold fs-6">
+                            Keluarga
+                        </span>
+                    </div>
+                    <i class="fa fa-users text-white" style="font-size: 30px;"></i>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('keluarga.clear') }}">
+                        <div class="custom-button">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if (can('u', 'keluar'))
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10" style="background-color: #0073b7">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
+                                {{ $surat }}
+                            </span>
+                        </div>
+                        <span class="text-white pt-1 fw-semibold fs-6">
+                            Surat Tercetak
+                        </span>
+                    </div>
+                    <i class="fa fa-book text-white" style="font-size: 30px;"></i>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('keluar.clear') }}">
+                        <div class="custom-button">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if (can('u', 'kelompok'))
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10" style="background-color: #dd4b39">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
+                                {{ $kelompok }}
+                            </span>
+                        </div>
+                        <span class="text-white pt-1 fw-semibold fs-6">
+                            Kelompok
+                        </span>
+                    </div>
+                    <i class="fa fa-users text-white" style="font-size: 30px;"></i>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('kelompok.clear') }}">
+                        <div class="custom-button">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if (can('u', 'rtm'))
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10" style="background-color: #d2d6de !important">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
+                                {{ $rtm }}
+                            </span>
+                        </div>
+                        <span class="text-white pt-1 fw-semibold fs-6">
+                            Rumah Tangga
+                        </span>
+                    </div>
+                    <i class="fa fa-home text-white" style="font-size: 30px;"></i>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route('rtm.clear') }}">
+                        <div class="custom-button">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if (can('u', 'program_bantuan'))
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10" style="background-color: #f39c12 !important">
+                <div class="card-header pt-5">
+                    <div class="card-title d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">
+                                {{ $bantuan['jumlah'] }}
+                            </span>
+                        </div>
+                        <span class="text-white pt-1 fw-semibold fs-6">
+                            {{ $bantuan['nama'] }}
+                        </span>
+                    </div>
+                    <i class="fa fa-pie-chart text-white" style="font-size: 30px;"></i>
+                </div>
+                <div class="card-body">
+                    <a href="{{ route($bantuan['link_detail']) }}">
+                        <div class="custom-button">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if (can('u', 'mandiri'))
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 card-flush h-md-90 mb-xl-10" style="background-color: #39CCCC">
                     <div class="card-header pt-5">
                         <div class="card-title d-flex flex-column">
                             <div class="d-flex align-items-center">
-                                <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">1,836</span>
-                                <span class="badge badge-light-danger fs-base">
-                                    <i class="ki-outline ki-arrow-down fs-5 text-danger ms-n1"></i>2.2%
-                                </span>
+                                <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $pendaftaran }}</span>
                             </div>
-                            <span class="text-gray-400 pt-1 fw-semibold fs-6">
-                                Total Sales
+                            <span class="text-white pt-1 fw-semibold fs-6">
+                                Verif Layanan Mandiri
                             </span>
                         </div>
+                        <i class="fa fa-user text-white" style="font-size: 30px;"></i>
                     </div>
-                    <div class="card-body d-flex align-items-end pt-0">
-                        <!--begin::Progress-->
-                        <div class="d-flex align-items-center flex-column mt-3 w-100">
-                            <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                <span class="fw-bolder fs-6 text-dark">1,048
-                                    to
-                                    Goal</span>
-                                <span class="fw-bold fs-6 text-gray-400">62%</span>
+                    <div class="card-body">
+                        <a href="{{ route('mandiri') }}">
+                            <div class="custom-button">
+                                Lihat Detail <i class="fa fa-arrow-circle-right"></i>
                             </div>
-                            <div class="h-8px mx-3 w-100 bg-light-success rounded">
-                                <div class="bg-success rounded h-8px" role="progressbar"
-                                    style="
-                                        width: 62%;
-                                    "
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

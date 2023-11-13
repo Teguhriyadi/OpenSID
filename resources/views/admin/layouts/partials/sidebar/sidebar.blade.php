@@ -17,7 +17,7 @@
                 </div>
                 <?php else : ?>
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion <?= jecho($modul_ini, $mod["slug"], "here show") ?>">
-                    <span class="menu-link <?= jecho($modul_ini, $mod['slug'], 'active') ?>">
+                    <span class="menu-link">
                         <span class="menu-icon">
                             <i class="fa-duotone <?= $mod["ikon"] ?> fs-2"></i>
                         </span>

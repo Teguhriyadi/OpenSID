@@ -67,19 +67,7 @@ class Pelanggan_Controller extends Admin_Controller
 
     public function index()
     {
-        unset($this->header['perbaharui_langganan']);
-        $response = $this->pelanggan_model->api_pelanggan_pemesanan();
-
-        kirim_versi_opensid();
-        // Ubah layanan_opendesa_token terbaru, jangan perbaharui jika token tersimpan di config (untuk developmen)
-        if ((null !== $response && $response->body->token !== $this->setting->layanan_opendesa_token) && empty(config_item('token_layanan'))) {
-            $post['layanan_opendesa_token'] = $response->body->token;
-            $this->setting_model->update_setting($post);
-
-            redirect($this->controller);
-        }
-
-        $this->render('pelanggan/index', ['response' => $response]);
+        return view("admin.layanan_pelanggan.index");
     }
 
     public function peringatan()

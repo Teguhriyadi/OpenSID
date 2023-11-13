@@ -60,24 +60,25 @@ class Sid_core extends Admin_Controller
 
     public function index($p = 1, $o = 0)
     {
-        $data['p'] = $p;
-        $data['o'] = $o;
+        // $data['p'] = $p;
+        // $data['o'] = $o;
 
-        $per_page = $this->input->post('per_page');
-        if (isset($per_page)) {
-            $this->session->per_page = $per_page;
-        }
+        // $per_page = $this->input->post('per_page');
+        // if (isset($per_page)) {
+        //     $this->session->per_page = $per_page;
+        // }
 
-        $data['cari']     = $this->session->cari ?: '';
-        $data['func']     = 'index';
-        $data['set_page'] = $this->_set_page;
-        $data['per_page'] = $this->session->per_page;
-        $data['paging']   = $this->wilayah_model->paging($p, $o);
-        $data['main']     = $this->wilayah_model->list_data($o, $data['paging']->offset, $data['paging']->per_page);
-        $data['keyword']  = $this->wilayah_model->autocomplete();
-        $data['total']    = $this->wilayah_model->total();
+        // $data['cari']     = $this->session->cari ?: '';
+        // $data['func']     = 'index';
+        // $data['set_page'] = $this->_set_page;
+        // $data['per_page'] = $this->session->per_page;
+        // $data['paging']   = $this->wilayah_model->paging($p, $o);
+        // $data['main']     = $this->wilayah_model->list_data($o, $data['paging']->offset, $data['paging']->per_page);
+        // $data['keyword']  = $this->wilayah_model->autocomplete();
+        // $data['total']    = $this->wilayah_model->total();
 
-        $this->render('sid/wilayah/wilayah', $data);
+        // $this->render('sid/wilayah/wilayah', $data);
+        return view("admin.wilayah.index");
     }
 
     // $aksi = cetak/unduh

@@ -46,6 +46,11 @@ class Wilayah extends Admin_Controller
         $this->load->model('wilayah_model');
     }
 
+    public function index()
+    {
+        echo "Ada";
+    }
+
     public function list_rw($dusun = '')
     {
         $list_rw = $this->wilayah_model->list_rw($dusun);

@@ -19,230 +19,295 @@
 @endsection
 
 @section('content')
-
-    @include('admin.layouts.components.notifikasi')
-
-    @include('admin.status_desa.navigasi')
-
-    <div class="box box-info">
-        <div class="box-header with-border">
-            {!! form_open(route('status_desa'), 'class="form-inline" id="mainform" name="mainform"') !!}
-            <label for="tahun">IDM Tahun </label>
-            <select class="form-control input-sm" name="tahun" onchange="$('#mainform').submit()">
-                <option value="" disabled>Pilih Tahun</option>
-                @foreach (tahun(2020) as $thn)
-                    <option value="{{ $thn }}" @selected($tahun === $thn)>{{ $thn }}</option>
-                @endforeach
-            </select>
-            <a class="btn btn-social btn-success btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"
-                {!! cek_koneksi_internet() == false || is_null($idm->error_msg) ? 'disabled title="Perangkat tidak terhubung dengan jaringan"' : 'href="' . route('status_desa.perbarui_idm', $tahun) . '"' !!}><i class="fa fa-refresh"></i>Perbarui</a>
-            @if (empty($idm->error_msg))
-                <a class="btn btn-social btn-info btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"
-                    href="{{ route('status_desa.simpan', $tahun) }}"><i class="fa fa-check-circle"></i>Simpan</a>
-            @endif
-            </form>
+    <div class="row g-5 g-xl-8 justify-content-center">
+        <div class="col-xl-6">
+            <a href="./status_desa_idm.html">
+                <div class="hover-elevate-up card card-xl-stretch mb-xl-8 bg-primary">
+                    <div class="card-body d-flex align-items-center pt-3 pb-0">
+                        <div class="d-flex flex-column flex-grow-1 py-2 py-lg-13 me-2">
+                            <h1 class="fw-bold fs-4 mb-2 text-white">IDM</h1>
+                            <span class="fw-semibold text-muted fs-5">
+                                Index Desa Membangun
+                            </span>
+                        </div>
+                        <i class="fa-solid fa-chart-area fs-7tx" style="opacity: .4;"></i>
+                    </div>
+                </div>
+            </a>
         </div>
-        <div class="box-body">
-            @if ($idm->error_msg)
-                <div class="alert alert-danger">
-                    {!! $idm->error_msg !!}
-                </div>
-            @else
-                <div class="row">
-                    <div class="col-lg-6 col-xs-12">
-                        <div class="row">
-                            <div class="col-lg-6 col-xs-12">
-                                <div class="small-box bg-blue radius">
-                                    <div class="inner">
-                                        <h3>{{ number_format($idm->SUMMARIES->SKOR_SAAT_INI, 4) }}</h3>
-                                        <p>SKOR IDM SAAT INI</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-stats-bars"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xs-12">
-                                <div class="small-box bg-yellow radius">
-                                    <div class="inner">
-                                        <h3>{{ $idm->SUMMARIES->STATUS }}</h3>
-                                        <p>STATUS IDM</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion-ios-pulse-strong"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xs-12">
-                                <div class="small-box bg-red radius">
-                                    <div class="inner">
-                                        <h3>{{ number_format($idm->SUMMARIES->SKOR_MINIMAL, 4) }}</h2>
-                                            <p>SKOR IDM MINIMAL</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-ios-pie"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xs-12">
-                                <div class="small-box bg-green radius">
-                                    <div class="inner">
-                                        <h3>{{ $idm->SUMMARIES->TARGET_STATUS }}</h3>
-                                        <p>TARGET STATUS</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-arrow-graph-up-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-xs-12">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped dataTable table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td width="30%">PROVINSI</td>
-                                                <td width="1">:</td>
-                                                <td>{{ $idm->IDENTITAS[0]->nama_provinsi }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>KABUPATEN</td>
-                                                <td> : </td>
-                                                <td>{{ $idm->IDENTITAS[0]->nama_kab_kota }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ strtoupper($setting->sebutan_kecamatan) }}</td>
-                                                <td> : </td>
-                                                <td>{{ $idm->IDENTITAS[0]->nama_kecamatan }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ strtoupper($setting->sebutan_desa) }}</td>
-                                                <td> : </td>
-                                                <td>{{ $idm->IDENTITAS[0]->nama_desa }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+        <div class="col-xl-6">
+            <a href="./status_desa_sdgs.html">
+                <div class="hover-elevate-up card card-xl-stretch mb-xl-8 bg-success">
+                    <div class="card-body d-flex align-items-center pt-3 pb-0">
+                        <div class="d-flex flex-column flex-grow-1 py-2 py-lg-13 me-2">
+                            <h1 class="fw-bold fs-4 mb-2 text-white">SDGS</h1>
+                            <span class="fw-semibold text-gray-300 fs-5">
+                                Sustainable Deveopment Goals
+                            </span>
                         </div>
-                    </div>
-
-                    <div class="col-lg-6 col-xs-12">
-                        <figure class="highcharts-figure">
-                            <div id="container"></div>
-                        </figure>
+                        <i class="fa-solid fa-recycle text-white fs-7tx" style="opacity: .4;"></i>
                     </div>
                 </div>
-
-                <div class="row">
-                    <hr>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="table-responsive">
-                            <table class="table table-bordered dataTable table-striped table-hover tabel-daftar">
-                                <thead class="bg-gray color-palette">
-                                    <tr>
-                                        <th rowspan="2" class="padat">NO</th>
-                                        <th rowspan="2">INDIKATOR IDM</th>
-                                        <th rowspan="2">SKOR</th>
-                                        <th rowspan="2">KETERANGAN</th>
-                                        <th rowspan="2" nowrap>KEGIATAN YANG DAPAT DILAKUKAN</th>
-                                        <th rowspan="2">+NILAI</th>
-                                        <th colspan="6" class="text-center">YANG DAPAT MELAKSANAKAN KEGIATAN</th>
-                                    </tr>
-                                    <tr>
-                                        <th>PUSAT</th>
-                                        <th>PROVINSI</th>
-                                        <th>KABUPATEN</th>
-                                        <th>DESA</th>
-                                        <th>CSR</th>
-                                        <th>LAINNYA</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($idm->ROW as $data)
-                                        <tr class="{{ empty($data->NO) && (print 'judul') }} ">
-                                            <td class="text-center">{{ $data->NO }}</td>
-                                            <td style="min-width: 150px;">{{ $data->INDIKATOR }}</td>
-                                            <td class="padat">{{ $data->SKOR }}</td>
-                                            <td style="min-width: 250px;">{{ $data->KETERANGAN }}</td>
-                                            <td>{{ $data->KEGIATAN }}</td>
-                                            <td class="padat">{{ $data->NILAI }}</td>
-                                            <td>{{ $data->PUSAT }}</td>
-                                            <td>{{ $data->PROV }}</td>
-                                            <td>{{ $data->KAB }}</td>
-                                            <td>{{ $data->DESA }}</td>
-                                            <td>{{ $data->CSR }}</td>
-                                            <td>{{ $data->SKOR[INDIKATOR['IKS 2020']] }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            </a>
         </div>
     </div>
 
+    <div class="card shadow-sm card-flush border-0">
+        <div class="card-header py-7">
+            <h2 class="card-title">
+                <select class="form-select form-select-sm" name="filter_tahun" data-control="select2"
+                    data-hide-search="true" data-placeholder="Pilih tahun">
+                    <option></option>
+                    <option value="1" selected>2023</option>
+                    <option value="2">2022</option>
+                    <option value="2">2021</option>
+                    <option value="2">2020</option>
+                </select>
+                <span class="ms-3 nowrap">IDM Tahunan</span>
+            </h2>
+            <div class="card-toolbar align-self-center d-flex column-gap-2">
+                <a href="#" class="btn_add btn btn-icon btn-sm btn-primary align-self-center" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Perbarui">
+                    <i class="fa-solid fa-recycle fs-7"></i>
+                </a>
+                <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Simpan">
+                    <i class="fa-solid fa-save fs-7"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body pt-0">
+            <div class="row g-5 g-xl-8">
+                <div class="col-xl-6">
+                    <div class="row g-5 g-xl-8">
+                        <div class="col-xl-6">
+                            <div class="card shadow-sm border-0 h-xl-100 position-relative hover-elevate-up"
+                                style="z-index: 2;">
+                                <div class="card-body">
+                                    <div class="fs-1 text-dark fw-bold mb-6 counted">
+                                        0.6540
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="card-title fw-semibold text-muted">
+                                            SKOR IDM SAAT INI
+                                        </span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chart-bar fs-5hx position-absolute text-light-primary"
+                                    style="right: 10px;top: 5px;z-index: -1;"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card shadow-sm border-0 h-xl-100 position-relative hover-elevate-up"
+                                style="z-index: 2;">
+                                <div class="card-body">
+                                    <div class="fs-1 text-dark fw-bold mb-6 counted">
+                                        BERKEMBANG
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="card-title fw-semibold text-muted">
+                                            STATUS IDM
+                                        </span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chart-line fs-5hx position-absolute text-light-primary"
+                                    style="right: 10px;top: 5px;z-index: -1;"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card shadow-sm border-0 h-xl-100 position-relative hover-elevate-up"
+                                style="z-index: 2;">
+                                <div class="card-body">
+                                    <div class="fs-1 text-dark fw-bold mb-6 counted">
+                                        0.7073
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="card-title fw-semibold text-muted">
+                                            SKOR IDM MINIMAL
+                                        </span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chart-pie fs-5hx position-absolute text-light-primary"
+                                    style="right: 10px;top: 5px;z-index: -1;"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card shadow-sm border-0 h-xl-100 position-relative hover-elevate-up"
+                                style="z-index: 2;">
+                                <div class="card-body">
+                                    <div class="fs-1 text-dark fw-bold mb-6 counted">
+                                        MAJU
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="card-title fw-semibold text-muted">
+                                            TARGET STATUS
+                                        </span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-arrow-trend-up fs-5hx position-absolute text-light-primary"
+                                    style="right: 10px;top: 5px;z-index: -1;"></i>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row mt-3 fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
+                                <label class="col-4">Provinsi</label>
+                                <div class="col-8">
+                                    <span class="me-2">:</span>
+                                    <span class="text-gray-700 fw-semibold">
+                                        Jawa Timur
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mt-3 fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
+                                <label class="col-4">Kabupaten</label>
+                                <div class="col-8">
+                                    <span class="me-2">:</span>
+                                    <span class="text-gray-700 fw-semibold">
+                                        Sidoarjo
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mt-3 fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
+                                <label class="col-4">Kecamatan</label>
+                                <div class="col-8">
+                                    <span class="me-2">:</span>
+                                    <span class="text-gray-700 fw-semibold">
+                                        Sidoarjo
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mt-3 fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
+                                <label class="col-4">Desa</label>
+                                <div class="col-8">
+                                    <span class="me-2">:</span>
+                                    <span class="text-gray-700 fw-semibold">
+                                        Sekardangan
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <script src="https://code.highcharts.com/highcharts.js"></script>
+                            <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+                            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                            <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                            <div id="chart_index_desa"></div>
+                            <script>
+                                var tahun = 2022;
+                                var iks = 0.82857142857143;
+                                var ike = 0.33333333333333;
+                                var ikl = 0.8;
+
+                                Highcharts.chart('chart_index_desa', {
+                                    chart: {
+                                        type: 'pie',
+                                        options3d: {
+                                            enabled: true,
+                                            alpha: 45
+                                        }
+                                    },
+                                    title: {
+                                        text: 'Indeks Desa Membangun (IDM) ' + tahun
+                                    },
+                                    subtitle: {
+                                        text: 'SKOR : IKS, IKE, IKL'
+                                    },
+
+                                    plotOptions: {
+                                        series: {
+                                            colorByPoint: true
+                                        },
+                                        pie: {
+                                            allowPointSelect: true,
+                                            cursor: 'pointer',
+                                            showInLegend: true,
+                                            depth: 45,
+                                            innerSize: 70,
+                                            dataLabels: {
+                                                enabled: true,
+                                                format: '<b>{point.name}</b>: {point.y:,.2f} / {point.percentage:.1f} %'
+                                            }
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'SKOR',
+                                        shadow: 1,
+                                        border: 1,
+                                        data: [
+                                            ['IKS', iks],
+                                            ['IKE', ike],
+                                            ['IKL', ikl]
+                                        ]
+                                    }]
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                            <thead class="fw-bold text-muted bg-light text-uppercase">
+                                <tr>
+                                    <th class="min-w-25px text-center align-middle" rowspan="3">
+                                        No
+                                    </th>
+                                    <th class="min-w-150px align-middle" rowspan="3">
+                                        Indikator IDM
+                                    </th>
+                                    <th class="min-w-100px text-end align-middle" rowspan="3">
+                                        Skor
+                                    </th>
+                                    <th class="min-w-250px align-middle" rowspan="3">
+                                        Keterangan
+                                    </th>
+                                    <th class="min-w-250px align-middle" rowspan="3">
+                                        Kegiatan Yang Dapat Dilakukan
+                                    </th>
+                                    <th class="min-w-100px text-end align-middle" rowspan="3">
+                                        +Nilai
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="min-w-250px text-center" colspan="6">
+                                        Yang Dapat Melaksanakan Kegiatan
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="min-w-125px">Pusat</th>
+                                    <th class="min-w-125px">Provinsi</th>
+                                    <th class="min-w-125px">Kabupaten</th>
+                                    <th class="min-w-125px">Desa</th>
+                                    <th class="min-w-125px">CSR</th>
+                                    <th class="min-w-125px">Lainnya</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td>Skor Akses Sarkes</td>
+                                    <td class="text-end">5</td>
+                                    <td>Waktu tempuh dari ≤ 30 Menit</td>
+                                    <td>-</td>
+                                    <td class="text-end">0</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>Dinkes, PU</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
-
-@if (!$idm->error_msg)
-    @push('scripts')
-        @include('admin.layouts.components.asset_highcharts')
-        <script>
-            $(document).ready(function() {
-
-                var tahun = {{ $tahun }};
-                var iks = {{ $idm->ROW[35]->SKOR }};
-                var ike = {{ $idm->ROW[48]->SKOR }};
-                var ikl = {{ $idm->ROW[52]->SKOR }};
-
-                Highcharts.chart('container', {
-                    chart: {
-                        type: 'pie',
-                        options3d: {
-                            enabled: true,
-                            alpha: 45
-                        }
-                    },
-                    title: {
-                        text: 'Indeks Desa Membangun (IDM) ' + tahun
-                    },
-                    subtitle: {
-                        text: 'SKOR : IKS, IKE, IKL'
-                    },
-
-                    plotOptions: {
-                        series: {
-                            colorByPoint: true
-                        },
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            showInLegend: true,
-                            depth: 45,
-                            innerSize: 70,
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b>: {point.y:,.2f} / {point.percentage:.1f} %'
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'SKOR',
-                        shadow: 1,
-                        border: 1,
-                        data: [
-                            ['IKS', iks],
-                            ['IKE', ike],
-                            ['IKL', ikl]
-                        ]
-                    }]
-                });
-            });
-        </script>
-    @endpush
-@endif

@@ -66,30 +66,31 @@ class Pengurus extends Admin_Controller
         redirect('pengurus');
     }
 
-    public function index($p = 1)
+    public function index()
     {
-        foreach ($this->_list_session as $list) {
-            $data[$list] = $this->session->{$list} ?: '';
-        }
+        // foreach ($this->_list_session as $list) {
+        //     $data[$list] = $this->session->{$list} ?: '';
+        // }
 
-        $per_page = $this->input->post('per_page');
-        if (isset($per_page)) {
-            $this->session->per_page = $per_page;
-        }
+        // $per_page = $this->input->post('per_page');
+        // if (isset($per_page)) {
+        //     $this->session->per_page = $per_page;
+        // }
 
-        $data['func']               = 'index';
-        $data['set_page']           = $this->_set_page;
-        $data['per_page']           = $this->session->per_page;
-        $data['paging']             = $this->pamong_model->paging($p);
-        $data['main']               = $this->pamong_model->list_data($data['paging']->offset, $data['paging']->per_page);
-        $data['keyword']            = $this->pamong_model->autocomplete();
-        $data['main_content']       = 'home/pengurus';
-        $data['subtitle']           = 'Buku ' . ucwords(setting('sebutan_pemerintah_desa'));
-        $data['selected_nav']       = 'aparat';
-        $data['jabatanSekdes']      = sekdes()->id;
-        $data['jabatanKadesSekdes'] = RefJabatan::getKadesSekdes();
+        // $data['func']               = 'index';
+        // $data['set_page']           = $this->_set_page;
+        // $data['per_page']           = $this->session->per_page;
+        // $data['paging']             = $this->pamong_model->paging($p);
+        // $data['main']               = $this->pamong_model->list_data($data['paging']->offset, $data['paging']->per_page);
+        // $data['keyword']            = $this->pamong_model->autocomplete();
+        // $data['main_content']       = 'home/pengurus';
+        // $data['subtitle']           = 'Buku ' . ucwords(setting('sebutan_pemerintah_desa'));
+        // $data['selected_nav']       = 'aparat';
+        // $data['jabatanSekdes']      = sekdes()->id;
+        // $data['jabatanKadesSekdes'] = RefJabatan::getKadesSekdes();
 
-        $this->render('bumindes/umum/main', $data);
+        // $this->render('bumindes/umum/main', $data);
+        return view("admin.bumindes.umum.main.index");
     }
 
     public function form($id = 0)

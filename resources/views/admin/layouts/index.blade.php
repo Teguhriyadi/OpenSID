@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 
     @include("admin.layouts.partials.css.style_css")
+
+    @yield("css")
+    
 </head>
 
 <body id="kt_app_body" data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on"
@@ -87,7 +90,8 @@
                     <!--begin::Content-->
                     <div class="d-flex flex-column flex-column-fluid">
                         
-                        @include("admin.layouts.breadcrumb")
+                        {{-- @include("admin.layouts.breadcrumb") --}}
+                        @yield("breadcrumb")
 
                         <div id="kt_app_content" class="app-content flex-column-fluid">
                             <div id="kt_app_content_container" class="app-container container-fluid">
