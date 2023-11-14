@@ -100,6 +100,16 @@ class Dokumen_sekretariat extends Admin_Controller
         return view("admin.bumindes.umum.main.index");
     }
 
+    public function dataTable()
+    {
+        $postData = $this->input->get();
+        $data["query"] = $this->web_dokumen_model->getDataTable($postData);
+        $data["recordsTotal"] = $this->web_dokumen_model->count_all();
+        $data["recordsFiltered"] = $this->web_dokumen_model->count_filtered($postData);
+
+        echo json_encode($data);
+    }
+
     public function clear($kat = 2)
     {
         $this->session->unset_userdata($this->list_session);

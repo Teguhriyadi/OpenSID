@@ -135,7 +135,8 @@ class Pengurus extends Admin_Controller
             $data['individu'] = null;
         }
 
-        $this->render('home/pengurus_form', $data);
+        return view("admin.component.pengurus_form", $data);
+        // $this->render('home/pengurus_form', $data);
     }
 
     public function filter($filter)

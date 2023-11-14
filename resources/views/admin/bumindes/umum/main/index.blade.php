@@ -4,6 +4,10 @@
     Administrasi Umum
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('custom/css/style.min.css') }}">
+@endsection
+
 @section('breadcrumb')
     <div id="kt_app_toolbar" class="app-toolbar pt-7 pt-lg-10">
         <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
@@ -56,36 +60,32 @@
                                 <span class="menu-section text-muted text-uppercase fs-7 fw-bold">Menu</span>
                             </div>
                         </div>
-                        @include("admin/bumindes/umum/main/side")
+                        @include('admin.bumindes.umum.main.side')
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="d-flex flex-column flex-lg-row-fluid gap-5 gap-xl-8">
             <div class="card shadow-sm card-flush border-0">
+                <div class="card-body">
+                    <div class="row row-gap-5">
+                        <div class="col-md-12 col-12">
+                            <select class="form-select form-select-sm" name="desa" data-control="select2"
+                                data-placeholder="Pilih status">
+                                <option></option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm card-flush border-0">
                 <div class="card-header border-0 py-7">
-                    <h2 class="card-title">
-                        <div class="me-3 d-flex align-items-center justify-content-center justify-content-md-start">
-                            <div class="dataTables_length">
-                                <label>
-                                    <select name="kt_ecommerce_products_table_length"
-                                        class="form-select form-select-sm form-select-solid">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center position-relative">
-                            <i class="fa-duotone fa-search fs-3 position-absolute ms-4"></i>
-                            <input type="text" class="form-control form-control-sm w-250px ps-12"
-                                placeholder="Cari...">
-                        </div>
-                    </h2>
                     <div class="card-toolbar align-self-center d-flex column-gap-2">
-                        <a href="./jabatan_add.html" class="btn btn-icon btn-sm btn-primary align-self-center"
+                        <a href="<?= site_url('pengurus/form') ?>" class="btn btn-icon btn-sm btn-primary align-self-center"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah">
                             <i class="fa-solid fa-plus fs-7"></i>
                         </a>
@@ -97,93 +97,39 @@
                 </div>
                 <div class="card-body pt-0">
                     <div class="table-responsive">
-                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                        <table id="example" class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                             <thead>
                                 <tr class="fw-bold text-muted bg-light text-uppercase align-middle">
-                                    <th class="min-w-25px w-50px text-center">
+                                    <th class="min-w-25px text-center">
                                         <div class="form-check form-check-sm form-check-custom">
                                             <input class="form-check-input" type="checkbox" value="1">
                                         </div>
                                     </th>
-                                    <th class="min-w-25px w-50px text-center">No</th>
-                                    <th class="min-w-25px w-50px text-center">Aksi</th>
+                                    <th class="min-w-25px text-center">No</th>
+                                    <th class="min-w-25px text-center">Aksi</th>
+                                    <th class="min-w-125px">Foto</th>
+                                    <th class="min-w-300px">Nama, NIP/NIPD, NIK, Tag ID Card
+                                    </th>
+                                    <th class="min-w-125px">Tempat,<br>Tanggal Lahir</th>
+                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                    <th class="min-w-125px">Agama</th>
+                                    <th class="min-w-125px">Pangkat/Golongan</th>
                                     <th class="min-w-125px">Jabatan</th>
+                                    <th class="min-w-125px">Pendidikan Terakhir</th>
+                                    <th class="min-w-125px">Nomor Keputusan Pengangkatan
+                                    </th>
+                                    <th class="min-w-125px">Tanggal Keputusan Pengangkatan
+                                    </th>
+                                    <th class="min-w-125px">Nomor Keputusan Pemberhentian
+                                    </th>
+                                    <th class="min-w-125px">Tanggal Keputusan Pemberhentian
+                                    </th>
+                                    <th class="min-w-125px">Masa/Periode Jabatan</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td class="text-center">
-                                        <div class="form-check form-check-sm form-check-custom">
-                                            <input class="form-check-input" type="checkbox" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">
-                                        <div class="d-flex justify-content-center flex-shrink-0 gap-2">
-                                            <div>
-                                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="Aksi"
-                                                    class="btn btn-sm btn-secondary btn-icon btn-flex btn-center menu-dropdown"
-                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
-                                                    <i class="fa-solid fa-ellipsis fs-3"></i>
-                                                </a>
-                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-auto py-4 min-w-125px"
-                                                    data-kt-menu="true" data-popper-placement="bottom-start">
-                                                    <div class="menu-item px-3">
-                                                        <a href="./jabatan_edit.html" class="menu-link px-3">
-                                                            Ubah
-                                                        </a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="btn_del menu-link px-3">
-                                                            Hapus
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Kepala Desa
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">
-                                        <div class="form-check form-check-sm form-check-custom">
-                                            <input class="form-check-input" type="checkbox" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">
-                                        <div class="d-flex justify-content-center flex-shrink-0 gap-2">
-                                            <div>
-                                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="Aksi"
-                                                    class="btn btn-sm btn-secondary btn-icon btn-flex btn-center menu-dropdown"
-                                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
-                                                    <i class="fa-solid fa-ellipsis fs-3"></i>
-                                                </a>
-                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-auto py-4 min-w-125px"
-                                                    data-kt-menu="true" data-popper-placement="bottom-start">
-                                                    <div class="menu-item px-3">
-                                                        <a href="./jabatan_edit.html" class="menu-link px-3">
-                                                            Ubah
-                                                        </a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="btn_del menu-link px-3">
-                                                            Hapus
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        Kepala Desa
-                                    </td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -191,4 +137,38 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    <script src="{{ asset('custom/javascript/bootstrap.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#example").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?= site_url('buku_umum/dokumen_sekretariat/dataTable') ?>",
+                    "type": "GET",
+                    "dataSrc": function(json) {
+                        return json.query
+                    }
+                },
+                "columnDefs": [{
+                        "data": null,
+                        "render": function(data, type, row, meta) {
+                            return '<div style="text-align: center;">' + (meta.row + meta.settings
+                                ._iDisplayStart + 1) + '.</div>';
+                        }
+                    },
+                    {
+                        "data": null
+                    },
+                    {
+                        "data": null
+                    }
+                ]
+            });
+        });
+    </script>
 @endsection

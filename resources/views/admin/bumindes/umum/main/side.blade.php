@@ -31,7 +31,7 @@
 <div class="menu-item position-relative">
     <div class="position-absolute top-0 start-0 rounded h-100 bg-primary w-4px">
     </div>
-    <a href="./buku_pemerintah_desa.html" class="menu-link active">
+    <a href="<?= site_url('pengurus') ?>" class="menu-link">
         <span class="menu-title">
             Buku Pemerintah Desa
         </span>

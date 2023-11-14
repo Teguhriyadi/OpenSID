@@ -69,56 +69,57 @@ class Penduduk extends Admin_Controller
         redirect($this->controller);
     }
 
-    public function index($p = 1, $o = 10)
+    public function index()
     {
-        $data['p'] = $p;
-        $data['o'] = $o;
+        // $data['p'] = $p;
+        // $data['o'] = $o;
 
-        foreach ($this->_list_session as $list) {
-            if (in_array($list, ['dusun', 'rw', 'rt'])) {
-                ${$list} = $this->session->{$list};
-            } else {
-                $data[$list] = $this->session->{$list} ?: '';
-            }
-        }
+        // foreach ($this->_list_session as $list) {
+        //     if (in_array($list, ['dusun', 'rw', 'rt'])) {
+        //         ${$list} = $this->session->{$list};
+        //     } else {
+        //         $data[$list] = $this->session->{$list} ?: '';
+        //     }
+        // }
 
-        if (isset($dusun)) {
-            $data['dusun']   = $dusun;
-            $data['list_rw'] = $this->wilayah_model->list_rw($dusun);
+        // if (isset($dusun)) {
+        //     $data['dusun']   = $dusun;
+        //     $data['list_rw'] = $this->wilayah_model->list_rw($dusun);
 
-            if (isset($rw)) {
-                $data['rw']      = $rw;
-                $data['list_rt'] = $this->wilayah_model->list_rt($dusun, $rw);
+        //     if (isset($rw)) {
+        //         $data['rw']      = $rw;
+        //         $data['list_rt'] = $this->wilayah_model->list_rt($dusun, $rw);
 
-                if (isset($rt)) {
-                    $data['rt'] = $rt;
-                } else {
-                    $data['rt'] = '';
-                }
-            } else {
-                $data['rw'] = '';
-            }
-        } else {
-            $data['dusun'] = $data['rw'] = $data['rt'] = '';
-        }
+        //         if (isset($rt)) {
+        //             $data['rt'] = $rt;
+        //         } else {
+        //             $data['rt'] = '';
+        //         }
+        //     } else {
+        //         $data['rw'] = '';
+        //     }
+        // } else {
+        //     $data['dusun'] = $data['rw'] = $data['rt'] = '';
+        // }
 
-        $per_page = $this->input->post('per_page');
-        if (isset($per_page)) {
-            $this->session->per_page = $per_page;
-        }
+        // $per_page = $this->input->post('per_page');
+        // if (isset($per_page)) {
+        //     $this->session->per_page = $per_page;
+        // }
 
-        $data['func']                 = 'index';
-        $data['set_page']             = $this->_set_page;
-        $list_data                    = $this->penduduk_model->list_data($o, $p);
-        $data['paging']               = $list_data['paging'];
-        $data['main']                 = $list_data['main'];
-        $data['list_dusun']           = $this->wilayah_model->list_dusun();
-        $data['list_status_dasar']    = $this->referensi_model->list_data('tweb_status_dasar');
-        $data['list_status_penduduk'] = $this->referensi_model->list_data('tweb_penduduk_status');
-        $data['list_jenis_kelamin']   = $this->referensi_model->list_data('tweb_penduduk_sex');
-        $data['pesan_hapus']          = 'Hanya lakukan hapus penduduk hanya jika ada kesalahan saat pengisian data atau penduduk tersebut tidak akan ditambahkan kembali. Apakah Anda yakin ingin menghapus data ini?';
+        // $data['func']                 = 'index';
+        // $data['set_page']             = $this->_set_page;
+        // $list_data                    = $this->penduduk_model->list_data($o, $p);
+        // $data['paging']               = $list_data['paging'];
+        // $data['main']                 = $list_data['main'];
+        // $data['list_dusun']           = $this->wilayah_model->list_dusun();
+        // $data['list_status_dasar']    = $this->referensi_model->list_data('tweb_status_dasar');
+        // $data['list_status_penduduk'] = $this->referensi_model->list_data('tweb_penduduk_status');
+        // $data['list_jenis_kelamin']   = $this->referensi_model->list_data('tweb_penduduk_sex');
+        // $data['pesan_hapus']          = 'Hanya lakukan hapus penduduk hanya jika ada kesalahan saat pengisian data atau penduduk tersebut tidak akan ditambahkan kembali. Apakah Anda yakin ingin menghapus data ini?';
 
-        $this->render('sid/kependudukan/penduduk', $data);
+        // $this->render('sid/kependudukan/penduduk', $data);
+        return view("admin.kependudukan.penduduk.index");
     }
 
     public function ambil_foto()

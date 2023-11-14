@@ -109,7 +109,6 @@
     <script type="text/javascript">
         var SITE_URL = "{{ site_url() }}";
     </script>
-    <script src="{{ asset('bootstrap/js/jquery.min.js') }}"></script>
     @if (config_item('csrf_protection'))
         <!-- CSRF Token -->
         <script type="text/javascript">

@@ -44,7 +44,7 @@ class Vi_Iuran_Produk_model extends MY_Model
 
     public function count_all()
     {
-        $this->db->from("tweb_wil_clusterdesa");
+        $this->db->from("vi_iuranproduk");
         return $this->db->count_all_results();
     }
 
