@@ -80,8 +80,6 @@ class Siteman extends MY_Controller
         $_SESSION['cari']       = '';
         $_SESSION['pengumuman'] = 0;
         $_SESSION['sesi']       = 'kosong';
-        //-------------------------------
-
         $this->load->view('siteman', $data);
     }
 
@@ -89,6 +87,7 @@ class Siteman extends MY_Controller
     {
         $method       = $this->input->method(true);
         $allow_method = ['POST'];
+        
         if (! in_array($method, $allow_method)) {
             redirect('siteman');
         }

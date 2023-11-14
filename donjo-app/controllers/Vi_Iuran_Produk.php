@@ -13,15 +13,12 @@ class Vi_Iuran_Produk extends Admin_Controller {
         $this->load->model('vi_iuran_produk_model');
         $this->load->model("history_model");
         $this->load->model('wilayah_model');
-        $this->modul_ini     = 'apps-menu';
-        $this->sub_modul_ini = 'pengaturan-peta';
+        $this->load->library('session');
     }
     
     public function index()
-    {
-        $data['query'] = $this->vi_iuran_produk_model->getData()->result();
-        
-        return view("admin.iuran.vi_iuran_produk.index", $data);
+    {   
+        return view("admin.iuran.vi_iuran_produk.index");
     }
     
     public function form()
@@ -34,9 +31,8 @@ class Vi_Iuran_Produk extends Admin_Controller {
     public function insert()
     {
         $data = array(
-            'desaid' => $this->input->post('desaid'),
             'nama_produk' => $this->input->post('nama_produk'),
-            'adm_produk' => $this->input->post('adm_produk')
+            'adm_produk' => 2
         );
 
         $history = array(
@@ -67,9 +63,8 @@ class Vi_Iuran_Produk extends Admin_Controller {
         $vi_iuran_produk = $this->vi_iuran_produk_model->getEditData($id)->row();
 
         $data = array(
-            'desaid' => $this->input->post('desa_id'),
             'nama_produk' => $this->input->post('nama_produk'),
-            'adm_produk' => $this->input->post('adm_produk')
+            'adm_produk' => 2
         );
 
         $history = array(
@@ -136,6 +131,16 @@ class Vi_Iuran_Produk extends Admin_Controller {
         } catch (Exception $e) {
             die("Error Loading File : " . $e->getMessage());
         }
+    }
+    
+    public function dataTable()
+    {
+        $postData = $this->input->get();
+        $data["query"] = $this->vi_iuran_produk_model->getDataTable($postData);
+        $data["recordsTotal"] = $this->vi_iuran_produk_model->count_all();
+        $data["recordsFiltered"] = $this->vi_iuran_produk_model->count_filtered($postData);
+        
+        echo json_encode($data);
     }
 }
 
