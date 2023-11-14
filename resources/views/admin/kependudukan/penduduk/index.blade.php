@@ -180,7 +180,7 @@
             </div>
             <div class="card-body pt-0">
                 <div class="table-responsive">
-                    <table id="example" class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                    <table id="example" class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" style="width: 100%">
                         <thead>
                             <tr class="fw-bold text-muted bg-light text-uppercase align-middle">
                                 <th class="min-w-25px text-center">
@@ -225,7 +225,89 @@
 <script src="{{ asset('custom/javascript/bootstrap.min.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#example").DataTable()
+        $("#example").DataTable({
+            "scrollX": true,
+            "scrollCollapse": true,
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "<?= site_url('penduduk/dataTable') ?>",
+                "type": "GET",
+                "dataSrc": function(json) {
+                    return json.query;
+                }
+            },
+            "columnDefs": [{
+                "orderable": false
+            }],
+            "columns": [{
+                "data": null
+            },
+            {
+                "data": null,
+                render: function(data, type, row, meta) {
+                    return '<div style="text-align: center;">'+ (meta.row + meta.settings._iDisplayStart + 1) +'.</div>';
+                }
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": 'nik'
+            },
+            {
+                "data": null
+            },
+            {
+                "data": 'nama'
+            },
+            {
+                "data": null
+            },
+            {
+                "data": 'nama_ayah'
+            },
+            {
+                "data": 'nama_ibu'
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            }],
+        })
     });
 </script>
 

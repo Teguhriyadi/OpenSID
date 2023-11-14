@@ -122,6 +122,16 @@ class Penduduk extends Admin_Controller
         return view("admin.kependudukan.penduduk.index");
     }
 
+    public function dataTable()
+    {
+        $postData = $this->input->get();
+        $data["query"] = $this->penduduk_model->getDataTable($postData);
+        $data["recordsTotal"] = $this->penduduk_model->count_all();
+        $data['recordsFiltered'] = $this->penduduk_model->count_filtered($postData);
+
+        echo json_encode($data);
+    }
+
     public function ambil_foto()
     {
         $foto = $this->input->get('foto');
