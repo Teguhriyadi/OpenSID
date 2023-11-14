@@ -4,37 +4,6 @@
         data-kt-scroll-wrappers="#kt_app_sidebar_navs" data-kt-scroll-offset="5px">
         <div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false"
             class="app-sidebar-menu-primary menu menu-column menu-rounded menu-sub-indention menu-state-bullet-primary">
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
-                    <span class="menu-icon">
-                        <i class="fa-duotone fa-home fs-2"></i>
-                    </span>
-                    <span class="menu-title">
-                        Master Iuran
-                    </span>
-                    <span class="menu-arrow"></span>
-                </span>
-                <div class="menu-sub menu-sub-accordion">
-                    <div class="menu-item">
-                        <a href="<?= site_url('vi_iuran_produk') ?>" class="menu-link">
-                            <span class="menu-bullet">
-                                <i class="fa-duotone fa-home"></i>
-                            </span>
-                            <span class="menu-title">
-                                Iuran Produk
-                            </span>
-                        </a>
-                        <a href="<?= site_url('vi_iuran') ?>" class="menu-link">
-                            <span class="menu-bullet">
-                                <i class="fa-duotone fa-home"></i>
-                            </span>
-                            <span class="menu-title">
-                                Iuran
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
             <?php foreach ($modul as $mod) : ?>
                 <?php if (count($mod["submodul"]) == 0) : ?>
                 <div class="menu-item mb-2">
@@ -77,6 +46,37 @@
                 </div>
                 <?php endif ?>
             <?php endforeach ?>
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="fa-duotone fa-home fs-2"></i>
+                    </span>
+                    <span class="menu-title">
+                        Tools
+                    </span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a href="<?= site_url('vi_iuran_produk') ?>" class="menu-link">
+                            <span class="menu-bullet">
+                                <i class="fa-duotone fa-home"></i>
+                            </span>
+                            <span class="menu-title">
+                                Iuran Produk
+                            </span>
+                        </a>
+                        <a href="<?= site_url('vi_iuran') ?>" class="menu-link">
+                            <span class="menu-bullet">
+                                <i class="fa-duotone fa-home"></i>
+                            </span>
+                            <span class="menu-title">
+                                Iuran
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

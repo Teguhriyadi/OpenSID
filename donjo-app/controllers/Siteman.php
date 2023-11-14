@@ -80,7 +80,7 @@ class Siteman extends MY_Controller
         $_SESSION['cari']       = '';
         $_SESSION['pengumuman'] = 0;
         $_SESSION['sesi']       = 'kosong';
-        $this->load->view('siteman', $data);
+        $this->load->view('siteman-login', $data);
     }
 
     public function auth()
