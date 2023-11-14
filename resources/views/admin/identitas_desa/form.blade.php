@@ -38,8 +38,13 @@
     </div>
 @endsection
 
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
-    <form action="" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row gap-5 gap-xl-8">
+    <form action="<?= $form_action ?>" method="POST" enctype="multipart/form-data"
+        class="d-flex flex-column flex-lg-row gap-5 gap-xl-8">
         <div class="d-flex flex-column flex-lg-row-auto w-lg-250px w-xl-350px gap-5 gap-xl-8">
             <div class="card shadow-sm border-0 card-flush">
                 <div class="card-header border-0 py-7">
@@ -57,8 +62,8 @@
                                 data-kt-image-input-action="change" data-bs-toggle="tooltip"
                                 data-bs-original-title="Pilih file">
                                 <i class="fa-duotone fa-pen-swirl fs-7"></i>
-                                <input type="file" name="logo_desa" accept=".png, .jpg, .jpeg, .webp, .avif">
-                                <input type="hidden" name="logo_desa_remove">
+                                <input type="file" name="logo" accept=".png, .jpg, .jpeg, .webp, .avif">
+                                <input type="hidden" name="old_logo" value="{{ $main->logo }}">
                             </label>
                             <span class="btn btn-icon btn-circle btn-active-color-danger w-25px h-25px bg-body shadow"
                                 data-kt-image-input-action="cancel" data-bs-toggle="tooltip" data-bs-original-title="Batal">
@@ -102,7 +107,7 @@
                                 data-bs-original-title="Pilih file">
                                 <i class="fa-duotone fa-pen-swirl fs-7"></i>
                                 <input type="file" name="kantor_desa" accept=".png, .jpg, .jpeg, .webp, .avif">
-                                <input type="hidden" name="kantor_desa_remove">
+                                <input type="hidden" name="old_kantor_desa" value="{{ $main->kantor_desa }}">
                             </label>
                             <span class="btn btn-icon btn-circle btn-active-color-danger w-25px h-25px bg-body shadow"
                                 data-kt-image-input-action="cancel" data-bs-toggle="tooltip" data-bs-original-title="Batal">
@@ -133,7 +138,8 @@
                             <div class="position-absolute top-0 start-0 rounded h-100 bg-primary w-4px">
                             </div>
                             <div class="fw-semibold ms-5">
-                                <span class="fs-5 fw-bold text-gray-900 text-hover-primary">{{ ucwords($setting->sebutan_desa) }}</span>
+                                <span
+                                    class="fs-5 fw-bold text-gray-900 text-hover-primary">{{ ucwords($setting->sebutan_desa) }}</span>
                                 <div class="fs-7 text-gray-700 fw-semibold">
                                     Informasi tentang {{ ucwords($setting->sebutan_desa) }}
                                 </div>
@@ -145,14 +151,9 @@
                                     {{ ucwords($setting->sebutan_desa) }}
                                 </label>
                                 @if (cek_koneksi_internet())
-                                    <select class="form-select mb-2" name="desa" data-control="select2" data-placeholder="Pilih desa" id="pilih_desa">
-                                        <?php foreach ($query as $q) : ?>
-                                        <option value="<?= $q->id ?>">
-                                            <?= $q->nama_desa ?> - <?= $q->nama_kecamatan ?> - <?= $q->nama_kabupaten ?> - <?= $q->nama_propinsi ?>
-                                        </option>
-                                        <?php endforeach ?>
-                                    </select>
+                                    <select class="form-select mb-2 select2" name="pilih_desa" id="pilih_desa"></select>
                                 @endif
+                                <input type="hidden" name="nama_desa" id="nama_desa" value="{{ $main->nama_desa }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -162,7 +163,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Kode Desa
                                 </label>
-                                <input type="text" name="kode_desa" class="form-control mb-2" id="kode_desa" placeholder="Kode desa" disabled>
+                                <input type="text" name="kode_desa" class="form-control mb-2" id="kode_desa"
+                                    placeholder="Kode desa" readonly value="{{ $main->kode_desa }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -173,8 +175,8 @@
                             <label class="required form-label fs-5 fw-bold">
                                 Kode Pos
                             </label>
-                            <input type="text" name="kode_pos" class="form-control mb-2" placeholder="Kode pos"
-                                value="1109">
+                            <input type="text" name="kode_pos" id="kode_pos" class="form-control mb-2"
+                                placeholder="Kode pos" value="{{ $main->kode_pos }}">
                             <div class="text-gray-600 fw-semibold fs-7">
                             </div>
                             <div class="fv-plugins-message-container invalid-feedback">
@@ -186,7 +188,7 @@
                                     Kepala Desa
                                 </label>
                                 <input type="text" name="kepala_desa" class="form-control mb-2"
-                                    placeholder="Kepala desa" value="">
+                                    placeholder="Kepala desa" value="" readonly>
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -197,7 +199,7 @@
                                     NIP Kepala Desa
                                 </label>
                                 <input type="text" name="nip_kepala_desa" class="form-control mb-2"
-                                    placeholder="NIP kepala desa" value="">
+                                    placeholder="NIP kepala desa" value="" readonly>
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -208,8 +210,8 @@
                             <label class="required form-label fs-5 fw-bold">
                                 Alamat Kantor Desa
                             </label>
-                            <textarea class="form-control mb-2" name="alamat_kantor_desa" placeholder="Alamat kantor desa"
-                                id="alamat_kantor_desa" rows="5"></textarea>
+                            <textarea class="form-control mb-2" name="alamat_kantor" placeholder="Alamat kantor desa" id="alamat_kantor_desa"
+                                rows="5" required>{{ $main->alamat_kantor }}</textarea>
                             <div class="text-gray-600 fw-semibold fs-7">
                             </div>
                             <div class="fv-plugins-message-container invalid-feedback">
@@ -220,7 +222,7 @@
                                 Email Desa
                             </label>
                             <input type="text" name="email_desa" class="form-control mb-2" placeholder="Email desa"
-                                value="1109">
+                                value="{{ $main->email_desa }}">
                             <div class="text-gray-600 fw-semibold fs-7">
                             </div>
                             <div class="fv-plugins-message-container invalid-feedback">
@@ -231,8 +233,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     No Telepon Desa
                                 </label>
-                                <input type="text" name="no_telepon_desa" class="form-control mb-2"
-                                    placeholder="No telepon desa" value="">
+                                <input type="text" name="telepon" class="form-control mb-2"
+                                    placeholder="No telepon desa" value="{{ $main->telepon }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -242,8 +244,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     No Ponsel Desa
                                 </label>
-                                <input type="text" name="no_ponsel_desa" class="form-control mb-2"
-                                    placeholder="No ponsel desa" value="">
+                                <input type="text" name="nomor_operator" class="form-control mb-2"
+                                    placeholder="No ponsel desa" value="{{ $main->nomor_operator }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -255,7 +257,7 @@
                                 Website
                             </label>
                             <input type="text" name="website" class="form-control mb-2" placeholder="Website"
-                                value="">
+                                value="{{ $main->website }}">
                             <div class="text-gray-600 fw-semibold fs-7">
                             </div>
                             <div class="fv-plugins-message-container invalid-feedback">
@@ -279,12 +281,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Kecamatan
                                 </label>
-                                <select class="form-select mb-2" name="kecamatan" data-control="select2"
-                                    data-placeholder="Pilih kecamatan">
-                                    <option></option>
-                                    <option value="1" selected>Kecamatan 1</option>
-                                    <option value="2">Kecamatan 2</option>
-                                </select>
+                                <input type="text" name="nama_kecamatan" id="nama_kecamatan" class="form-control"
+                                    placeholder="Nama Kecamatan" readonly value="{{ $main->nama_kecamatan }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -295,7 +293,8 @@
                                     Kode Kecamatan
                                 </label>
                                 <input type="text" name="kode_kecamatan" class="form-control mb-2"
-                                    placeholder="Kode kecamatan" value="1109">
+                                    id="kode_kecamatan" placeholder="Kode kecamatan" readonly
+                                    value="{{ $main->kode_kecamatan }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -307,8 +306,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Nama Camat
                                 </label>
-                                <input type="text" name="nama_camat" class="form-control mb-2"
-                                    placeholder="Nama camat" value="1109">
+                                <input type="text" name="nama_kepala_camat" class="form-control mb-2"
+                                    placeholder="Nama Kecamatan" value="{{ $main->nama_kepala_camat }}" required>
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -318,8 +317,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     NIP Camat
                                 </label>
-                                <input type="text" name="nip_camat" class="form-control mb-2" placeholder="NIP camat"
-                                    value="1109">
+                                <input type="text" name="nip_kepala_camat" class="form-control mb-2"
+                                    placeholder="NIP camat" value="{{ $main->nip_kepala_camat }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -344,12 +343,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Kota/Kabupaten
                                 </label>
-                                <select class="form-select mb-2" name="kabupaten" data-control="select2"
-                                    data-placeholder="Pilih kota/kabupaten">
-                                    <option></option>
-                                    <option value="1" selected>Kota 1</option>
-                                    <option value="2">Kabupaten 2</option>
-                                </select>
+                                <input type="text" name="nama_kabupaten" id="nama_kabupaten" class="form-control"
+                                    placeholder="Kota / Kabupaten" readonly value="{{ $main->nama_kabupaten }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -359,8 +354,9 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Kode Kota/Kabupaten
                                 </label>
-                                <input type="text" name="kode_kabupaten" class="form-control mb-2"
-                                    placeholder="Kode kota/kabupaten" value="1109">
+                                <input type="text" name="kode_kabupaten" id="kode_kabupaten"
+                                    class="form-control mb-2" placeholder="Kode kota/kabupaten" readonly
+                                    value="{{ $main->kode_kabupaten }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -385,12 +381,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Provinsi
                                 </label>
-                                <select class="form-select mb-2" name="provinsi" data-control="select2"
-                                    data-placeholder="Pilih provinsi">
-                                    <option></option>
-                                    <option value="1" selected>Provinsi 1</option>
-                                    <option value="2">Provinsi 2</option>
-                                </select>
+                                <input type="text" name="nama_propinsi" id="nama_propinsi" class="form-control"
+                                    placeholder="Provinsi" readonly value="{{ $main->nama_propinsi }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -400,8 +392,8 @@
                                 <label class="required form-label fs-5 fw-bold">
                                     Kode Provinsi
                                 </label>
-                                <input type="text" name="kode_provinsi" class="form-control mb-2"
-                                    placeholder="Kode provinsi" value="11">
+                                <input type="text" name="kode_propinsi" class="form-control mb-2" id="kode_propinsi"
+                                    placeholder="Kode provinsi" readonly value="{{ $main->kode_propinsi }}">
                                 <div class="text-gray-600 fw-semibold fs-7">
                                 </div>
                                 <div class="fv-plugins-message-container invalid-feedback">
@@ -427,25 +419,76 @@
     </form>
 @endsection
 
-@section("javascript")
+@section('javascript')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            let server = "{{ config_item('server_pantau') }}"
+            let token = "{{ config_item('token_pantau') }}"
+            let select2 = $('.select2');
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#pilih_desa").on("change", function() {
-            let pilih_desa = $("#pilih_desa").val();
-
-            $.ajax({
-                type: "GET",
-                url: "<?= site_url('identitas_desa/pilih/') ?>" + pilih_desa,
-                success: function(data) {
-                    $("#kode_desa").val(data.kode_pos);
+            $('.select2').select2({
+                placeholder: 'Pilih desa',
+                minimumInputLength: 0,
+                escapeMarkup: function(markup) {
+                    return markup;
                 },
-                error: function(error) {
-                    console.log("Error : " + error);
-                }
-            })
-        });
-    });
-</script>
+                templateResult: function(data) {
+                    return data.text;
+                },
+                templateSelection: function(data) {
+                    $("#nama_kecamatan").val(data.nama_kec)
+                    $("#kode_desa").val(data.kode_desa)
+                    $("#nama_desa").val(data.nama_desa)
+                    $("#kode_propinsi").val(data.kode_prov)
+                    $("#nama_propinsi").val(data.nama_prov)
+                    $("#nama_kabupaten").val(data.nama_kab)
+                    $("#kode_kabupaten").val(data.kode_kab)
+                    $("#kode_kecamatan").val(data.kode_kec)
 
+                    return data.text
+                },
+                ajax: {
+                    url: function(params) {
+                        return server + "/index.php/api/wilayah/caridesa?&token=" + token + "&page=" + (
+                            params.page || 1);
+                    },
+                    dataType: 'json',
+                    processResults: function(data) {
+                        return {
+                            results: data.results,
+                            pagination: {
+                                more: data.results.length >= 10
+                            }
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            let existing = $("#nama_desa").val();
+            let ambil_kode_desa = $("#kode_desa").val();
+
+            console.log(ambil_kode_desa);
+
+            if (existing) {
+                $.ajax({
+                    url: server + "/index.php/api/wilayah/caridesa?&token=" + token,
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function(data) {
+                        let selectedOption = data.results.find(option => option.nama_desa === existing);
+
+                        if (selectedOption) {
+                            let newOption = new Option(selectedOption.text, selectedOption.id, true,
+                                true);
+                            select2.append(newOption).trigger('change');
+                        }
+                    }
+                })
+            }
+        });
+    </script>
 @endsection

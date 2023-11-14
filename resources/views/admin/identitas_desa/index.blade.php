@@ -43,7 +43,7 @@
             <div class=" fw-semibold">
                 <h4 class="text-gray-900 fw-bold">Informasi</h4>
                 <div class="fs-6 text-gray-700 ">
-                    Silahkan tentukan Kepala Desa Subang
+                    Silahkan tentukan Kepala Desa {{ $main->nama_desa }}
                     melalui modul <a class="fw-bold" href="./buku_peraturan_desa.html">Pemerintah Desa</a>.
                 </div>
             </div>
@@ -56,14 +56,16 @@
                 <div class="card-body">
                     <div class="d-flex flex-center flex-column py-5">
                         <div class="mb-7 text-center">
-                            <img src="https://sidesa.sipantas.id/assets/files/logo/opensid_logo.png" class="w-200px"
+                            <img src="{{ gambar_desa($main['path_logo']) }}" class="w-200px"
                                 alt="">
                         </div>
                         <h1 class="fw-semibold text-gray-800 text-center lh-lg">
-                            <span class="fw-bolder">Desa Subang</span>
+                            <span class="fw-bolder">
+                                Desa {{ $main->nama_desa }}
+                            </span>
                         </h1>
                         <span class="card-label fw-bold text-gray-700 text-center">
-                            Kecamatan Subang, Kabupaten Kuningan, Provinsi Jawa Barat
+                            Kecamatan {{ $main->nama_kecamatan }}, Kabupaten {{ $main->nama_kabupaten }}, Provinsi {{ $main->nama_propinsi }}
                         </span>
                     </div>
                     <div class="d-flex flex-stack justify-content-end fs-4">
@@ -117,13 +119,13 @@
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Nama</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">Subang</span>
+                                            <span class="text-gray-700 fw-semibold">{{ $main->nama_desa }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Kode</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">32.08.03.2003</span>
+                                            <span class="text-gray-700 fw-semibold">{{ $main->kode_desa }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
@@ -141,35 +143,34 @@
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Alamat</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span semfw-semibold class="text-gray-700 fw-normal cursor-default">Jl.
-                                                Gang Buntu No 35</span>
+                                            <span semfw-semibold class="text-gray-700 fw-normal cursor-default">{{ $main['alamat_kantor'] }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Email</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
                                             <span semfw-semibold
-                                                class="text-gray-700 fw-normal cursor-default">aaa@gmail.com</span>
+                                                class="text-gray-700 fw-normal cursor-default">{{ $main['email_desa'] }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Telpon</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
                                             <span semfw-semibold
-                                                class="text-gray-700 fw-normal cursor-default">08770266199</span>
+                                                class="text-gray-700 fw-normal cursor-default">{{ $main['telepon'] }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Ponsel</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
                                             <span semfw-semibold
-                                                class="text-gray-700 fw-normal cursor-default">086789712812</span>
+                                                class="text-gray-700 fw-normal cursor-default">{{ $main['nomor_operator'] }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Website</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span semfw-semibold class="text-gray-700 fw-normal cursor-default">-</span>
+                                            <span semfw-semibold class="text-gray-700 fw-normal cursor-default">{{ $main['website'] }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -196,13 +197,13 @@
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Nama</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">Subang</span>
+                                            <span class="text-gray-700 fw-semibold">{{ $main->nama_kecamatan }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Kode</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">32.08.03</span>
+                                            <span class="text-gray-700 fw-semibold">{{ $main->kode_kecamatan }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
@@ -243,13 +244,13 @@
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Nama</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">Kuningan</span>
+                                            <span class="text-gray-700 fw-semibold">{{ $main->nama_kabupaten }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Kode</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">32.08</span>
+                                            <span class="text-gray-700 fw-semibold">{{ $main->kode_kabupaten }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -277,14 +278,15 @@
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Nama</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">Jawa
-                                                Barat</span>
+                                            <span class="text-gray-700 fw-semibold">
+                                                {{ $main->nama_propinsi }}
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Kode</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span class="text-gray-700 fw-semibold">32</span>
+                                            <span class="text-gray-700 fw-semibold">{{ $main->kode_propinsi }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -297,7 +299,9 @@
                     <div class="card shadow-sm card-flush border-0">
                         <div class="card-header border-0 py-7">
                             <div class="card-title">
-                                <h2>Desa Subang</h2>
+                                <h2>
+                                    Desa {{ $main->nama_desa }}
+                                </h2>
                             </div>
                             <div class="card-toolbar align-self-center d-flex column-gap-2">
                                 <a href="#" class="btn btn-icon btn-sm btn-danger align-self-center"
@@ -362,7 +366,9 @@
                     <div class="card shadow-sm card-flush border-0">
                         <div class="card-header border-0 py-7">
                             <div class="card-title">
-                                <h2>Desa Subang</h2>
+                                <h2>
+                                    Desa {{ $main->nama_desa }}
+                                </h2>
                             </div>
                             <div class="card-toolbar align-self-center d-flex column-gap-2">
                                 <a href="#" class="btn btn-icon btn-sm btn-danger align-self-center"

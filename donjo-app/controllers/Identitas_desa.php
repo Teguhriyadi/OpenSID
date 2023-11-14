@@ -87,11 +87,21 @@ class Identitas_desa extends Admin_Controller
     {
         $this->redirect_hak_akses('u');
 
+        $main = null;
+
+        if (Schema::hasTable('ref_jabatan')) {
+            $main = Config::first();
+        }
+
         $nomor_operator = Schema::hasColumn('config', 'nomor_operator');
 
-        $data["query"] = $this->Config_model->getDataDesa();
+        if ($main) {
+            $form_action = route('identitas_desa.update', $main->id);
+        } else {
+            $form_action = route('identitas_desa.insert');
+        }
 
-        return view('admin.identitas_desa.form', $data, compact('nomor_operator'));
+        return view('admin.identitas_desa.form', compact('main', 'form_action', 'nomor_operator'));
     }
 
     public function pilih($id_desa)
@@ -113,9 +123,10 @@ class Identitas_desa extends Admin_Controller
         $this->redirect_hak_akses('u');
 
         if (Config::create($this->validate($this->request))) {
-            return json([
-                'status' => true,
-            ]);
+            // return json([
+            //     'status' => true,
+            // ]);
+            return redirect("identitas_desa");
         }
 
         return json([
@@ -137,9 +148,10 @@ class Identitas_desa extends Admin_Controller
         $data = Config::findOrFail($id);
 
         if ($data->update(static::validate($this->request))) {
-            return json([
-                'status' => true,
-            ]);
+            // return json([
+            //     'status' => true,
+            // ]);
+            return redirect("identitas_desa");
         }
 
         return json([

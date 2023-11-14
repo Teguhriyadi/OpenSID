@@ -133,7 +133,7 @@
                             <label class="required form-label fs-5 fw-bold">
                                 Nama Pegawai
                             </label>
-                            <input type="text" name="nama_pegawai" class="form-control mb-2" placeholder="Nama pegawai"
+                            <input type="text" name="pamong_nama" class="form-control mb-2" placeholder="Nama pegawai"
                                 value="">
                             <div class="text-gray-600 fw-semibold fs-7">
                             </div>
@@ -344,12 +344,13 @@
                             <label class="required form-label fs-5 fw-bold">
                                 Jabatan
                             </label>
-                            <select class="form-select mb-2" name="jabatan" data-control="select2"
-                                data-placeholder="Pilih jabatan">
+                            <select class="form-select mb-2 select2" name="jabatan_id">
                                 <option></option>
-                                <option value="1">Kadus Ladang Indah</option>
-                                <option value="2">Kaur Perencanaan</option>
-                                <option value="3">Kaur Keuangan</option>
+                                <?php foreach ($jabatan as $key => $value) : ?>
+                                    <option value="1">
+                                        <?= $value ?>
+                                    </option>
+                                <?php endforeach ?>
                             </select>
                             <div class="text-gray-600 fw-semibold fs-7">
                             </div>

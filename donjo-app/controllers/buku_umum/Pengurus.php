@@ -113,6 +113,7 @@ class Pengurus extends Admin_Controller
 
         // Cek apakah kades
         $jabatan_kades = kades()->id;
+
         if (Pamong::where('jabatan_id', $jabatan_kades)->where('pamong_status', 1)->exists() && $data['pamong']['jabatan_id'] != $jabatan_kades) {
             $semua_jabatan = $semua_jabatan->except($jabatan_kades);
         }
