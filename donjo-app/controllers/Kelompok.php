@@ -46,7 +46,7 @@ class Kelompok extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['kelompok_model', 'pamong_model']);
+        $this->load->model(['kelompok_model', 'pamong_model', "kelompok_master_model"]);
         $this->modul_ini     = 'kependudukan';
         $this->sub_modul_ini = 'kelompok';
         $this->_set_page     = ['20', '50', '100'];
@@ -63,9 +63,30 @@ class Kelompok extends Admin_Controller
         redirect($this->controller);
     }
 
-    public function index()
+    public function index($id = 0)
     {
-        return view("admin.lembaga_desa.index");
+        $data["query"] = $this->kelompok_master_model->getDataList();
+        $data['list_penduduk'] = $this->kelompok_model->list_penduduk();
+
+        if ($id) {
+            $data['kelompok']    = $this->kelompok_model->get_kelompok($id);
+            $data['form_action'] = site_url("{$this->controller}/update/{$p}/{$o}/{$id}");
+        } else {
+            $data['kelompok']    = null;
+            $data['form_action'] = site_url("{$this->controller}/insert");
+        }
+        
+        return view("admin.lembaga_desa.index", $data);
+    }
+
+    public function dataTable()
+    {
+        $postData = $this->input->get();
+        $data["query"] = $this->kelompok_model->getDataTable($postData);
+        $data["recordsTotal"] = $this->kelompok_model->count_all();
+        $data['recordsFiltered'] = $this->kelompok_model->count_filtered($postData);
+
+        echo json_encode($data);
     }
 
     public function anggota($id = 0, $p = 1, $o = 0)

@@ -51,16 +51,18 @@
 
                         <div id="kt_kategori_lembaga" data-bs-parent="#kt_aside_menu"
                             class="mt-2 accordion-collapse collapse show">
+                            <?php foreach ($query as $q) : ?>
                             <div class="menu-item position-relative">
                                 <div class="position-absolute top-0 start-0 rounded h-100 bg-primary w-4px">
                                 </div>
-                                <a href="#" class="menu-link active">
+                                <a href="<?= $q->id ?>" class="menu-link active">
                                     <span class="menu-title">
-                                        Kemasyarakatan
+                                        <?= $q->kelompok ?>
                                     </span>
                                     <span class="menu-badge fs-7 fw-normal text-muted"></span>
                                 </a>
                             </div>
+                            <?php endforeach ?>
                             <div class="menu-item mt-5">
                                 <a href="<?= site_url('lembaga_master') ?>" class="btn btn-sm btn-primary w-100">
                                     Kelolah Kategori Lembaga
@@ -99,9 +101,9 @@
             <div class="card shadow-sm card-flush border-0">
                 <div class="card-header border-0 py-7">
                     <div class="card-toolbar align-self-center d-flex column-gap-2">
-                        <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center"
-                            data-modal-target="#mdl_lembaga_desa" data-title="Tambah Lembaga" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Tambah">
+                        <a href="#" class="btn_add btn btn-icon btn-sm btn-primary align-self-center"
+                            data-title="Tambah" data-bs-target="#tambah-data" data-bs-toggle="modal" data-bs-placement="top"
+                            title="Tambah">
                             <i class="fa-solid fa-plus fs-7"></i>
                         </a>
                         <a href="#" class="btn_del btn btn-icon btn-sm btn-danger align-self-center"
@@ -118,8 +120,8 @@
                             data-bs-placement="top" title="Unduh">
                             <i class="fa-solid fa-download fs-7"></i>
                         </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Bersihkan">
+                        <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Bersihkan">
                             <i class="fa-solid fa-refresh fs-7"></i>
                         </a>
                     </div>
@@ -152,15 +154,179 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tambah-data" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered mw-600px">
+            <div class="modal-content">
+                <form class="form" action="<?= $form_action ?>" method="POST">
+                    <div class="modal-header position-relative justify-content-center">
+                        <h2 class="m-0 p-0" id="mdl_title">
+                            Tambah Lembaga
+                        </h2>
+                        <div class="btn btn-sm btn-icon btn-active-color-danger position-absolute"
+                            style="top: 17px;right: 15px;" data-bs-dismiss="modal">
+                            <i class="fa-duotone fa-xmark fs-3"></i>
+                        </div>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="row mb-5">
+                            <div class="fv-row col-md-6 fv-plugins-icon-container flex-md-root">
+                                <label class="required form-label fs-5 fw-bold">
+                                    Nama Lembaga
+                                </label>
+                                <input type="text" name="nama" class="form-control mb-2"
+                                    placeholder="Nama lembaga">
+                                <div class="text-gray-600 fw-semibold fs-7">
+                                </div>
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="fv-row col-md-6 fv-plugins-icon-container flex-md-root">
+                                <label class="required form-label fs-5 fw-bold">
+                                    Kode Lembaga
+                                </label>
+                                <input type="text" name="kode" class="form-control mb-2"
+                                    placeholder="Kode lembaga">
+                                <div class="text-gray-600 fw-semibold fs-7">
+                                    Pastikan kode belum pernah dipakai di data lembaga / di
+                                    data kelompok.
+                                </div>
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="fv-row col-md-6 fv-plugins-icon-container flex-md-root">
+                                <label class="required form-label fs-5 fw-bold">
+                                    Kategori Lembaga
+                                </label>
+                                <select class="form-select mb-2" data-dropdown-parent="#tambah-data"
+                                    data-control="select2" data-placeholder="Kategori Lembaga" name="id_master"
+                                    id="id_master">
+                                    <option value=""></option>
+                                    @foreach ($query as $q)
+                                        <option value="{{ $q->id }}">
+                                            {{ $q->kelompok }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="text-gray-600 fw-semibold fs-7">
+                                </div>
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="fv-row col-md-6 fv-plugins-icon-container flex-md-root">
+                                <label class="required form-label fs-5 fw-bold">
+                                    Ketua Lembaga
+                                </label>
+                                <select class="form-select mb-2" data-dropdown-parent="#tambah-data"
+                                    data-control="select2" data-placeholder="Ketua Lembaga" name="id_ketua"
+                                    id="id_ketua">
+                                    <option value=""></option>
+                                    @foreach ($list_penduduk as $list)
+                                        <option value="<?= $list["id"] ?>">
+                                            NIK : <?= $list["nik"] ?> - <?= $list["nama"] ?>
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="text-gray-600 fw-semibold fs-7">
+                                </div>  
+                                <div class="fv-plugins-message-container invalid-feedback">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fv-row w-100 fv-plugins-icon-container mb-5">
+                            <label class="required form-label fs-5 fw-bold">
+                                Deskripsi Lembaga
+                            </label>
+                            <textarea name="keterangan" id="keterangan" rows="3" placeholder="Deskripsi lembaga"
+                                class="form-control"></textarea>
+                            <div class="text-gray-600 fw-semibold fs-7">
+                            </div>
+                            <div class="fv-plugins-message-container invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center gap-5">
+                            <button type="reset" data-bs-dismiss="modal" class="btn btn-sm btn-light">
+                                Batal
+                            </button>
+
+                            <button type="submit" class="btn btn-sm btn-primary" data-kt-indicator="off">
+                                <span class="indicator-label">
+                                    Simpan
+                                </span>
+                                <span class="indicator-progress">
+                                    Proses...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END -->
 @endsection
 
-@section("javascript")
-
-<script src="{{ asset('custom/javascript/customDataTables.min.js') }}"></script>
-<script type="text/javascript">
-    $("#example").DataTable({
-        "scrollX": true
-    });
-</script>
-
+@section('javascript')
+    <script src="{{ asset('custom/javascript/customDataTables.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#id_master").select2();
+            $("#id_ketua").select2();
+        });
+        $("#example").DataTable({
+            "scrollX": true,
+            "scrollCollapse": true,
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "<?= site_url('lembaga/dataTable') ?>",
+                "type": "GET",
+                "dataSrc": function(json) {
+                    return json.query;
+                }
+            },
+            "columnDefs": [{
+                "orderable": false
+            }],
+            "columns": [{
+                "data": null,
+            },
+            {
+                "data": null,
+                render: function(data, type, row, meta) {
+                    return '<div style="text-align: center;">'+ (meta.row + meta.settings._iDisplayStart + 1) +'.</div>';
+                }
+            },
+            {
+                "data": null,
+                render: function(data, type, row, meta) {
+                    return `
+                        <a href="<?= site_url('lembaga/delete/') ?>` + data.id + `" class="btn_del btn btn-icon btn-sm btn-danger align-self-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data Terpilih">
+                            <i class="fa-solid fa-trash fs-7"></i>
+                        </a>
+                    `
+                }
+            },
+            {
+                "data": "kode"
+            },
+            {
+                "data": null
+            },
+            {
+                "data": null
+            },
+            {
+                "data": "tipe"
+            },
+            {
+                "data": null
+            }],
+        });
+    </script>
 @endsection

@@ -177,6 +177,16 @@ class Kelompok_master_model extends MY_Model
         return $this->db;
     }
 
+    public function getDataList()
+    {
+        $this->db->from($this->table);
+        $this->db->order_by("id", "DESC");
+        $query = $this->db->get();
+
+        return $query->result();
+        
+    }
+
     public function getDataTable($postData)
     {
         $this->get_datatable($postData);
