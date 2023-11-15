@@ -439,14 +439,16 @@
                     return data.text;
                 },
                 templateSelection: function(data) {
-                    $("#nama_kecamatan").val(data.nama_kec)
-                    $("#kode_desa").val(data.kode_desa)
-                    $("#nama_desa").val(data.nama_desa)
-                    $("#kode_propinsi").val(data.kode_prov)
-                    $("#nama_propinsi").val(data.nama_prov)
-                    $("#nama_kabupaten").val(data.nama_kab)
-                    $("#kode_kabupaten").val(data.kode_kab)
-                    $("#kode_kecamatan").val(data.kode_kec)
+                    if (data && data.id && data.nama_desa) {
+                        $("#nama_kecamatan").val(data.nama_kec)
+                        $("#kode_desa").val(data.kode_desa)
+                        $("#nama_desa").val(data.nama_desa)
+                        $("#kode_propinsi").val(data.kode_prov)
+                        $("#nama_propinsi").val(data.nama_prov)
+                        $("#nama_kabupaten").val(data.nama_kab)
+                        $("#kode_kabupaten").val(data.kode_kab)
+                        $("#kode_kecamatan").val(data.kode_kec)
+                    }
 
                     return data.text
                 },
@@ -471,15 +473,13 @@
             let existing = $("#nama_desa").val();
             let ambil_kode_desa = $("#kode_desa").val();
 
-            console.log(ambil_kode_desa);
-
             if (existing) {
                 $.ajax({
                     url: server + "/index.php/api/wilayah/caridesa?&token=" + token,
                     type: "GET",
                     dataType: "JSON",
                     success: function(data) {
-                        let selectedOption = data.results.find(option => option.nama_desa === existing);
+                        let selectedOption = data.results.find(option => option.nama_desa == existing);
 
                         if (selectedOption) {
                             let newOption = new Option(selectedOption.text, selectedOption.id, true,
@@ -487,7 +487,7 @@
                             select2.append(newOption).trigger('change');
                         }
                     }
-                })
+                });
             }
         });
     </script>
