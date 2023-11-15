@@ -1,4 +1,7 @@
 $(document).ready(function () {
+	// off autocomplete
+	$("input").attr("autocomplete", "off");
+
 	// global search animation
 	$(".app-navbar .header-search .search-input").focus(function () {
 		$(this).parents(".header-search").addClass("active");
@@ -65,14 +68,13 @@ $(document).ready(function () {
 	// });
 	// submit
 	$(document).on("submit", "form", function (e) {
-		console.log("ada");
 		e.preventDefault();
 		const btn = $(this).find("[type=submit]");
 		btn.attr("data-kt-indicator", "on").addClass("disabled");
 		setTimeout(() => {
 			btn.attr("data-kt-indicator", "off").removeClass("disabled");
 			Swal.fire({
-				html: `Data berhasil makanan`,
+				html: `Data berhasil submit`,
 				icon: "success",
 				confirmButtonText: "Iya, lanjut!",
 				buttonsStyling: !1,

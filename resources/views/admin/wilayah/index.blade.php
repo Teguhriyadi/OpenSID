@@ -38,16 +38,12 @@
     </div>
 @endsection
 
-@section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
-@endsection
-
 @section('content')
     <div class="card shadow-sm card-flush border-0">
         <div class="card-header border-0 py-7">
             <div class="card-toolbar align-self-center d-flex column-gap-2">
                 <a href="#" class="btn_add btn btn-icon btn-sm btn-primary align-self-center"
-                    data-title="Tambah Dusun" data-modal-target="#mdl_wilayah_administratif" data-bs-toggle="tooltip"
+                    data-title="Tambah Dusun" data-bs-target="#tambah-data" data-bs-toggle="modal"
                     data-bs-placement="top" title="Tambah Dusun">
                     <i class="fa-solid fa-plus fs-7"></i>
                 </a>
@@ -90,12 +86,83 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tambah-data" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered mw-600px">
+            <div class="modal-content">
+                <form class="form" action="<?= $form_action ?>" method="POST">
+                    <div class="modal-header position-relative justify-content-center">
+                        <h2 class="m-0 p-0" id="mdl_title">
+                            Tambah Dusun
+                        </h2>
+                        <div class="btn btn-sm btn-icon btn-active-color-danger position-absolute"
+                            style="top: 17px;right: 15px;" data-bs-dismiss="modal">
+                            <i class="fa-duotone fa-xmark fs-3"></i>
+                        </div>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="fv-row w-100 fv-plugins-icon-container mb-5">
+                            <label class="required form-label fs-5 fw-bold" for="dusun">
+                                Nama Dusun
+                            </label>
+                            <input type="text" name="dusun" id="dusun" class="form-control mb-2" placeholder="Nama dusun">
+                            <div class="text-gray-600 fw-semibold fs-7">
+                            </div>
+                            <div class="fv-plugins-message-container invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="fv-row w-100 fv-plugins-icon-container mb-5">
+                            <label class="required form-label fs-5 fw-bold" for="id_kepala">
+                                NIK/Nama Kepala Dusun
+                            </label>
+                            <select class="form-select mb-2"
+                            data-dropdown-parent="#tambah-data"
+                            data-control="select2"
+                            data-placeholder="NIK/Nama kepala dusun" name="id_kepala" id="id_kepala">
+                            <option value=""></option>
+                            @foreach ($penduduk as $item)
+                            <option value="{{ $item["id"] }}">
+                                NIK : {{ $item["nik"] }} -
+                                {{ $item["nama"] }}
+                            </option>
+                            @endforeach
+                            </select>
+                            <div class="text-gray-600 fw-semibold fs-7">
+                            </div>
+                            <div class="fv-plugins-message-container invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center gap-5">
+                            <button type="reset" data-bs-dismiss="modal" class="btn btn-sm btn-light">
+                                Batal
+                            </button>
+
+                            <button type="submit" class="btn btn-sm btn-primary" data-kt-indicator="off">
+                                <span class="indicator-label">
+                                    Simpan
+                                </span>
+                                <span class="indicator-progress">
+                                    Proses...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END -->
 @endsection
 
 @section('javascript')
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="{{ asset('custom/javascript/customDataTables.min.js') }}"></script>
+    
     <script type="text/javascript">
         $(document).ready(function() {
+
             $("#example").DataTable({
                 "processing": true,
                 "serverSide": true,
@@ -120,9 +187,10 @@
                     {
                         "data": null,
                         render: function(data, type, row, meta) {
+                            let url = "<?= site_url('sid_core/sub_rw/') ?>" + data.id;
                             return `
                         <div class="d-flex justify-content-center flex-shrink-0 gap-2">
-                            <a href="./wilayah_administratif_rw.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah sub dusun" class="btn btn-icon btn-primary btn-sm">
+                            <a href="${url}" data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah sub dusun" class="btn btn-icon btn-primary btn-sm">
                                 <i class="fa-solid fa-timeline fs-6"></i>
                             </a>
                             <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Lokasi" class="btn btn-sm btn-primary btn-icon btn-flex btn-center menu-dropdown" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
@@ -174,10 +242,16 @@
                         }
                     },
                     {
-                        "data": "rw"
+                        "data": "rw",
+                        render: function(data) {
+                            return "<div style='text-align: center'>" + data + "</div>";
+                        }
                     },
                     {
-                        "data": "rt"
+                        "data": "rt",
+                        render: function(data) {
+                            return "<div style='text-align: center'>" + data + "</div>";
+                        }
                     },
                     {
                         "data": null
