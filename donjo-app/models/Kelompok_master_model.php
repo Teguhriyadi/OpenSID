@@ -177,5 +177,42 @@ class Kelompok_master_model extends MY_Model
         return $this->db;
     }
 
+    public function getDataTable($postData)
+    {
+        $this->get_datatable($postData);
+
+        if ($postData["length"] != -1) {
+            $this->db->limit($postData["length"], $postData["start"]);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function count_filtered($postData)
+    {
+        $this->get_datatable($postData);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all()
+    {
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    private function get_datatable($postData)
+    {
+        $this->db->from($this->table);
+
+        if (!empty( $postData["search"]["value"])) {
+            $this->db->like("id", $postData["search"]["value"]);
+        }
+
+        $this->db->order_by('id', "DESC");
+    }
+
     
 }

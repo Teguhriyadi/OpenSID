@@ -79,6 +79,16 @@ class Kelompok_master extends Admin_Controller
         // $this->render('kelompok_master/table', $data);
     }
 
+    public function dataTable()
+    {
+        $postData = $this->input->get();
+        $data["query"] = $this->kelompok_master_model->getDataTable($postData);
+        $data["recordsTotal"] = $this->kelompok_master_model->count_all();
+        $data["recordsFiltered"] = $this->kelompok_master_model->count_filtered($postData);
+        
+        echo json_encode($data);
+    }
+
     public function form($id = 0)
     {
         $this->redirect_hak_akses('u');

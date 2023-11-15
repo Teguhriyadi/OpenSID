@@ -140,7 +140,53 @@
     <script src="{{ asset('custom/javascript/customDataTables.min.js') }}"></script>
     <script type="text/javascript">
         $("#example").DataTable({
-            "scrollX": true
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "<?= site_url('lembaga_master/dataTable') ?>",
+                "type": "GET",
+                "dataSrc": function(json) {
+                    return json.query;
+                }
+            },
+            "columnDefs": [{
+                "orderable": false
+            }],
+            "columns": [{
+                "data": null
+            },
+            {
+                "data": null,
+                render: function(data, type, row, meta) {
+                    return '<div style="text-align: center;">'+ (meta.row + meta.settings._iDisplayStart + 1) +'.</div>';
+                }
+            },
+            {
+                "data": null,
+                render: function(data, type, row, meta) {
+                    return `
+                        <div style="text-align: center;">
+                             
+                            <form action="<?= site_url('lembaga_master/delete/') ?>` + data.id + `" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i> Hapus    
+                                </button>    
+                            </form>   
+                        </div>
+                    `
+                }
+            },
+            {
+                "data": "kelompok"
+            },
+            {
+                "data": "deskripsi"
+            },
+            {
+                "data": null
+            }],
         });
     </script>
 @endsection
