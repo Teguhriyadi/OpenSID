@@ -37,8 +37,7 @@
 @endsection
 
 @section('content')
-    
-    @include("admin.identitas_desa.info_kades")
+    @include('admin.identitas_desa.info_kades')
 
     <div class="d-flex flex-column flex-lg-row gap-5 gap-xl-8">
         <div class="d-flex flex-column flex-lg-row-auto w-lg-250px w-xl-350px">
@@ -46,8 +45,7 @@
                 <div class="card-body">
                     <div class="d-flex flex-center flex-column py-5">
                         <div class="mb-7 text-center">
-                            <img src="{{ gambar_desa($main['path_logo']) }}" class="w-200px"
-                                alt="">
+                            <img src="{{ gambar_desa($main['path_logo']) }}" class="w-200px" alt="">
                         </div>
                         <h1 class="fw-semibold text-gray-800 text-center lh-lg">
                             <span class="fw-bolder">
@@ -55,7 +53,8 @@
                             </span>
                         </h1>
                         <span class="card-label fw-bold text-gray-700 text-center">
-                            Kecamatan {{ $main->nama_kecamatan }}, Kabupaten {{ $main->nama_kabupaten }}, Provinsi {{ $main->nama_propinsi }}
+                            Kecamatan {{ $main->nama_kecamatan }}, Kabupaten {{ $main->nama_kabupaten }}, Provinsi
+                            {{ $main->nama_propinsi }}
                         </span>
                     </div>
                     <div class="d-flex flex-stack justify-content-end fs-4">
@@ -133,7 +132,8 @@
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Alamat</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span semfw-semibold class="text-gray-700 fw-normal cursor-default">{{ $main['alamat_kantor'] }}</span>
+                                            <span semfw-semibold
+                                                class="text-gray-700 fw-normal cursor-default">{{ $main['alamat_kantor'] }}</span>
                                         </div>
                                     </div>
                                     <div class="row mt-3 fs-5 fw-bold">
@@ -160,7 +160,8 @@
                                     <div class="row mt-3 fs-5 fw-bold">
                                         <label class="col-lg-4">Website</label>
                                         <div class="col-lg-8"><span class="me-2">:</span>
-                                            <span semfw-semibold class="text-gray-700 fw-normal cursor-default">{{ $main['website'] }}</span>
+                                            <span semfw-semibold
+                                                class="text-gray-700 fw-normal cursor-default">{{ $main['website'] }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -306,19 +307,17 @@
                         </div>
                         <div class="card-body pt-0">
                             <div class="mb-5">
-                                <iframe class="w-100 rounded-3"
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7911.987315526154!2d112.71904164150094!3d-7.465950470182353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e6d71e2e7351%3A0x5f1df990f0b101cb!2sSekardangan%2C%20Kec.%20Sidoarjo%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1698910558120!5m2!1sid!2sid"
-                                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe width="100%" height="300" frameborder="10" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps?q=<?= $main->lat ?>,<?= $main->lng ?>&hl=es;z=14&output=embed"></iframe>
                             </div>
-                            <form action="" class="form">
+                            <form action="<?= $form_action ?>" method="POST" class="form">
+
                                 <div class="row mb-5">
                                     <div class="fv-row col-md-6 fv-plugins-icon-container flex-md-root">
                                         <label class="required form-label fs-5 fw-bold">
                                             Latitude
                                         </label>
-                                        <input type="text" name="latitude" class="form-control mb-2"
-                                            placeholder="Latitude" value="2.410132391694892">
+                                        <input type="text" name="lat" class="form-control mb-2"
+                                            placeholder="Masukkan Latitude" value="{{ $main->lat }}">
                                         <div class="text-gray-600 fw-semibold fs-7">
                                         </div>
                                         <div class="fv-plugins-message-container invalid-feedback">
@@ -328,8 +327,8 @@
                                         <label class="required form-label fs-5 fw-bold">
                                             Longitude
                                         </label>
-                                        <input type="text" name="longitude" class="form-control mb-2"
-                                            placeholder="Longitude" value="96.34149354620605">
+                                        <input type="text" name="lng" class="form-control mb-2"
+                                            placeholder="Longitude" value="{{ $main->lng }}">
                                         <div class="text-gray-600 fw-semibold fs-7">
                                         </div>
                                         <div class="fv-plugins-message-container invalid-feedback">
@@ -337,7 +336,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-sm btn-primary" data-kt-indicator="off">
+                                    <button type="submit" class="btn btn-sm btn-primary" data-kt-indicator="off">
                                         <span class="indicator-label">
                                             Simpan
                                         </span>
@@ -373,26 +372,22 @@
                         </div>
                         <div class="card-body pt-0">
                             <div class="mb-5">
-                                <iframe class="w-100 rounded-3"
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.1724493433862!2d112.71529067504882!3d-7.446164542564924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e6b4f414d77b%3A0xcfffb9adcd160eb9!2sAlun-Alun%20Sidoarjo%2C%20Kec.%20Sidoarjo%2C%20Kabupaten%20Sidoarjo%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1698912281882!5m2!1sid!2sid"
-                                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe width="100%" height="300" frameborder="10" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps?q=<?= $main->lat ?>,<?= $main->lng ?>&hl=es;z=14&output=embed"></iframe>
                             </div>
-                            <form action="" class="form">
+                            <form action="<?= site_url('identitas_desa/update_maps/wilayah/') ?>" class="form" method="POST">
                                 <div class="fv-row w-100 fv-plugins-icon-container mb-5">
                                     <label class="required form-label fs-5 fw-bold">
                                         Warna
                                     </label>
                                     <input type="color" name="warna"
-                                        class="form-control form-control-color w-100 mb-2" placeholder="Warna"
-                                        value="#ffffff">
+                                        class="form-control form-control-color w-100 mb-2" placeholder="Warna" value="<?= $main->warna ?>">
                                     <div class="text-gray-600 fw-semibold fs-7">
                                     </div>
                                     <div class="fv-plugins-message-container invalid-feedback">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end column-gap-3">
-                                    <button type="button" class="btn btn-sm btn-primary" data-kt-indicator="off">
+                                    <button type="submit" class="btn btn-sm btn-primary" data-kt-indicator="off">
                                         <span class="indicator-label">
                                             Simpan
                                         </span>
@@ -409,4 +404,5 @@
             </div>
         </div>
     </div>
+
 @endsection

@@ -176,23 +176,26 @@ class Sid_core extends Admin_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function sub_rw($id_dusun = '', $p = 1, $o = 0)
+    public function sub_rw($id_dusun = '', $id_rw = '')
     {
-        $per_page = $this->input->post('per_page');
-        if (isset($per_page)) {
-            $this->session->per_page = $per_page;
-        }
+        $this->redirect_hak_akses('u');
 
         $dusun            = $this->wilayah_model->cluster_by_id($id_dusun);
-        $nama_dusun       = $dusun['dusun'];
         $data['dusun']    = $dusun['dusun'];
         $data['id_dusun'] = $id_dusun;
-        $data['func']     = "sub_rw/{$id_dusun}";
-        $data['set_page'] = $this->_set_page;
+        $data['penduduk'] = $this->wilayah_model->list_penduduk();
 
-        $data['paging'] = $this->wilayah_model->paging_rw($p, $o, $nama_dusun);
-        $data['main']   = $this->wilayah_model->list_data_rw($id_dusun, $data['paging']->offset, $data['paging']->per_page);
-        $data['total']  = $this->wilayah_model->total_rw($nama_dusun);
+        if ($id_rw) {
+            $data_rw             = $this->wilayah_model->cluster_by_id($id_rw);
+            $data['id_rw']       = $id_rw;
+            $data['rw']          = $data_rw['rw'];
+            $data['individu']    = $this->wilayah_model->get_penduduk($data_rw['id_kepala']);
+            $data['form_action'] = site_url("{$this->controller}/update_rw/{$id_dusun}/{$id_rw}");
+        } else {
+            $data['id_rw']       = null;
+            $data['rw']          = null;
+            $data['form_action'] = site_url("{$this->controller}/insert_rw/{$id_dusun}");
+        }
 
         return view("admin.wilayah.sub_rw", $data);
         // $this->render('sid/wilayah/wilayah_rw', $data);
@@ -248,6 +251,7 @@ class Sid_core extends Admin_Controller
     public function insert_rw($id_dusun = '')
     {
         $this->redirect_hak_akses('u');
+
         $this->wilayah_model->insert_rw($id_dusun);
         redirect("{$this->controller}/sub_rw/{$id_dusun}");
     }

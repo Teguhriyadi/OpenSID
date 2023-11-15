@@ -64,17 +64,22 @@ class Identitas_desa extends Admin_Controller
      *
      * @return void
      */
-    public function index()
+    public function index($tipe = "kantor")
     {
         $main = null;
+
+        $data['poly']         = ($tipe == 'wilayah') ? 'multi' : 'poly';    
 
         if (Schema::hasTable('ref_jabatan')) {
             $main = Config::first();
         }
 
+        $form_action = route('identitas_desa.update_maps', $tipe);
+
         return view('admin.identitas_desa.index', [
             'main'      => $main,
             'cek_kades' => $this->cek_kades,
+            'form_action' => $form_action
         ]);
     }
 

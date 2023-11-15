@@ -176,4 +176,6 @@ class Kelompok_master_model extends MY_Model
 
         return $this->db;
     }
+
+    
 }

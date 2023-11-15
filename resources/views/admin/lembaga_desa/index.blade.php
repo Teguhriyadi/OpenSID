@@ -28,199 +28,139 @@
 @endsection
 
 @section('content')
-    <div class="card shadow-sm card-flush border-0">
-        <div class="card-header border-0 py-7">
-            <h2 class="card-title">
-                <div class="me-3 d-flex align-items-center justify-content-center justify-content-md-start">
-                    <div class="dataTables_length">
-                        <label>
-                            <select name="kt_ecommerce_products_table_length"
-                                class="form-select form-select-sm form-select-solid">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </label>
+    <div class="d-flex flex-column flex-lg-row gap-5 gap-xl-8">
+        <div class="d-flex flex-column flex-lg-row-auto w-lg-250px w-xl-350px">
+            <div class="card shadow-sm card-flush border-0" data-kt-sticky="true" data-kt-sticky-name="docs-sticky-summary"
+                data-kt-sticky-left="auto" data-kt-sticky-width="{default:'auto','md': '350px'}" data-kt-sticky-top="100px"
+                data-kt-sticky-animation="true" data-kt-sticky-zindex="95">
+                <div class="card-body">
+                    <div class="menu menu-rounded menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-5 fw-semibold"
+                        id="#kt_aside_menu" data-kt-menu="true">
+
+                        <div class="menu-item cursor-pointer d-flex align-items-center position-relative rotate collapsible"
+                            data-bs-toggle="collapse" data-bs-target="#kt_kategori_lembaga">
+                            <div class="menu-content pb-0">
+                                <span class="menu-section text-muted text-uppercase fs-7 fw-bold">
+                                    Kategori Lembaga
+                                </span>
+                            </div>
+                            <span class="ms-2 rotate-180 ms-auto">
+                                <i class="fa-duotone fa-chevron-down fs-7"></i>
+                            </span>
+                        </div>
+
+                        <div id="kt_kategori_lembaga" data-bs-parent="#kt_aside_menu"
+                            class="mt-2 accordion-collapse collapse show">
+                            <div class="menu-item position-relative">
+                                <div class="position-absolute top-0 start-0 rounded h-100 bg-primary w-4px">
+                                </div>
+                                <a href="#" class="menu-link active">
+                                    <span class="menu-title">
+                                        Kemasyarakatan
+                                    </span>
+                                    <span class="menu-badge fs-7 fw-normal text-muted"></span>
+                                </a>
+                            </div>
+                            <div class="menu-item mt-5">
+                                <a href="<?= site_url('lembaga_master') ?>" class="btn btn-sm btn-primary w-100">
+                                    Kelolah Kategori Lembaga
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="d-flex align-items-center position-relative">
-                    <i class="fa-duotone fa-search fs-3 position-absolute ms-4"></i>
-                    <input type="text" class="form-control form-control-sm w-250px ps-12" placeholder="Cari...">
-                </div>
-            </h2>
-            <div class="card-toolbar align-self-center d-flex column-gap-2">
-                <a href="<?= site_url('lembaga/form') ?>" class="btn btn-icon btn-sm btn-primary align-self-center"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah">
-                    <i class="fa-solid fa-plus fs-7"></i>
-                </a>
-                <a href="#" class="btn_del btn btn-icon btn-sm btn-danger align-self-center" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="Hapus Data Terpilih">
-                    <i class="fa-solid fa-trash fs-7"></i>
-                </a>
-                <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center" data-modal-target="#mdl_cetak"
-                    data-title="Cetak Data" data-bs-toggle="tooltip" data-bs-placement="top" title="Cetak">
-                    <i class="fa-solid fa-print fs-7"></i>
-                </a>
-                <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center" data-modal-target="#mdl_unduh"
-                    data-title="Unduh Data" data-bs-toggle="tooltip" data-bs-placement="top" title="Unduh">
-                    <i class="fa-solid fa-download fs-7"></i>
-                </a>
             </div>
         </div>
-        <div class="card-body pt-0">
-            <div class="row mb-5 mb-xl-8">
-                <div class="col-12">
-                    <div class="row fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
-                        <label class="col-4">Provinsi</label>
-                        <div class="col-8">
-                            <span class="me-2">:</span>
-                            <span class="text-gray-700 fw-semibold">
-                                Jawa Timur
-                            </span>
+
+        <div class="d-flex flex-column flex-lg-row-fluid gap-5 gap-xl-8">
+            <!-- filter -->
+            <div class="card shadow-sm card-flush border-0">
+                <div class="card-body">
+                    <div class="row row-gap-5">
+                        <div class="col-md-6 col-12">
+                            <select class="form-select form-select-sm" name="desa" data-control="select2"
+                                data-placeholder="Pilih status">
+                                <option></option>
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="row mt-3 fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
-                        <label class="col-4">Kabupaten</label>
-                        <div class="col-8">
-                            <span class="me-2">:</span>
-                            <span class="text-gray-700 fw-semibold">
-                                Sidoarjo
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row mt-3 fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
-                        <label class="col-4">Kecamatan</label>
-                        <div class="col-8">
-                            <span class="me-2">:</span>
-                            <span class="text-gray-700 fw-semibold">
-                                Sidoarjo
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row mt-3 fs-5 fw-bold bg-hover-light-primary py-1 mx-0 rounded-2 cursor-default">
-                        <label class="col-4">Desa</label>
-                        <div class="col-8">
-                            <span class="me-2">:</span>
-                            <span class="text-gray-700 fw-semibold">
-                                Sekardangan
-                            </span>
+                        <div class="col-md-6 col-12">
+                            <select class="form-select form-select-sm" name="desa" data-control="select2"
+                                data-placeholder="Pilih kategori lembaga">
+                                <option></option>
+                                <option value="1">Kemasyarakatan</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-                    <thead>
-                        <tr class="fw-bold text-muted bg-light text-uppercase align-middle">
-                            <th class="min-w-25px text-center">
-                                <div class="form-check form-check-sm form-check-custom">
-                                    <input class="form-check-input" type="checkbox" value="1">
-                                </div>
-                            </th>
-                            <th class="min-w-25px text-center">No</th>
-                            <th class="min-w-25px text-center">Aksi</th>
-                            <th class="min-w-125px">Foto</th>
-                            <th class="min-w-150px text-end">No Anggota</th>
-                            <th class="min-w-150px">NIK</th>
-                            <th class="min-w-150px">Nama</th>
-                            <th class="min-w-150px">Tempat,<br> Tanggal Lahir</th>
-                            <th class="min-w-150px text-end">Umur (Tahun)</th>
-                            <th class="min-w-150px">Jenis Kelamin</th>
-                            <th class="min-w-150px">Alamat</th>
-                            <th class="min-w-150px">Jabatan</th>
-                            <th class="min-w-150px">Nomor SK Jabatan</th>
-                            <th class="min-w-150px">Nomor SK Pengangkatan</th>
-                            <th class="min-w-150px">Tanggal SK Pengangkatan</th>
-                            <th class="min-w-150px">Nomor SK Pemberhentian</th>
-                            <th class="min-w-150px">Tanggal SK Pemberhentian</th>
-                            <th class="min-w-150px">Masa Jabatan (Usia/Periode)</th>
-                            <th class="min-w-150px">Keterangan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">
-                                <div class="form-check form-check-sm form-check-custom">
-                                    <input class="form-check-input" type="checkbox" value="1">
-                                </div>
-                            </td>
-                            <td class="text-center">1</td>
-                            <td class="text-center">
-                                <div class="d-flex justify-content-center flex-shrink-0 gap-2">
-                                    <div>
-                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Aksi"
-                                            class="btn btn-sm btn-secondary btn-icon btn-flex btn-center menu-dropdown"
-                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
-                                            <i class="fa-solid fa-ellipsis fs-3"></i>
-                                        </a>
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-auto py-4 min-w-125px"
-                                            data-kt-menu="true" data-popper-placement="bottom-start">
-                                            <div class="menu-item px-3">
-                                                <a href="./rincian_lembaga_edit.html" class="menu-link px-3">
-                                                    Ubah
-                                                </a>
-                                            </div>
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="btn_del menu-link px-3">
-                                                    Hapus
-                                                </a>
-                                            </div>
+
+            <div class="card shadow-sm card-flush border-0">
+                <div class="card-header border-0 py-7">
+                    <div class="card-toolbar align-self-center d-flex column-gap-2">
+                        <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center"
+                            data-modal-target="#mdl_lembaga_desa" data-title="Tambah Lembaga" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Tambah">
+                            <i class="fa-solid fa-plus fs-7"></i>
+                        </a>
+                        <a href="#" class="btn_del btn btn-icon btn-sm btn-danger align-self-center"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data Terpilih">
+                            <i class="fa-solid fa-trash fs-7"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center"
+                            data-modal-target="#mdl_cetak" data-title="Cetak Data" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Cetak">
+                            <i class="fa-solid fa-print fs-7"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center"
+                            data-modal-target="#mdl_unduh" data-title="Unduh Data" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Unduh">
+                            <i class="fa-solid fa-download fs-7"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-sm btn-primary align-self-center"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Bersihkan">
+                            <i class="fa-solid fa-refresh fs-7"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                            <thead>
+                                <tr class="fw-bold text-muted bg-light text-uppercase align-middle">
+                                    <th class="min-w-25px text-center">
+                                        <div class="form-check form-check-sm form-check-custom">
+                                            <input class="form-check-input" type="checkbox" value="1">
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-50px me-3">
-                                        <img src="./assets/media/svg/avatars/blank.svg" class="img-fluid" alt="">
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-end">31231</td>
-                            <td>5201142005716996</td>
-                            <td>AHLUL</td>
-                            <td>
-                                MANGSIT,<br>20 MEI 1970
-                            </td>
-                            <td class="text-end">53</td>
-                            <td>LAKI-LAKI</td>
-                            <td>Dusun MANGSIT RW - RT 004</td>
-                            <td>KETUA</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>Ketua Lembaga</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row justify-content-center mt-7">
-                <div class="dataTables_paginate paging_simple_numbers">
-                    <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled">
-                            <a href="#" tabindex="0" class="page-link">
-                                <i class="previous"></i>
-                            </a>
-                        </li>
-                        <li class="paginate_button page-item active">
-                            <a href="#" tabindex="0" class="page-link">1</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" tabindex="0" class="page-link">2</a>
-                        </li>
-                        <li class="paginate_button page-item next">
-                            <a href="#" tabindex="0" class="page-link">
-                                <i class="next"></i>
-                            </a>
-                        </li>
-                    </ul>
+                                    </th>
+                                    <th class="min-w-25px text-center">No</th>
+                                    <th class="min-w-25px text-center">Aksi</th>
+                                    <th class="min-w-150px">Kode Lembaga</th>
+                                    <th class="min-w-150px">Nama Lengkap</th>
+                                    <th class="min-w-150px">Ketua Lembaga</th>
+                                    <th class="min-w-150px">Kategori Lembaga</th>
+                                    <th class="min-w-150px text-end">Jumlah Anggota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section("javascript")
+
+<script src="{{ asset('custom/javascript/customDataTables.min.js') }}"></script>
+<script type="text/javascript">
+    $("#example").DataTable({
+        "scrollX": true
+    });
+</script>
+
 @endsection
