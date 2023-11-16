@@ -229,7 +229,8 @@ class Penduduk extends Admin_Controller
 
         $this->session->unset_userdata(['dari_internal']);
 
-        $this->render('sid/kependudukan/penduduk_form', $data);
+        return view("admin.kependudukan.penduduk.form", $data);
+        // $this->render('sid/kependudukan/penduduk_form', $data);
     }
 
     public function detail($p = 1, $o = 0, $id = 0)

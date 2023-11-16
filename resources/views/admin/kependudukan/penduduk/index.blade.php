@@ -92,12 +92,12 @@
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-auto py-4 min-w-125px"
                             data-kt-menu="true" data-popper-placement="bottom-start">
                             <div class="menu-item px-3">
-                                <a href="./penduduk_lahir_add.html" class="menu-link px-3">
+                                <a href="<?= site_url('penduduk/form_peristiwa/1'); ?>" class="menu-link px-3">
                                     Penduduk Lahir
                                 </a>
                             </div>
                             <div class="menu-item px-3">
-                                <a href="./penduduk_masuk_add.html" class="menu-link px-3">
+                                <a href="<?= site_url('penduduk/form_peristiwa/5'); ?>" class="menu-link px-3">
                                     Penduduk Masuk
                                 </a>
                             </div>
