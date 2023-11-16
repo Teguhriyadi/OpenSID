@@ -169,6 +169,9 @@
                                 <a href="#" class="menu-link px-3">
                                     Export Penduduk
                                 </a>
+                                <a href="<?= site_url('penduduk/impor') ?>" class="menu-link px-3">
+                                    Import Penduduk
+                                </a>
                             </div>
                         </div>
                     </div>

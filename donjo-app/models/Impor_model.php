@@ -51,9 +51,21 @@ class Impor_model extends CI_Model
         'nama',
         'no_kk',
         'nik',
-        'sex',
-        'tempatlahir',
-        'tanggallahir',
+        'jenis_kelamin',
+        "",
+        'id_level',
+        'id_desa',
+        'id_dusun',
+        'id_agama',
+        'status_perkawinan',
+        'pekerjaan_warga',
+        'kewarganegaraan',
+        'pendidikan_warga',
+        'kode_shdk',
+        'nama_ayah_warga',
+        'nama_ibu_warga',
+        'tempat_lahir',
+        'tanggal_lahir',
         'agama_id',
         'pendidikan_kk_id',
         'pendidikan_sedang_id',
@@ -63,6 +75,7 @@ class Impor_model extends CI_Model
         'warganegara_id',
         'ayah_nik',
         'nama_ayah',
+        'kerjaan',
         'ibu_nik',
         'nama_ibu',
         'golongan_darah_id',
@@ -77,6 +90,7 @@ class Impor_model extends CI_Model
         'cacat_id',
         'cara_kb_id',
         'hamil',
+        'password',
         'ktp_el',
         'status_rekam',
         'alamat_sekarang',
@@ -97,7 +111,7 @@ class Impor_model extends CI_Model
             ini_set('memory_limit', '512M');
         }
         set_time_limit(3600);
-        $this->load->model(['referensi_model', 'penduduk_model']);
+        $this->load->model(['referensi_model', 'penduduk_model', "pekerjaan_model", "pendidikan_model"]);
         $this->load->library('Spreadsheet_Excel_Reader');
 
         // Data referensi tambahan
@@ -230,15 +244,15 @@ class Impor_model extends CI_Model
         if ($isi_baris['agama_id'] != '' && ! ($isi_baris['agama_id'] >= 1 && $isi_baris['agama_id'] <= 7)) {
             return 'kode agama ' . $isi_baris['agama_id'] . '  tidak dikenal';
         }
-        if ($isi_baris['pendidikan_kk_id'] != '' && ! ($isi_baris['pendidikan_kk_id'] >= 1 && $isi_baris['pendidikan_kk_id'] <= 10)) {
-            return 'kode pendidikan ' . $isi_baris['pendidikan_kk_id'] . '  tidak dikenal';
-        }
+        // if ($isi_baris['pendidikan_kk_id'] != '' && ! ($isi_baris['pendidikan_kk_id'] >= 1 && $isi_baris['pendidikan_kk_id'] <= 10)) {
+        //     return 'kode pendidikan ' . $isi_baris['pendidikan_kk_id'] . '  tidak dikenal';
+        // }
         if ($isi_baris['pendidikan_sedang_id'] != '' && ! ($isi_baris['pendidikan_sedang_id'] >= 1 && $isi_baris['pendidikan_sedang_id'] <= 18)) {
             return 'kode pendidikan_sedang ' . $isi_baris['pendidikan_sedang_id'] . '  tidak dikenal';
         }
-        if ($isi_baris['pekerjaan_id'] != '' && ! ($isi_baris['pekerjaan_id'] >= 1 && $isi_baris['pekerjaan_id'] <= 89)) {
-            return 'kode pekerjaan ' . $isi_baris['pekerjaan_id'] . '  tidak dikenal';
-        }
+        // if ($isi_baris['pekerjaan_id'] != '' && ! ($isi_baris['pekerjaan_id'] >= 1 && $isi_baris['pekerjaan_id'] <= 89)) {
+        //     return 'kode pekerjaan ' . $isi_baris['pekerjaan_id'] . '  tidak dikenal';
+        // }
         if ($isi_baris['status_kawin'] != '' && ! ($isi_baris['status_kawin'] >= 1 && $isi_baris['status_kawin'] <= 4)) {
             return 'kode status_kawin ' . $isi_baris['status_kawin'] . ' tidak dikenal';
         }
@@ -336,15 +350,56 @@ class Impor_model extends CI_Model
         return (in_array($isi, ['', '-'])) ? null : $isi;
     }
 
+    public function get_data_pekerjaan($kolom, $rowData)
+    {
+        $pekerjaan = trim($rowData[$kolom["pekerjaan_warga"]]);
+        
+        $cek = $this->db->get_where("tweb_penduduk_pekerjaan", array("nama" => $pekerjaan));
+
+        if ($cek->num_rows() > 0) {
+            $hasil_query = $cek->row();
+
+            $nilai_kolom = $hasil_query->id;
+
+            return $nilai_kolom;
+        } else {
+            $nilai_kolom = 0;
+
+            return $nilai_kolom;
+        }
+
+    }
+
+    public function get_data_pendidikan($kolom, $rowData)
+    {
+        $pendidikan = strtoupper($rowData[$kolom["pendidikan_warga"]]);
+        
+        $cek = $this->db->get_where("tweb_penduduk_pendidikan", array("nama" => $pendidikan));
+
+        if ($cek->num_rows() > 0) {
+            $hasil_query = $cek->row();
+
+            $nilai_kolom = $hasil_query->id;
+
+            return $nilai_kolom;
+        } else {
+            $nilai_kolom = 0;
+
+            return $nilai_kolom;
+        }
+
+    }
+
     private function get_isi_baris($kolom, $rowData)
     {
+
         $kolom               = array_flip(array_filter($kolom, 'strlen'));
         $isi_baris['alamat'] = trim($rowData[$kolom['alamat']]);
-        $dusun               = ltrim(trim($rowData[$kolom['dusun']]), "'");
+        $dusun               = ltrim(trim($rowData[$kolom['id_dusun']]), "'");
         $dusun               = str_replace('_', ' ', $dusun);
         $dusun               = strtoupper($dusun);
         $dusun               = str_replace('DUSUN ', '', $dusun);
-        $isi_baris['dusun']  = $dusun;
+        $isi_baris['dusun']  = $this->db->escape_str($dusun);
 
         $isi_baris['rw']   = ltrim(trim($rowData[$kolom['rw']]), "'");
         $isi_baris['rt']   = ltrim(trim($rowData[$kolom['rt']]), "'");
@@ -363,18 +418,35 @@ class Impor_model extends CI_Model
         $nik              = preg_replace('/[^0-9]/', '', $nik);
         $isi_baris['nik'] = $nik;
 
-        $isi_baris['sex']                  = $this->get_konversi_kode($this->kode_sex, $rowData[$kolom['sex']]);
-        $isi_baris['tempatlahir']          = $this->cek_kosong($rowData[$kolom['tempatlahir']]);
-        $isi_baris['tanggallahir']         = $this->cek_kosong($this->format_tanggal($rowData[$kolom['tanggallahir']]));
-        $isi_baris['agama_id']             = $this->get_konversi_kode($this->kode_agama, $rowData[$kolom['agama_id']]);
-        $isi_baris['pendidikan_kk_id']     = $this->get_konversi_kode($this->kode_pendidikan_kk, $rowData[$kolom['pendidikan_kk_id']]);
+        $sex = trim($rowData[$kolom["jenis_kelamin"]]);
+        
+        if ($sex == "Laki-Laki") {
+            $optionSex = 1;
+        } else {
+            $optionSex = 2;
+        }
+
+        $pilihan = $this->get_data_pekerjaan($kolom, $rowData);
+
+        $isi_baris['sex']                  = $optionSex;
+        $isi_baris["pekerjaan_id"]         = $pilihan;
+
+        $isi_baris['tempatlahir']          = $this->cek_kosong($rowData[$kolom['tempat_lahir']]);
+        $isi_baris['tanggallahir']         = $this->cek_kosong($this->format_tanggal($rowData[$kolom['tanggal_lahir']]));
+        $isi_baris['agama_id']             = $this->get_konversi_kode($this->kode_agama, $rowData[$kolom['id_agama']]);
+
+        $pendidikan_kk = $this->get_data_pendidikan($kolom, $rowData);
+
+        $isi_baris['pendidikan_kk_id']     = $pendidikan_kk;
+        
         $isi_baris['pendidikan_sedang_id'] = $this->get_konversi_kode($this->kode_pendidikan_sedang, $rowData[$kolom['pendidikan_sedang_id']]);
-        $isi_baris['pekerjaan_id']         = $this->get_konversi_kode($this->kode_pekerjaan, $rowData[$kolom['pekerjaan_id']]);
-        $isi_baris['status_kawin']         = $this->get_konversi_kode($this->kode_status, $rowData[$kolom['status_kawin']]);
+    
+
+        $isi_baris['status_kawin']         = $this->get_konversi_kode($this->kode_status, $rowData[$kolom['status_perkawinan']]);
         $isi_baris['kk_level']             = $this->get_konversi_kode($this->kode_hubungan, $rowData[$kolom['kk_level']]);
         $isi_baris['warganegara_id']       = $this->get_konversi_kode($this->kode_warganegara, $rowData[$kolom['warganegara_id']]);
-        $isi_baris['nama_ayah']            = $this->cek_kosong($rowData[$kolom['nama_ayah']]);
-        $isi_baris['nama_ibu']             = $this->cek_kosong($rowData[$kolom['nama_ibu']]);
+        $isi_baris['nama_ayah']            = $this->cek_kosong($rowData[$kolom['nama_ayah_warga']]);
+        $isi_baris['nama_ibu']             = $this->cek_kosong($rowData[$kolom['nama_ibu_warga']]);
         $isi_baris['golongan_darah_id']    = $this->get_konversi_kode($this->kode_golongan_darah, $rowData[$kolom['golongan_darah_id']]);
         $isi_baris['akta_lahir']           = $this->cek_kosong($rowData[$kolom['akta_lahir']]);
         $isi_baris['dokumen_pasport']      = $this->cek_kosong($rowData[$kolom['dokumen_pasport']]);
@@ -597,8 +669,8 @@ class Impor_model extends CI_Model
                 return $this->error_tulis_penduduk['message'] = 'Tidak dapat menambahkan penduduk dengan nik ' . $data['nik'] . ' karena data sudah ditetapkan lengkap';
             }
 
-            if ($data['nama'] == '' || $isi_baris['no_kk'] == '' || $data['kk_level'] == '' || $isi_baris['dusun'] == '' || $isi_baris['rt'] == '' || $isi_baris['rw'] == '') {
-                return $this->error_tulis_penduduk['message'] = 'nama, nomor kk, shdk, dusun, rt, rw harus diisi untuk penduduk baru';
+            if ($data['nama'] == '' || $isi_baris['no_kk'] == '') {
+                return $this->error_tulis_penduduk['message'] = 'nama, nomor kk, dusun harus diisi untuk penduduk baru';
             }
 
             if ($this->penduduk_model->cekTagIdCard($data['tag_id_card'])) {

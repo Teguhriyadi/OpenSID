@@ -991,7 +991,8 @@ class Penduduk extends Admin_Controller
             'boleh_hapus_penduduk' => $this->impor_model->boleh_hapus_penduduk(),
         ];
 
-        return view('admin.penduduk.impor', $data);
+        return view("admin.kependudukan.penduduk.impor", $data);
+        // return view('admin.penduduk.impor', $data);
     }
 
     public function proses_impor()
