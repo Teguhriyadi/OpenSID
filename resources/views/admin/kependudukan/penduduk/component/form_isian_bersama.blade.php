@@ -28,21 +28,13 @@
                 <label class="required form-label fs-5 fw-bold">
                     NIK
                 </label>
-                <input type="text" class="form-control" name="nik" id="nik">
-                <div class="text-gray-600 fw-semibold fs-7">
-                </div>
-                <div class="fv-plugins-message-container invalid-feedback">
-                </div>
+                <input type="text" class="form-control" name="nik" id="nik" placeholder="Nomor NIK" value="<?= $penduduk['nik'] ?>" <?= jecho($cek_nik, '0', 'readonly') ?>>
             </div>
             <div class="col-md-8">
                 <label class="required form-label fs-5 fw-bold">
                     Nama <small class="text-danger"> (Tanpa Gelar) </small>
                 </label>
-                <input type="text" class="form-control" name="nama" id="nama">
-                <div class="text-gray-600 fw-semibold fs-7">
-                </div>
-                <div class="fv-plugins-message-container invalid-feedback">
-                </div>
+                <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Lengkap" value="<?= strtoupper($penduduk['nama']) ?>">
             </div>
         </div>
     </div>
@@ -87,7 +79,7 @@
                 <label class="form-label fs-5 fw-bold">
                     Nomor KK Sebelumnya
                 </label>
-                <input type="text" class="form-control" placeholder="Nomor KK Sebelumnya">
+                <input type="text" maxlength="30" class="form-control" placeholder="Nomor KK Sebelumnya" value="<?= strtoupper($penduduk['no_kk_sebelumnya']) ?>">
             </div>
             <div class="col-md-4 mb-3">
                 <label class="form-label fs-5 fw-bold">
@@ -96,9 +88,7 @@
                 <select name="kk_level" class="form-control" id="kk_level">
                     <option value="">- Pilih Hubungan -</option>
                     <?php foreach ($hubungan as $data) : ?>
-                    <option value="<?= $data['id'] ?>">
-                        <?= strtoupper($data['nama']) ?>
-                    </option>
+                    <option value="<?= $data['id'] ?>" <?php selected($penduduk['kk_level'], $data['id']); ?> <?= ($data['id'] == 1 && $keluarga['status_dasar'] == '2') ? 'disabled' : ''; ?>><?= strtoupper($data['nama']) ?></option>
                     <?php endforeach ?>
                 </select>
             </div>
@@ -106,8 +96,8 @@
                 <label class="form-label fs-5 fw-bold"> Jenis Kelamin </label>
                 <select name="sex" class="form-control" id="sex">
                     <option value="">- Pilih Jenis Kelamin -</option>
-                    <option value="1">Laki - Laki</option>
-                    <option value="2">Perempuan</option>
+                    <option value="1" <?php selected($penduduk['id_sex'], '1'); ?>>Laki - Laki</option>
+                    <option value="2" <?php selected($penduduk['id_sex'], '2'); ?>>Perempuan</option>
                 </select>
             </div>
         </div>
@@ -123,7 +113,7 @@
                 <select name="agama_id" class="form-control" id="agama_id">
                     <option value="">- Pilih Agama -</option>
                     <?php foreach ($agama as $data) : ?>
-                    <option value="<?= $data['id'] ?>">
+                    <option value="<?= $data['id'] ?>" <?php selected($penduduk['agama_id'], $data['id']); ?>>
                         <?= strtoupper($data['nama']) ?>
                     </option>
                     <?php endforeach ?>

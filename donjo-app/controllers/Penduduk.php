@@ -250,8 +250,19 @@ class Penduduk extends Admin_Controller
         $data['penduduk']           = $this->penduduk_model->get_penduduk($id) ?? show_404();
         $data['list_dokumen']       = $this->penduduk_model->list_dokumen($id);
         $data['jenis_syarat_surat'] = $this->referensi_model->list_by_id('ref_syarat_surat', 'ref_syarat_id');
+        
+        return view("admin.kependudukan.penduduk.dokumen", $data);
+        // $this->render('sid/kependudukan/penduduk_dokumen', $data);
+    }
 
-        $this->render('sid/kependudukan/penduduk_dokumen', $data);
+    public function getDataTableDokumen($id_pend)
+    {
+        $postData = $this->input->get();
+        $data["query"] = $this->web_dokumen_model->getDataTableDokumenHidup($postData, $id_pend);
+        $data["recordsTotal"] = $this->web_dokumen_model->count_all_dokumen();
+        $data["recordsFiltered"] = $this->web_dokumen_model->count_filtered_dokumen($postData);
+        
+        echo json_encode($data);
     }
 
     public function dokumen_form($id = 0, $id_dokumen = 0)
@@ -292,7 +303,8 @@ class Penduduk extends Admin_Controller
             $data['form_action'] = site_url("{$this->controller}/dokumen_insert");
         }
 
-        $this->load->view('sid/kependudukan/dokumen_form', $data);
+        return view("admin.kependudukan.penduduk.dokumen_form", $data);
+        // $this->load->view('sid/kependudukan/dokumen_form', $data);
     }
 
     public function dokumen_list($id = 0)

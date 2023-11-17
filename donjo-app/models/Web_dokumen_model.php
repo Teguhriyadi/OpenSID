@@ -79,6 +79,44 @@ class Web_dokumen_model extends MY_Model
         return $this->db->from('dokumen_hidup as dokumen')->get()->result_array();
     }
 
+    public function getDataTableDokumenHidup($postData, $id_pend)
+    {
+        $this->get_datatable_dokumen($postData, $id_pend);
+
+        if ($postData["length"] != -1) {
+            $this->db->limit($postData["length"], $postData["start"]);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function count_filtered_dokumen($postData)
+    {
+        $this->get_datatable($postData);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all_dokumen()
+    {
+        $this->db->from("dokumen_hidup");
+        return $this->db->count_all_results();
+    }
+
+    private function get_datatable_dokumen($postData, $id_pend)
+    {
+        $this->db->from("dokumen_hidup");
+        $this->db->where("id_pend", $id_pend);
+
+        if (!empty( $postData["search"]["value"])) {
+            $this->db->like("id", $postData["search"]["value"]);
+        }
+
+        $this->db->order_by('id', "DESC");
+    }
+
     // ================= informasi publik ===================
     // https://mbahcoding.com/tutorial/php/codeigniter/codeigniter-simple-server-side-datatable-example.html
 

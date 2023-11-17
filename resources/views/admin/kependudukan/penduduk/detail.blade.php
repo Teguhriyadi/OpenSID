@@ -38,10 +38,10 @@
     <div class="card-header border-0 py-7">
         <div class="card-toolbar align-self-center d-flex column-gap-2">
             <div>
-                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Manajemen Dokumen" class="btn btn-icon btn-sm btn-success align-self-center menu-dropdown" data-kt-menu-placement="bottom-start">
+                <a href="<?= site_url("penduduk/dokumen/{$penduduk['id']}")?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Manajemen Dokumen" class="btn btn-icon btn-sm btn-success align-self-center menu-dropdown" data-kt-menu-placement="bottom-start">
                     <i class="fa-solid fa-book fs-7"></i>
                 </a>
-                <a href="<?= site_url('penduduk/clear'); ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Ubah Biodata" class="btn btn-icon btn-sm btn-warning align-self-center menu-dropdown" data-kt-menu-placement="bottom-start">
+                <a href="<?= site_url("penduduk/form/{$p}/{$o}/{$penduduk['id']}")?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Ubah Biodata" class="btn btn-icon btn-sm btn-warning align-self-center menu-dropdown" data-kt-menu-placement="bottom-start">
                     <i class="fa-solid fa-edit fs-7"></i>
                 </a>
                 <a href="<?= site_url('penduduk/clear'); ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Cetak Biodata" class="btn btn-icon btn-sm btn-primary align-self-center menu-dropdown" data-kt-menu-placement="bottom-start">
