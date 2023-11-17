@@ -1,4 +1,4 @@
-@extends('admin.layouts.index')
+@extends("admin.layouts.index")
 
 @section('breadcrumb')
     <div id="kt_app_toolbar" class="app-toolbar pt-7 pt-lg-10">
@@ -32,10 +32,8 @@
     </div>
 @endsection
 
-@section('content')
-    @include('admin.layouts.components.notifikasi')
+@section("content")
 
-    <form action="<?= $form_action ?>" method="POST" enctype="multipart/form-data">
-        @include("admin.kependudukan.penduduk.component.form_isian")
-    </form>
+Hamdan
+
 @endsection

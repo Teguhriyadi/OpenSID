@@ -778,7 +778,7 @@ class Penduduk_model extends MY_Model
 
     public function validasi_data_penduduk(&$data, $id = null)
     {
-        $data['tanggallahir']         = empty($data['tanggallahir']) ? null : tgl_indo_in($data['tanggallahir']);
+        $data['tanggallahir']         = empty($data['tanggallahir']) ? null : $data["tanggallahir"];
         $data['tanggal_akhir_paspor'] = empty($data['tanggal_akhir_paspor']) ? null : tgl_indo_in($data['tanggal_akhir_paspor']);
         $data['tanggalperkawinan']    = empty($data['tanggalperkawinan']) ? null : tgl_indo_in($data['tanggalperkawinan']);
         $data['tanggalperceraian']    = empty($data['tanggalperceraian']) ? null : tgl_indo_in($data['tanggalperceraian']);
@@ -801,7 +801,7 @@ class Penduduk_model extends MY_Model
         $data['panjang_lahir']      = $data['panjang_lahir'] ?: null;
         $data['cacat_id']           = $data['cacat_id'] ?: null;
         $data['sakit_menahun_id']   = $data['sakit_menahun_id'] ?: null;
-        $data['kk_level']           = $data['kk_level'];
+        $data['kk_level']           = 0;
         $data['ket']                = htmlentities($data['ket']);
         if (empty($data['id_asuransi']) || $data['id_asuransi'] == 1) {
             $data['no_asuransi'] = null;
@@ -956,7 +956,7 @@ class Penduduk_model extends MY_Model
     }
 
     // Tambah penduduk domisili (tidak ada nomor KK)
-    public function insert()
+    public function insert($data)
     {
         unset($_SESSION['validation_error'], $_SESSION['success']);
 
@@ -985,11 +985,11 @@ class Penduduk_model extends MY_Model
         $maksud_tujuan = $data['maksud_tujuan_kedatangan'];
         unset($data['maksud_tujuan_kedatangan']);
 
-        $tgl_lapor = rev_tgl($_POST['tgl_lapor'], date('Y-m-d H:i:s'));
+        $tgl_lapor = date("Y-m-d H:i:s");
         if ($_POST['tgl_peristiwa']) {
-            $tgl_peristiwa = rev_tgl($_POST['tgl_peristiwa']);
+            $tgl_peristiwa = $_POST["tgl_peristiwa"];
         } else {
-            $tgl_peristiwa = rev_tgl($_POST['tanggallahir']);
+            $tgl_peristiwa = $_POST["tanggallahir"];
         }
         unset($data['tgl_lapor'], $data['tgl_peristiwa']);
 
@@ -1033,6 +1033,11 @@ class Penduduk_model extends MY_Model
 
         return $idku;
     }
+
+    // public function tambah_data($data)
+    // {
+    //     return $this->db->insert("tweb_penduduk", $data);
+    // }
 
     public function update($id = 0)
     {
@@ -1087,9 +1092,9 @@ class Penduduk_model extends MY_Model
 
         $tgl_lapor = rev_tgl($_POST['tgl_lapor']);
         if ($_POST['tgl_peristiwa']) {
-            $tgl_peristiwa = rev_tgl($_POST['tgl_peristiwa']);
+            $tgl_peristiwa = $_POST["tgl_peristiwa"];
         } else {
-            $tgl_peristiwa = rev_tgl($_POST['tanggallahir']);
+            $tgl_peristiwa = $_POST['tanggallahir'];
         }
         unset($data['tgl_lapor'], $data['tgl_peristiwa']);
 

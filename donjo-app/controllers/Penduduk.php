@@ -240,7 +240,9 @@ class Penduduk extends Admin_Controller
         $data['list_dokumen'] = $this->penduduk_model->list_dokumen($id);
         $data['penduduk']     = $this->penduduk_model->get_penduduk($id);
         $data['program']      = $this->program_bantuan_model->get_peserta_program(1, $data['penduduk']['nik']);
-        $this->render('sid/kependudukan/penduduk_detail', $data);
+        
+        return view("admin.kependudukan.penduduk.detail", $data);
+        // $this->render('sid/kependudukan/penduduk_detail', $data);
     }
 
     public function dokumen($id = '')
@@ -369,8 +371,36 @@ class Penduduk extends Admin_Controller
 
     public function insert()
     {
+        $data = array(
+            "nama" => $this->input->post("nama"),
+            "nik" => $this->input->post("nik"),
+            "id_kk" => 0,
+            "kk_level" => $this->input->post("kk_level"),
+            "sex" => $this->input->post("sex"),
+            "tempatlahir" => $this->input->post("tempatlahir"),
+            "tanggallahir" => $this->input->post("tanggallahir"),
+            "agama_id" => $this->input->post("agama_id"),
+            "pendidikan_kk_id" => $this->input->post("pendidikan_kk_id"),
+            "pekerjaan_id" => $this->input->post("pekerjaan_id"),
+            "status_kawin" => $this->input->post("status_kawin"),
+            "warganegara_id" => $this->input->post("warganegara_id"),
+            "nama_ayah" => $this->input->post("nama_ayah"),
+            "nama_ibu" => $this->input->post("nama_ibu"),
+            "golongan_darah_id" => $this->input->post("golongan_darah_id"),
+            "id_cluster" => $this->input->post("id_cluster"),
+            "status" => $this->input->post("status"),
+            "status_dasar" => 1,
+            "created_by" => 1,
+            "alamat_sebelumnya" => $this->input->post("alamat_sebelumnya") ? $this->input->post("alamat_sebelumnya") : '',
+            "tanggal_cetak_ktp" => $this->input->post("tanggal_cetak_ktp") ? $this->input->post("tanggal_cetak_ktp") : '',
+            "alamat_sekarang" => $this->input->post("alamat_sekarang") ? $this->input->post("alamat_sekarang") : '',
+            "tgl_peristiwa" => $this->input->post("tgl_peristiwa") ? $this->input->post("tgl_peristiwa") : '',
+            "tanggal_lapor" => date("Y-m-d H:i:s")
+        );
+
+        
         $this->redirect_hak_akses('u');
-        $id = $this->penduduk_model->insert();
+        $id = $this->penduduk_model->insert($data);
         if ($_SESSION['success'] == -1) {
             $_SESSION['dari_internal'] = true;
             redirect("{$this->controller}/form");

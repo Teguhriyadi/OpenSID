@@ -37,6 +37,7 @@
 @endsection
 
 @section('content')
+
     <div class="d-flex flex-column flex-lg-row-fluid gap-5 gap-xl-8">
         <!-- filter -->
         <div class="card shadow-sm card-flush border-0">
